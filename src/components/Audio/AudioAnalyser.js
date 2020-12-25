@@ -5,6 +5,7 @@ import AudioVisualiser from './AudioVisualiser';
 class AudioAnalyser extends Component {
   constructor(props) {
     super(props);
+    const { lang } = props;
     this.state = { audioData: new Uint8Array(0) };
     this.tick = this.tick.bind(this);
 
@@ -15,7 +16,7 @@ class AudioAnalyser extends Component {
 
     this.recognition.continuous = true;
     this.recognition.interimResults = true;
-    this.recognition.lang = 'en-US';
+    this.recognition.lang = lang;
 
     this.recognition.start();
 
@@ -28,15 +29,16 @@ class AudioAnalyser extends Component {
       }
     };
 
-    this.recognition.onend = () => {
-      this.recognition.stop();
-    };
+    // this.recognition.onend = () => {
+    //   this.recognition.stop();
+    // };
   }
 
   componentDidMount() {
     this.audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
     this.analyser = this.audioContext.createAnalyser();
+    // this.analyser.fftSize = 256;
     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
     const { audio } = this.props;
     this.source = this.audioContext.createMediaStreamSource(audio);
@@ -65,6 +67,7 @@ class AudioAnalyser extends Component {
 
 AudioAnalyser.propTypes = {
   audio: PropTypes.objectOf(PropTypes.object).isRequired,
+  lang: PropTypes.string.isRequired,
 };
 
 export default AudioAnalyser;
