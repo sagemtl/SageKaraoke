@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.png';
 import '../styles/App.css';
+import Controls from './Controls/Controls';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <Controls />
     </div>
   );
 }
