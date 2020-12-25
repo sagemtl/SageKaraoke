@@ -22,7 +22,7 @@ const Controls = () => {
         onKeyDown={toggleHidden}
         className="control-dismiss-tab"
       >
-        <b>hide</b>
+        <b>{hidden ? 'show' : 'hide'}</b>
       </div>
     </div>
   );

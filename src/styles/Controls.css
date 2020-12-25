@@ -9,6 +9,7 @@
   border-radius: 5px;
   border: 2px solid lightgrey;
   box-shadow: 7px 7px lightgrey;
+  transition: all 1.5s ease-in-out;
 }
 
 .control-center--hidden {
@@ -28,4 +29,9 @@
   border-top-right-radius: 3px;
   border: 2px solid lightgrey;
   text-align: center;
+  cursor: pointer;
+}
+
+.control-dismiss-tab:focus {
+  outline: none;
 }
