@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import '../../styles/Controls.css';
+import '../../styles/controls.scss';
 
 const Controls = () => {
   const [hidden, setHidden] = useState(false);
