@@ -16,6 +16,13 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": ["src"]
+        }
+      }
+    },
     "plugins": ["prettier", "react-hooks"],
     "rules": {
         "react/react-in-jsx-scope": "off",
