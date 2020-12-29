@@ -37,6 +37,7 @@ const Song = ({ match }) => {
       <audio src={song} muted controls onTimeUpdate={onTimeUpdate}>
         Sorry, your browser doesn&apos;t support audio.
       </audio>
+      <div>{currentIndex >= 0 ? lineList[currentIndex].content : null}</div>
     </div>
   );
 };
