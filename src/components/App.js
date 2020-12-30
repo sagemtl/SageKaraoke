@@ -1,11 +1,12 @@
 import React from 'react';
-import logo from '../assets/logo.png';
-import '../styles/App.css';
+// import logo from '../assets/logo.png';
+// import '../styles/App.css';
+import Layout from './Layout';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit
@@ -19,7 +20,8 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
+      <Layout />
     </div>
   );
 }
