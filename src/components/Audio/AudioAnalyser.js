@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AudioVisualiser from './AudioVisualiser';
+import getScore from '../../utils/score';
 
 class AudioAnalyser extends Component {
   constructor(props) {
@@ -26,6 +27,8 @@ class AudioAnalyser extends Component {
       const result = event.results[event.results.length - 1];
       if (result.isFinal) {
         console.log(result[0].transcript);
+        const score = getScore(result[0].transcript);
+        console.log(score);
       }
     };
 
