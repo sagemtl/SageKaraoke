@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import parseLrc from 'utils/parseLrc';
 import Songs from 'assets/data'; // Will be replaced with a fetch
 import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
+import '../styles/Lyrics.scss';
 
-const Song = ({ match }) => {
-  const {
-    params: { songId },
-  } = match;
+const Lyrics = ({ songTitle }) => {
   // fetch from backend API using song id/name with a useMemo
+  console.log(songTitle);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -31,23 +30,24 @@ const Song = ({ match }) => {
   );
 
   return (
-    <div className="home">
-      <h1>Song Page</h1>
-      <h2>{songId}</h2>
-      <audio src={song} muted controls onTimeUpdate={onTimeUpdate}>
+    <div className="lyrics-div">
+      <audio src={song} autoPlay onTimeUpdate={onTimeUpdate}>
         Sorry, your browser doesn&apos;t support audio.
       </audio>
-      <div>{currentIndex >= 0 ? lineList[currentIndex].content : null}</div>
+      <div className="lyrics-current">
+        {currentIndex >= 0 ? lineList[currentIndex].content : null}
+      </div>
+      <div className="lyrics-next">
+        {currentIndex < lineList.length - 1
+          ? lineList[currentIndex + 1].content
+          : null}
+      </div>
     </div>
   );
 };
 
-Song.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      songId: PropTypes.string,
-    }),
-  }).isRequired,
+Lyrics.propTypes = {
+  songTitle: PropTypes.string.isRequired,
 };
 
-export default Song;
+export default Lyrics;
