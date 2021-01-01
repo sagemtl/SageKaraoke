@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { GlobalContextProvider } from './global/context';
 import Router from './router';
 import './styles/main.scss';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <GlobalContextProvider>
     <Router />
-  </React.StrictMode>,
+  </GlobalContextProvider>,
   document.getElementById('root'),
 );
