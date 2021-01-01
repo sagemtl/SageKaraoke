@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../../global/context';
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
   return (
     <div className="home">
       <h1>Home</h1>
+      <Link to="/sing/yue-liang-dai-biao-wo-de-xin">月亮代表我的心</Link>
       <h1>{karaokeState.test}</h1>
       <button
         type="button"
