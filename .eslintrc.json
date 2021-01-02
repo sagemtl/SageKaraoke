@@ -17,6 +17,7 @@
         "sourceType": "module"
     },
     "plugins": ["prettier", "react-hooks"],
+    "parser": "babel-eslint",
     "rules": {
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",

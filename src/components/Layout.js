@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import UrgeWithPleasureComponent from './videopage';
+import CountdownTimer from './videopage';
 
 class Layout extends PureComponent {
   render() {
     return (
       <div>
-        <UrgeWithPleasureComponent />
+        <CountdownTimer />
         <h1>Hello</h1>
       </div>
     );
