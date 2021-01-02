@@ -1,0 +1,17 @@
+.lyrics-div {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lyrics-current {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.lyrics-next {
+  font-size: 36px;
+  font-weight: bold;
+  color: gray;
+}
