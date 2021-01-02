@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AudioInput from 'components/Audio/AudioInput';
-import { useGlobalContext } from '../../../global/context';
+import { useGlobalContext } from 'global/context';
 
 const Home = () => {
   const globalContext = useGlobalContext();
