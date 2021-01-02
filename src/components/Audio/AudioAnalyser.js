@@ -9,6 +9,7 @@ class AudioAnalyser extends Component {
     const { lang } = props;
     this.state = { audioData: new Uint8Array(0) };
     this.tick = this.tick.bind(this);
+    this.audioDataList = [];
 
     this.recognition = new (window.SpeechRecognition ||
       window.webkitSpeechRecognition ||
@@ -31,17 +32,13 @@ class AudioAnalyser extends Component {
         console.log(score);
       }
     };
-
-    // this.recognition.onend = () => {
-    //   this.recognition.stop();
-    // };
   }
 
   componentDidMount() {
     this.audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
     this.analyser = this.audioContext.createAnalyser();
-    // this.analyser.fftSize = 256;
+    this.analyser.fftSize = 256;
     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
     const { audio } = this.props;
     this.source = this.audioContext.createMediaStreamSource(audio);
@@ -54,11 +51,13 @@ class AudioAnalyser extends Component {
     this.analyser.disconnect();
     this.source.disconnect();
     this.recognition.stop();
+    console.log(this.audioDataList.length);
   }
 
   tick() {
     this.analyser.getByteTimeDomainData(this.dataArray);
     this.setState({ audioData: this.dataArray });
+    // this.audioDataList.push(this.dataArray);
     this.rafId = requestAnimationFrame(this.tick);
   }
 
