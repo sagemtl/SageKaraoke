@@ -1,9 +1,10 @@
-const Songs = {
+const Song = {
   id: 1,
   cover: '',
   singers: ['邓丽君'],
   name: '月亮代表我的心',
   src: '',
+  lang: 'zh-CN',
   lrc: `
 [00:11.36]你问我爱你有多深
 [00:17.39]我爱你有几分
@@ -39,4 +40,4 @@ const Songs = {
   `,
 };
 
-export default Songs;
+export default Song;

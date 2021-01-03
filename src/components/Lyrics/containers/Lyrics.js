@@ -2,18 +2,14 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
 import parseLrc from 'utils/parseLrc';
-import Songs from 'assets/data'; // TO-DO: Will be replaced with a fetch
-import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
+import songFile from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
 import '../styles/Lyrics.scss';
 
-const Lyrics = ({ songTitle }) => {
+const Lyrics = ({ lrc }) => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const [currentIndex, setCurrentIndex] = useState(-1);
 
-  // TO-DO: fetch from backend API using song id/name with a useMemo
-
-  const { lrc } = Songs;
   const lineList = useMemo(() => parseLrc(lrc), [lrc]);
 
   const onTimeUpdate = useCallback(
@@ -28,7 +24,7 @@ const Lyrics = ({ songTitle }) => {
         karaokeState.audioTime >= lineList[currentIndex + 1].millisecond
       ) {
         setCurrentIndex(currentIndex + 1);
-        console.log(lineList[currentIndex + 1].content);
+        // console.log(lineList[currentIndex + 1].content);
       }
     },
     [karaokeState, karaokeDispatch, currentIndex, lineList],
@@ -36,12 +32,10 @@ const Lyrics = ({ songTitle }) => {
 
   return (
     <div className="lyrics-div">
-      <audio src={song} autoPlay onTimeUpdate={onTimeUpdate}>
+      <audio src={songFile} autoPlay onTimeUpdate={onTimeUpdate}>
         Sorry, your browser doesn&apos;t support audio.
       </audio>
-      <div>
-        {songTitle}:{karaokeState.audioTime}
-      </div>
+      <div>time: {karaokeState.audioTime}</div>
       <div className="lyrics-current">
         {currentIndex >= 0 ? lineList[currentIndex].content : null}
       </div>
@@ -55,7 +49,7 @@ const Lyrics = ({ songTitle }) => {
 };
 
 Lyrics.propTypes = {
-  songTitle: PropTypes.string.isRequired,
+  lrc: PropTypes.string.isRequired,
 };
 
 export default Lyrics;
