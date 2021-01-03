@@ -1,1 +1,1 @@
-export { default } from './containers/VideoPage';
+export { default } from './containers/Home';
