@@ -1,30 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
+// import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
 import AudioVisualiser from './AudioVisualiser';
 import getScore from '../../utils/score';
 
-class AudioAnalyser extends Component {
-  constructor(props) {
-    super(props);
-    const { lang } = props;
-    this.state = { audioData: new Uint8Array(0) };
-    this.tick = this.tick.bind(this);
-    this.audioDataList = [];
+const AudioAnalyser = ({ audio, lang }) => {
+  // const globalContext = useGlobalContext();
+  // const [karaokeState] = globalContext.karaoke;
 
-    this.recognition = new (window.SpeechRecognition ||
+  const [audioData, setAudioData] = useState(new Uint8Array(0));
+  const [dataArray, setDataArray] = useState(new Uint8Array(0));
+  const [, setRafId] = useState(null);
+  // const [audioDataList, setAudioDataList] = useState({});
+
+  const recognition = useMemo(() => {
+    const recognitionObj = new (window.SpeechRecognition ||
       window.webkitSpeechRecognition ||
       window.mozSpeechRecognition ||
       window.msSpeechRecognition)();
 
-    this.recognition.continuous = true;
-    this.recognition.interimResults = true;
-    this.recognition.lang = lang;
+    recognitionObj.continuous = true;
+    recognitionObj.interimResults = true;
+    recognitionObj.lang = lang;
 
-    this.recognition.start();
+    recognitionObj.start();
+    console.log(recognitionObj);
 
-    console.log(this.recognition);
-
-    this.recognition.onresult = (event) => {
+    recognitionObj.onresult = (event) => {
       const result = event.results[event.results.length - 1];
       if (result.isFinal) {
         console.log(result[0].transcript);
@@ -32,40 +34,56 @@ class AudioAnalyser extends Component {
         console.log(score);
       }
     };
-  }
 
-  componentDidMount() {
-    this.audioContext = new (window.AudioContext ||
+    return recognitionObj;
+  }, [lang]);
+
+  const [analyser, source] = useMemo(() => {
+    const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
-    this.analyser = this.audioContext.createAnalyser();
-    this.analyser.fftSize = 256;
-    this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
-    const { audio } = this.props;
-    this.source = this.audioContext.createMediaStreamSource(audio);
-    this.source.connect(this.analyser);
-    this.rafId = requestAnimationFrame(this.tick);
-  }
 
-  componentWillUnmount() {
-    cancelAnimationFrame(this.rafId);
-    this.analyser.disconnect();
-    this.source.disconnect();
-    this.recognition.stop();
-    console.log(this.audioDataList.length);
-  }
+    const analyserObj = audioContext.createAnalyser();
+    analyserObj.fftSize = 256;
 
-  tick() {
-    this.analyser.getByteTimeDomainData(this.dataArray);
-    this.setState({ audioData: this.dataArray });
-    // this.audioDataList.push(this.dataArray);
-    this.rafId = requestAnimationFrame(this.tick);
-  }
+    setDataArray(new Uint8Array(analyserObj.frequencyBinCount));
 
-  render() {
-    const { audioData } = this.state;
-    return <AudioVisualiser audioData={audioData} />;
-  }
-}
+    const sourceObj = audioContext.createMediaStreamSource(audio);
+    sourceObj.connect(analyserObj);
+
+    console.log(analyserObj, sourceObj);
+    return [analyserObj, sourceObj];
+  }, [audio]);
+
+  const tick = useCallback(() => {
+    analyser.getByteTimeDomainData(dataArray);
+    setAudioData(dataArray);
+
+    setRafId(requestAnimationFrame(tick));
+  }, [analyser, dataArray, setRafId]);
+
+  useEffect(() => {
+    setRafId(requestAnimationFrame(tick));
+
+    const cleanup = () => {
+      setRafId(null);
+      analyser.disconnect();
+      source.disconnect();
+      recognition.stop();
+      console.log('audio analyser cleanup');
+    };
+
+    return cleanup;
+  }, [audio, analyser, recognition, source, tick, setRafId]);
+
+  // useEffect(
+  //   () => () => {
+  //     console.log(karaokeState);
+  //   },
+  //   [],
+  // );
+
+  return <AudioVisualiser audioData={audioData} />;
+};
 
 AudioAnalyser.propTypes = {
   audio: PropTypes.objectOf(PropTypes.object).isRequired,
