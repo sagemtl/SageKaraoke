@@ -32,11 +32,10 @@ const Preview = ({ match }) => {
       <h3>Playing {songTitle}</h3>
       <h3>By {artist}</h3>
       <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-vid.mp4`}
+        url={`${process.env.PUBLIC_URL}/videos/${songName}-mv.mp4`}
         playing={play}
         muted
       />
-      {/* Sorry, your browser doesnt support embedded videos. */}
       {/* <video
         muted
         autoPlay
