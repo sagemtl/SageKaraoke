@@ -1,42 +1,25 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
-// import { useGlobalContext } from 'global/context';
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
+import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
 import AudioVisualiser from './AudioVisualiser';
-import getScore from '../../utils/score';
+import AudioRecogniser from './AudioRecogniser';
 
 const AudioAnalyser = ({ audio, lang }) => {
-  // const globalContext = useGlobalContext();
-  // const [karaokeState] = globalContext.karaoke;
+  const globalContext = useGlobalContext();
+  const [karaokeState] = globalContext.karaoke;
+  const { audioEnded, audioTime } = karaokeState;
 
   const [audioData, setAudioData] = useState(new Uint8Array(0));
   const [dataArray, setDataArray] = useState(new Uint8Array(0));
   const [, setRafId] = useState(null);
-  // const [audioDataList, setAudioDataList] = useState({});
 
-  const recognition = useMemo(() => {
-    const recognitionObj = new (window.SpeechRecognition ||
-      window.webkitSpeechRecognition ||
-      window.mozSpeechRecognition ||
-      window.msSpeechRecognition)();
-
-    recognitionObj.continuous = true;
-    recognitionObj.interimResults = true;
-    recognitionObj.lang = lang;
-
-    recognitionObj.start();
-    console.log(recognitionObj);
-
-    recognitionObj.onresult = (event) => {
-      const result = event.results[event.results.length - 1];
-      if (result.isFinal) {
-        console.log(result[0].transcript);
-        const score = getScore(result[0].transcript);
-        console.log(score);
-      }
-    };
-
-    return recognitionObj;
-  }, [lang]);
+  const audioDataSave = useRef([]);
 
   const [analyser, source] = useMemo(() => {
     const audioContext = new (window.AudioContext ||
@@ -57,9 +40,8 @@ const AudioAnalyser = ({ audio, lang }) => {
   const tick = useCallback(() => {
     analyser.getByteTimeDomainData(dataArray);
     setAudioData(dataArray);
-
     setRafId(requestAnimationFrame(tick));
-  }, [analyser, dataArray, setRafId]);
+  }, [analyser, dataArray]);
 
   useEffect(() => {
     setRafId(requestAnimationFrame(tick));
@@ -68,21 +50,28 @@ const AudioAnalyser = ({ audio, lang }) => {
       setRafId(null);
       analyser.disconnect();
       source.disconnect();
-      recognition.stop();
       console.log('audio analyser cleanup');
     };
 
     return cleanup;
-  }, [audio, analyser, recognition, source, tick, setRafId]);
+  }, [audio, analyser, source, tick]);
 
-  // useEffect(
-  //   () => () => {
-  //     console.log(karaokeState);
-  //   },
-  //   [],
-  // );
+  useEffect(() => {
+    audioDataSave.current.push(JSON.stringify({ audioTime, audioData }));
+  }, [audioTime, audioData]);
 
-  return <AudioVisualiser audioData={audioData} />;
+  useEffect(() => {
+    if (audioEnded) {
+      console.log(audioDataSave.current);
+    }
+  }, [audioEnded]);
+
+  return (
+    <>
+      <AudioVisualiser audioData={audioData} />
+      <AudioRecogniser lang={lang} />
+    </>
+  );
 };
 
 AudioAnalyser.propTypes = {

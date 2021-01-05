@@ -30,9 +30,21 @@ const Lyrics = ({ lrc }) => {
     [karaokeState, karaokeDispatch, currentIndex, lineList],
   );
 
+  const onEnded = useCallback(() => {
+    karaokeDispatch({
+      type: 'SET_AUDIO_ENDED',
+      payload: true,
+    });
+  }, [karaokeDispatch]);
+
   return (
     <div className="lyrics-div">
-      <audio src={songFile} autoPlay onTimeUpdate={onTimeUpdate}>
+      <audio
+        src={songFile}
+        autoPlay
+        onTimeUpdate={onTimeUpdate}
+        onEnded={onEnded}
+      >
         Sorry, your browser doesn&apos;t support audio.
       </audio>
       <div>time: {karaokeState.audioTime}</div>
