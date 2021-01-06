@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AudioAnalyser from './AudioAnalyser';
+import AudioRecogniser from './AudioRecogniser';
 
 const AudioInput = ({ lang }) => {
   const [audio, setAudio] = useState(null);
@@ -28,7 +29,12 @@ const AudioInput = ({ lang }) => {
 
   return (
     <div className="audio-input">
-      {audio ? <AudioAnalyser audio={audio} lang={lang} /> : ''}
+      {audio ? (
+        <>
+          <AudioAnalyser audio={audio} />
+          <AudioRecogniser lang={lang} />
+        </>
+      ) : null}
     </div>
   );
 };

@@ -8,9 +8,8 @@ import React, {
 import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
 import AudioVisualiser from './AudioVisualiser';
-import AudioRecogniser from './AudioRecogniser';
 
-const AudioAnalyser = ({ audio, lang }) => {
+const AudioAnalyser = ({ audio }) => {
   const globalContext = useGlobalContext();
   const [karaokeState] = globalContext.karaoke;
   const { audioEnded, audioTime } = karaokeState;
@@ -66,17 +65,11 @@ const AudioAnalyser = ({ audio, lang }) => {
     }
   }, [audioEnded]);
 
-  return (
-    <>
-      <AudioVisualiser audioData={audioData} />
-      <AudioRecogniser lang={lang} />
-    </>
-  );
+  return <AudioVisualiser audioData={audioData} />;
 };
 
 AudioAnalyser.propTypes = {
   audio: PropTypes.objectOf(PropTypes.object).isRequired,
-  lang: PropTypes.string.isRequired,
 };
 
 export default AudioAnalyser;
