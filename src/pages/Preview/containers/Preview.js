@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { getSongByTitleId } from 'utils/ktvQueries';
-// import yueInstr from 'assets/moon-represent-my-heart-instr.mp3';
-// import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
 import { useGlobalContext } from '../../../global/context';
 
 const Preview = ({ match }) => {
@@ -52,30 +50,26 @@ const Preview = ({ match }) => {
       <h1>Preview page</h1>
       <h3>Playing {songTitle}</h3>
       <h3>By {artist}</h3>
+      {/* visuals */}
       <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/videos/${songName}-mv.mp4`}
+        url={`${process.env.PUBLIC_URL}/${songName}/${songName}-mv.mp4`}
         playing={karaokeState.playSong}
         muted
         controls
       />
+      {/* music */}
       <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-instr.mp3`}
+        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
         playing={karaokeState.playSong}
         controls
       />
-
+      {/* vocals */}
       <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-orig.mp3`}
+        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_vocals.mp3`}
         playing={karaokeState.playSong}
         muted={!karaokeState.origVoiceOn}
         controls
       />
-      {/* <video
-        muted
-        autoPlay
-        src={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-vid.mp4`}
-        type="video/mp4"
-      /> */}
     </div>
   );
 };
