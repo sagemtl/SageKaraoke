@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { getSongByTitleId } from 'utils/ktvQueries';
-import yueInstr from 'assets/moon-represent-my-heart-instr.mp3';
-import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
+// import yueInstr from 'assets/moon-represent-my-heart-instr.mp3';
+// import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
 import { useGlobalContext } from '../../../global/context';
 
 const Preview = ({ match }) => {
@@ -15,7 +15,6 @@ const Preview = ({ match }) => {
 
   const [songTitle, setSongTitle] = useState('');
   const [artist, setArtist] = useState('');
-  // const [play, setPlay] = useState(true);
 
   const setPlaySong = (play) => {
     karaokeDispatch({
@@ -33,9 +32,15 @@ const Preview = ({ match }) => {
     };
 
     getSongInfo();
+  }, [songName]);
 
-    setPlaySong(true);
-  }, [songName, setPlaySong]);
+  useEffect(() => {
+    setPlaySong(true); // play song on page loads
+    return () => {
+      setPlaySong(false);
+      console.log(`inside preview cleanup, playSong: ${karaokeState.playSong}`);
+    }; // stop playing when page unmount
+  }, []);
 
   return (
     <div className="home">
@@ -46,14 +51,19 @@ const Preview = ({ match }) => {
         url={`${process.env.PUBLIC_URL}/videos/${songName}-mv.mp4`}
         playing={karaokeState.playSong}
         muted
+        controls
       />
-      <audio src={yueInstr} autoPlay controls>
-        Sorry, your browser doesn&apos;t support audio.
-      </audio>
+      <ReactPlayer
+        url={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-instr.mp3`}
+        playing={karaokeState.playSong}
+        controls
+      />
 
-      <audio src={song} autoPlay controls>
-        Sorry, your browser doesn&apos;t support audio.
-      </audio>
+      <ReactPlayer
+        url={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-orig.mp3`}
+        playing={karaokeState.playSong}
+        controls
+      />
       {/* <video
         muted
         autoPlay
