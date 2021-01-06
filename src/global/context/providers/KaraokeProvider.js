@@ -8,6 +8,7 @@ const KaraokeContext = createContext();
 const initialState = {
   test: 0,
   playSong: false,
+  origVoiceOn: true,
 };
 
 // TODO: Add global state modifier functions here
@@ -18,6 +19,8 @@ const reducer = (state, action) => {
       return { ...state, test: action.payload.test };
     case 'SET_PLAYSONG':
       return { ...state, playSong: action.payload.playSong };
+    case 'SET_ORIGINAL_VOICE_ON':
+      return { ...state, origVoiceOn: action.payload.origVoiceOn };
     default:
       return null;
   }

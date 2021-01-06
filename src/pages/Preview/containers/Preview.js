@@ -37,9 +37,14 @@ const Preview = ({ match }) => {
   useEffect(() => {
     setPlaySong(true); // play song on page loads
     return () => {
-      setPlaySong(false);
+      setPlaySong(false); // stop playing when page unmount
+      // original audio should be on when unmount
+      karaokeDispatch({
+        type: 'SET_ORIGINAL_VOICE_ON',
+        payload: { origVoiceOn: true },
+      });
       console.log(`inside preview cleanup, playSong: ${karaokeState.playSong}`);
-    }; // stop playing when page unmount
+    };
   }, []);
 
   return (
@@ -62,6 +67,7 @@ const Preview = ({ match }) => {
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-orig.mp3`}
         playing={karaokeState.playSong}
+        muted={!karaokeState.origVoiceOn}
         controls
       />
       {/* <video
