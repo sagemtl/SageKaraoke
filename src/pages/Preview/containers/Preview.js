@@ -1,16 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { getSongByTitleId } from 'utils/ktvQueries';
+import yueInstr from 'assets/moon-represent-my-heart-instr.mp3';
+import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
+import { useGlobalContext } from '../../../global/context';
 
 const Preview = ({ match }) => {
   const {
     params: { songName },
   } = match;
+  const globalContext = useGlobalContext();
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
 
   const [songTitle, setSongTitle] = useState('');
   const [artist, setArtist] = useState('');
-  const [play, setPlay] = useState(true);
+  // const [play, setPlay] = useState(true);
+
+  const setPlaySong = (play) => {
+    karaokeDispatch({
+      type: 'SET_PLAYSONG',
+      payload: { playSong: play },
+    });
+  };
 
   useEffect(() => {
     const getSongInfo = async () => {
@@ -22,9 +34,8 @@ const Preview = ({ match }) => {
 
     getSongInfo();
 
-    // TODO: delete this setPlay line, it's just to prevent errors for now
-    setPlay(true);
-  }, [songName]);
+    setPlaySong(true);
+  }, [songName, setPlaySong]);
 
   return (
     <div className="home">
@@ -33,9 +44,16 @@ const Preview = ({ match }) => {
       <h3>By {artist}</h3>
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/videos/${songName}-mv.mp4`}
-        playing={play}
+        playing={karaokeState.playSong}
         muted
       />
+      <audio src={yueInstr} autoPlay controls>
+        Sorry, your browser doesn&apos;t support audio.
+      </audio>
+
+      <audio src={song} autoPlay controls>
+        Sorry, your browser doesn&apos;t support audio.
+      </audio>
       {/* <video
         muted
         autoPlay
