@@ -24,7 +24,6 @@ const Lyrics = ({ lrc }) => {
         karaokeState.audioTime >= lineList[currentIndex + 1].millisecond
       ) {
         setCurrentIndex(currentIndex + 1);
-        // console.log(lineList[currentIndex + 1].content);
       }
     },
     [karaokeState, karaokeDispatch, currentIndex, lineList],
