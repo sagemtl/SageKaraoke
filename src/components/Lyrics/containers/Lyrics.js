@@ -42,6 +42,7 @@ const Lyrics = ({ lrc }) => {
       <audio
         src={songFile}
         autoPlay
+        muted
         onTimeUpdate={onTimeUpdate}
         onEnded={onEnded}
       >
