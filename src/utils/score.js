@@ -29,5 +29,3 @@ export const getLyricsScore = (wordsCount, speech) => {
 
   return score;
 };
-
-// export default getLyricsScore;
