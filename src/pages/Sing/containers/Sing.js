@@ -13,6 +13,7 @@ const Sing = ({ match }) => {
 
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
+  const { playSong } = karaokeState;
 
   const setPlaySong = (play) => {
     karaokeDispatch({
@@ -21,13 +22,12 @@ const Sing = ({ match }) => {
     });
   };
 
-  console.log(karaokeState);
   return (
     <div className="home">
       <h1>Sing Page </h1>
       <div>
-        <Countdown onComplete={() => setPlaySong(true)} />
-        <Video playing={karaokeState} />
+        {playSong ? null : <Countdown onComplete={setPlaySong} />}
+        <Video playing={playSong} />
       </div>
       <Lyrics songTitle={songTitle} />
     </div>

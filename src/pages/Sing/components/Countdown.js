@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const Countdown = ({ onComplete }) => {
-  const [counter, setCounter] = React.useState(3);
+  const [counter, setCounter] = useState(3);
 
-  // Third Attempts
-  React.useEffect(() => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    return () => clearInterval(timer);
+  useEffect(() => {
+    if (counter > 0) setTimeout(() => setCounter(counter - 1), 1000);
   }, [counter]);
 
   if (counter === 0) {
-    onComplete();
+    onComplete(true);
     return null;
   }
   return (
