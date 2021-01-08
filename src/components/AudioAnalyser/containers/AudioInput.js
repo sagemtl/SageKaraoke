@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import AudioAnalyser from './AudioAnalyser';
+import AudioAnalyser from '../components/AudioAnalyser';
 
 const AudioInput = ({ songTitle }) => {
   const [audio, setAudio] = useState(null);
