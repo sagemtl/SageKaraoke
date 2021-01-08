@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
-import AudioInput from 'components/Audio/AudioInput';
+import AudioInput from 'components/Audio';
 import { getLyricsByTitleId } from 'utils/ktvQueries';
 
 const Sing = ({ match }) => {
@@ -24,8 +24,12 @@ const Sing = ({ match }) => {
   return (
     <div className="home">
       <h1>Sing Page</h1>
-      <AudioInput lang={lang} />
-      <Lyrics lrc={lrc} />
+      {lang && lrc ? (
+        <>
+          <AudioInput lang={lang} songTitle={songTitle} />
+          <Lyrics lrc={lrc} />
+        </>
+      ) : null}
     </div>
   );
 };

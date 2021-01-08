@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useGlobalContext } from 'global/context';
-import getScore from '../../utils/score';
+import getScore from 'utils/score';
 
 const AudioRecogniser = ({ lang }) => {
   const globalContext = useGlobalContext();

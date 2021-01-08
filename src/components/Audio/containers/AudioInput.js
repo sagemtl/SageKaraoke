@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AudioAnalyser from './AudioAnalyser';
 import AudioRecogniser from './AudioRecogniser';
 
-const AudioInput = ({ lang }) => {
+const AudioInput = ({ lang, songTitle }) => {
   const [audio, setAudio] = useState(null);
 
   const getMicrophone = async () => {
@@ -31,7 +31,7 @@ const AudioInput = ({ lang }) => {
     <div className="audio-input">
       {audio ? (
         <>
-          <AudioAnalyser audio={audio} />
+          <AudioAnalyser audio={audio} songTitle={songTitle} />
           <AudioRecogniser lang={lang} />
         </>
       ) : null}
@@ -41,6 +41,7 @@ const AudioInput = ({ lang }) => {
 
 AudioInput.propTypes = {
   lang: PropTypes.string.isRequired,
+  songTitle: PropTypes.string.isRequired,
 };
 
 export default AudioInput;

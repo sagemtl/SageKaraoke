@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
+import { getScore } from 'utils/ktvQueries';
 import vocals from 'assets/yue-liang-dai-biao-wo-de-xin_vocals.mp3';
 import AudioVisualiser from './AudioVisualiser';
 
-const AudioAnalyser = ({ audio }) => {
+const AudioAnalyser = ({ audio, songTitle }) => {
   const globalContext = useGlobalContext();
   const [karaokeState] = globalContext.karaoke;
   const { audioEnded, audioTime } = karaokeState;
@@ -50,9 +51,16 @@ const AudioAnalyser = ({ audio }) => {
   // Handle when audio has ended
   useEffect(() => {
     if (audioEnded) {
-      console.log(audioDataSave.current);
+      const getPitchScore = async () => {
+        const score = await getScore(
+          songTitle,
+          JSON.stringify(audioDataSave.current),
+        );
+        console.log(score);
+      };
+      getPitchScore();
     }
-  }, [audioEnded]);
+  }, [audioEnded, songTitle]);
 
   // Handle analyser and source cleanup
   useEffect(() => {
@@ -84,6 +92,7 @@ const AudioAnalyser = ({ audio }) => {
 
 AudioAnalyser.propTypes = {
   audio: PropTypes.objectOf(PropTypes.object).isRequired,
+  songTitle: PropTypes.string.isRequired,
 };
 
 export default AudioAnalyser;
