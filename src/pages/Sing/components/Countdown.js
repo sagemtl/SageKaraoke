@@ -13,7 +13,6 @@ const Countdown = ({ onComplete }) => {
 
   if (counter === 0) {
     onComplete();
-    setTimeout(1000);
     return null;
   }
   return (
