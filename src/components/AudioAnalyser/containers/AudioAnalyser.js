@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
 import { getScore } from 'utils/ktvQueries';
-import vocals from 'assets/yue-liang-dai-biao-wo-de-xin_vocals.mp3';
+// import vocals from 'assets/yue-liang-dai-biao-wo-de-xin_vocals.mp3';
 import AudioVisualiser from './AudioVisualiser';
 
 const AudioAnalyser = ({ audio, songTitle }) => {
@@ -16,7 +16,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
   const [, setRafId] = useState(null);
 
   const audioDataSave = useRef([]);
-  const audioRef = useRef(null);
+  // const audioRef = useRef(null);
 
   const tick = useCallback(() => {
     audioEnv.analyser.getByteTimeDomainData(dataArray);
@@ -26,7 +26,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
 
   // Handle analyser and source setup
   useEffect(() => {
-    console.log(audioRef);
+    // console.log(audioRef);
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
 
@@ -35,8 +35,8 @@ const AudioAnalyser = ({ audio, songTitle }) => {
 
     setDataArray(new Uint8Array(analyserObj.frequencyBinCount));
 
-    // const sourceObj = audioContext.createMediaStreamSource(audio);
-    const sourceObj = audioContext.createMediaElementSource(audioRef.current);
+    const sourceObj = audioContext.createMediaStreamSource(audio);
+    // const sourceObj = audioContext.createMediaElementSource(audioRef.current);
     sourceObj.connect(analyserObj);
 
     console.log(analyserObj, sourceObj);
@@ -85,7 +85,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
   return (
     <>
       <AudioVisualiser audioData={audioData} />
-      <audio ref={audioRef} src={vocals} autoPlay controls />
+      {/* <audio ref={audioRef} src={vocals} autoPlay controls /> */}
     </>
   );
 };

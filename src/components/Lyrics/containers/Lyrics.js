@@ -1,16 +1,13 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
-import parseLrc from 'utils/parseLrc';
 import songFile from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
 import '../styles/Lyrics.scss';
 
-const Lyrics = ({ lrc }) => {
+const Lyrics = ({ lineList }) => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const [currentIndex, setCurrentIndex] = useState(-1);
-
-  const lineList = useMemo(() => parseLrc(lrc), [lrc]);
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -41,7 +38,7 @@ const Lyrics = ({ lrc }) => {
       <audio
         src={songFile}
         autoPlay
-        muted
+        // muted
         onTimeUpdate={onTimeUpdate}
         onEnded={onEnded}
       >
@@ -61,7 +58,13 @@ const Lyrics = ({ lrc }) => {
 };
 
 Lyrics.propTypes = {
-  lrc: PropTypes.string.isRequired,
+  lineList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      millisecond: PropTypes.number.isRequired,
+      content: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Lyrics;

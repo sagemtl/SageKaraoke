@@ -9,6 +9,7 @@ const initialState = {
   test: 0,
   audioTime: 0,
   audioEnded: false,
+  lyricsScore: 0,
 };
 
 // TODO: Add global state modifier functions here
@@ -21,6 +22,8 @@ const reducer = (state, action) => {
       return { ...state, audioTime: action.payload };
     case 'SET_AUDIO_ENDED':
       return { ...state, audioEnded: action.payload };
+    case 'SET_LYRICS_SCORE':
+      return { ...state, lyricsScore: action.payload };
     default:
       return null;
   }

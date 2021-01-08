@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
-import AudioInput from 'components/Audio';
+import AudioInput from 'components/AudioAnalyser';
+import AudioRecognizer from 'components/AudioRecognizer';
 import { getLyricsByTitleId } from 'utils/ktvQueries';
+import parseLrc from 'utils/parseLrc';
 
 const Sing = ({ match }) => {
   const {
@@ -10,13 +12,14 @@ const Sing = ({ match }) => {
   } = match;
 
   const [lang, setLang] = useState('');
-  const [lrc, setLrc] = useState('');
+  const [lrcList, setLrcList] = useState([]);
 
   useEffect(() => {
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
+      const lineList = parseLrc(songData.lyrics);
       setLang(songData.language);
-      setLrc(songData.lyrics);
+      setLrcList(lineList);
     };
     getSongData();
   }, [songTitle]);
@@ -24,10 +27,11 @@ const Sing = ({ match }) => {
   return (
     <div className="home">
       <h1>Sing Page</h1>
-      {lang && lrc ? (
+      {lang && lrcList.length ? (
         <>
-          <AudioInput lang={lang} songTitle={songTitle} />
-          <Lyrics lrc={lrc} />
+          <AudioInput songTitle={songTitle} />
+          <AudioRecognizer lang={lang} lineList={lrcList} />
+          <Lyrics lineList={lrcList} />
         </>
       ) : null}
     </div>
