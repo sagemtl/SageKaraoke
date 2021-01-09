@@ -1,39 +1,50 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
-import parseLrc from 'utils/parseLrc';
-import Songs from 'assets/data'; // Will be replaced with a fetch
-import song from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
+import songFile from 'assets/yue-liang-dai-biao-wo-de-xin.mp3';
 import '../styles/Lyrics.scss';
 
-const Lyrics = ({ songTitle }) => {
-  // fetch from backend API using song id/name with a useMemo
-  console.log(songTitle);
-
-  const [currentTime, setCurrentTime] = useState(0);
+const Lyrics = ({ lineList }) => {
+  const globalContext = useGlobalContext();
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const [currentIndex, setCurrentIndex] = useState(-1);
-
-  const { lrc } = Songs;
-  const lineList = useMemo(() => parseLrc(lrc), [lrc]);
 
   const onTimeUpdate = useCallback(
     (event) => {
-      setCurrentTime(event.target.currentTime * 1000);
+      karaokeDispatch({
+        type: 'SET_AUDIO_TIME',
+        payload: Math.floor(event.target.currentTime * 10) * 100,
+      });
+
       if (
         currentIndex < lineList.length - 1 &&
-        currentTime >= lineList[currentIndex + 1].millisecond
+        karaokeState.audioTime >= lineList[currentIndex + 1].millisecond
       ) {
         setCurrentIndex(currentIndex + 1);
-        console.log(lineList[currentIndex + 1].content);
       }
     },
-    [currentTime, currentIndex, lineList],
+    [karaokeState, karaokeDispatch, currentIndex, lineList],
   );
+
+  const onEnded = useCallback(() => {
+    karaokeDispatch({
+      type: 'SET_AUDIO_ENDED',
+      payload: true,
+    });
+  }, [karaokeDispatch]);
 
   return (
     <div className="lyrics-div">
-      <audio src={song} autoPlay onTimeUpdate={onTimeUpdate}>
+      <audio
+        src={songFile}
+        autoPlay
+        // muted
+        onTimeUpdate={onTimeUpdate}
+        onEnded={onEnded}
+      >
         Sorry, your browser doesn&apos;t support audio.
       </audio>
+      <div>time: {karaokeState.audioTime}</div>
       <div className="lyrics-current">
         {currentIndex >= 0 ? lineList[currentIndex].content : null}
       </div>
@@ -47,7 +58,13 @@ const Lyrics = ({ songTitle }) => {
 };
 
 Lyrics.propTypes = {
-  songTitle: PropTypes.string.isRequired,
+  lineList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      millisecond: PropTypes.number.isRequired,
+      content: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Lyrics;
