@@ -6,7 +6,7 @@ const getRandomString = () => Math.random().toString(36).substring(7);
 
 export default (lrc) => {
   const lrcLineList = [];
-  const lineList = lrc.split('\n');
+  const lineList = lrc.split('\\n');
   lineList.forEach((line) => {
     if (!LRC_LINE.test(line)) {
       return;
