@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useGlobalContext } from 'global/context';
 import PropTypes from 'prop-types';
+// import vocals from 'assets/yue-liang-dai-biao-wo-de-xin_vocals.mp3';
 import { getScore } from 'utils/ktvQueries';
 import AudioVisualiser from './AudioVisualiser';
 
@@ -15,6 +16,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
   const [, setRafId] = useState(null);
 
   const audioDataSave = useRef([]);
+  // const audioRef = useRef(null);
 
   const tick = useCallback(() => {
     audioEnv.analyser.getByteTimeDomainData(dataArray);
@@ -24,6 +26,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
 
   // Handle analyser and source setup
   useEffect(() => {
+    // if (audioRef.current) {
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
 
@@ -33,15 +36,17 @@ const AudioAnalyser = ({ audio, songTitle }) => {
     setDataArray(new Uint8Array(analyserObj.frequencyBinCount));
 
     const sourceObj = audioContext.createMediaStreamSource(audio);
+    // const sourceObj = audioContext.createMediaElementSource(audioRef.current);
     sourceObj.connect(analyserObj);
 
     console.log(analyserObj, sourceObj);
     setAudioEnv({ analyser: analyserObj, source: sourceObj });
+    // }
   }, [audio]);
 
   // Handle on each audio data
   useEffect(() => {
-    audioDataSave.current.push(JSON.stringify({ audioTime, audioData }));
+    audioDataSave.current.push({ audioTime, audioData: Array.from(audioData) });
   }, [audioTime, audioData]);
 
   // Handle when audio has ended
@@ -55,6 +60,8 @@ const AudioAnalyser = ({ audio, songTitle }) => {
         console.log(score);
       };
       getPitchScore();
+      // console.log(songTitle);
+      // console.log(JSON.stringify(audioDataSave.current));
     }
   }, [audioEnded, songTitle]);
 
@@ -81,6 +88,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
   return (
     <>
       <AudioVisualiser audioData={audioData} />
+      {/* <audio src={vocals} ref={audioRef} autoPlay /> */}
     </>
   );
 };
