@@ -15,7 +15,10 @@ const Home = () => {
       <button
         type="button"
         onClick={() => {
-          karaokeDispatch({ type: 'SET_TEST', payload: karaokeState.test + 1 });
+          karaokeDispatch({
+            type: 'SET_TEST',
+            payload: { test: karaokeState.test + 1 },
+          });
         }}
       >
         Increment
