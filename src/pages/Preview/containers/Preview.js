@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { getSongByTitleId } from 'utils/ktvQueries';
+import { useGlobalContext } from '../../../global/context';
 
 const Preview = ({ match }) => {
   const {
     params: { songName },
   } = match;
+  const globalContext = useGlobalContext();
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
+  const { playSong, origVoiceOn } = karaokeState;
 
   const [songTitle, setSongTitle] = useState('');
   const [artist, setArtist] = useState('');
-  const [play, setPlay] = useState(true);
+
+  const setPlaySong = useCallback(
+    (play) => {
+      karaokeDispatch({
+        type: 'SET_PLAYSONG',
+        payload: { playSong: play },
+      });
+    },
+    [karaokeDispatch],
+  );
 
   useEffect(() => {
     const getSongInfo = async () => {
@@ -21,27 +34,46 @@ const Preview = ({ match }) => {
     };
 
     getSongInfo();
-
-    // TODO: delete this setPlay line, it's just to prevent errors for now
-    setPlay(true);
   }, [songName]);
+
+  useEffect(() => {
+    setPlaySong(true); // play song on page loads
+
+    return () => {
+      setPlaySong(false); // stop playing when page unmount
+      // original audio should be on when unmount
+      karaokeDispatch({
+        type: 'SET_ORIGINAL_VOICE_ON',
+        payload: { origVoiceOn: true },
+      });
+    };
+  }, [setPlaySong, playSong, karaokeDispatch]);
 
   return (
     <div className="home">
       <h1>Preview page</h1>
       <h3>Playing {songTitle}</h3>
       <h3>By {artist}</h3>
+      {/* visuals */}
       <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/videos/${songName}-mv.mp4`}
-        playing={play}
+        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+        playing={playSong}
         muted
+        controls
       />
-      {/* <video
-        muted
-        autoPlay
-        src={`${process.env.PUBLIC_URL}/videos/moon-represent-my-heart-vid.mp4`}
-        type="video/mp4"
-      /> */}
+      {/* music */}
+      <ReactPlayer
+        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
+        playing={playSong}
+        controls
+      />
+      {/* vocals */}
+      <ReactPlayer
+        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_vocals.mp3`}
+        playing={playSong}
+        muted={!origVoiceOn}
+        controls
+      />
     </div>
   );
 };
