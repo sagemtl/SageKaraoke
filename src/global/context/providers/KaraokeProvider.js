@@ -5,6 +5,8 @@ const KaraokeContext = createContext();
 
 const initialState = {
   navOpen: true,
+  playSong: false,
+  origVoiceOn: true,
   audioTime: 0,
   audioEnded: false,
   lyricsScore: 0,
@@ -12,6 +14,10 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_PLAYSONG':
+      return { ...state, playSong: action.payload.playSong };
+    case 'SET_ORIGINAL_VOICE_ON':
+      return { ...state, origVoiceOn: action.payload.origVoiceOn };
     case 'SET_AUDIO_TIME':
       return { ...state, audioTime: action.payload };
     case 'SET_AUDIO_ENDED':
