@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 
 const KaraokeContext = createContext();
 
-// TODO: Add global intitial states here
-
 const initialState = {
-  test: 0,
+  navOpen: true,
   playSong: false,
   origVoiceOn: true,
   audioTime: 0,
@@ -14,12 +12,8 @@ const initialState = {
   lyricsScore: 0,
 };
 
-// TODO: Add global state modifier functions here
-
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_TEST':
-      return { ...state, test: action.payload.test };
     case 'SET_PLAYSONG':
       return { ...state, playSong: action.payload.playSong };
     case 'SET_ORIGINAL_VOICE_ON':
@@ -30,6 +24,8 @@ const reducer = (state, action) => {
       return { ...state, audioEnded: action.payload };
     case 'SET_LYRICS_SCORE':
       return { ...state, lyricsScore: action.payload };
+    case 'SET_NAVBAR_OPEN':
+      return { ...state, navOpen: action.payload };
     default:
       return null;
   }
