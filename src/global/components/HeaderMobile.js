@@ -5,10 +5,12 @@ import '../styles/headerMobile.scss';
 
 const routes = [
   {
+    id: 1,
     label: 'Home',
     to: 'https://www.sagemontreal.com/',
   },
   {
+    id: 2,
     label: 'Boutique',
     to: 'https://www.sagemontreal.com/shop',
   },
@@ -22,7 +24,7 @@ const HeaderMobile = () => {
       <Drawer open={open} onClose={() => setOpen(!open)}>
         <div className="header-mobile-drawer">
           {routes.map((route) => (
-            <a className="header-mobile__link" to={route.to}>
+            <a className="header-mobile__link" to={route.to} key={route.id}>
               <h2>{route.label}</h2>
             </a>
           ))}

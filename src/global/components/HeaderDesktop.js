@@ -5,10 +5,12 @@ import '../styles/headerDesktop.scss';
 
 const routes = [
   {
+    id: 1,
     label: 'Home',
     to: 'https://www.sagemontreal.com/',
   },
   {
+    id: 2,
     label: 'Boutique',
     to: 'https://www.sagemontreal.com/shop',
   },
@@ -63,7 +65,7 @@ const HeaderDesktop = () => {
           </div>
         </header>
         {routes.map((route) => (
-          <a className="navbox__link" href={route.to}>
+          <a className="navbox__link" href={route.to} key={route.id}>
             <h2 className="navbox__text">{route.label}</h2>
           </a>
         ))}
