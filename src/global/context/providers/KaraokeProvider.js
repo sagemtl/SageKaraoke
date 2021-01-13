@@ -9,6 +9,9 @@ const initialState = {
   test: 0,
   playSong: false,
   origVoiceOn: true,
+  audioTime: 0,
+  audioEnded: false,
+  lyricsScore: 0,
 };
 
 // TODO: Add global state modifier functions here
@@ -21,6 +24,12 @@ const reducer = (state, action) => {
       return { ...state, playSong: action.payload.playSong };
     case 'SET_ORIGINAL_VOICE_ON':
       return { ...state, origVoiceOn: action.payload.origVoiceOn };
+    case 'SET_AUDIO_TIME':
+      return { ...state, audioTime: action.payload };
+    case 'SET_AUDIO_ENDED':
+      return { ...state, audioEnded: action.payload };
+    case 'SET_LYRICS_SCORE':
+      return { ...state, lyricsScore: action.payload };
     default:
       return null;
   }
