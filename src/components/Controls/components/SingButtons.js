@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useGlobalContext } from 'global/context';
 import '../styles/controls.scss';
 
 const SingButtons = () => {
-  const [playing, setPlaying] = useState(false);
-  const [isOn, setLiveVoice] = useState(false);
+  const globalContext = useGlobalContext();
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
+  const { playSong, origVoiceOn } = karaokeState;
+  const history = useHistory();
 
   const onPlayPauseClickHandler = () => {
-    setPlaying(!playing);
+    karaokeDispatch({
+      type: 'SET_PLAYSONG',
+      payload: { playSong: !playSong },
+    });
   };
 
   const handleLiveVoice = () => {
-    setLiveVoice(!isOn);
+    karaokeDispatch({
+      type: 'SET_ORIGINAL_VOICE_ON',
+      payload: { origVoiceOn: !origVoiceOn },
+    });
+  };
+
+  const returnHome = () => {
+    history.push('/');
   };
 
   return (
     <div className="control-icons-container">
-      <button
-        className="play-control"
-        // onClick={this.returnHome}
-        type="button"
-      >
+      <button className="play-control" onClick={returnHome} type="button">
         <i className="fas fa-home" />
       </button>
       <button
@@ -27,7 +37,7 @@ const SingButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        {playing ? (
+        {playSong ? (
           <i className="fas fa-pause" />
         ) : (
           <i className="fas fa-play" />
@@ -37,14 +47,14 @@ const SingButtons = () => {
         <input
           type="checkbox"
           id="react-switch-new"
-          checked={isOn}
+          checked={origVoiceOn}
           onChange={handleLiveVoice}
         />
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label
           className="react-switch-label"
           htmlFor="react-switch-new"
-          style={{ background: isOn && '#154734' }}
+          style={{ background: origVoiceOn && '#154734' }}
         >
           <span className="react-switch-button" />
         </label>

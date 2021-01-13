@@ -1,23 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useGlobalContext } from 'global/context';
 import '../styles/controls.scss';
 
 const PreviewButtons = () => {
-  const [playing, setPlaying] = useState(false);
-  const [isOn, setLiveVoice] = useState(false);
+  const globalContext = useGlobalContext();
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
+  const { playSong, origVoiceOn } = karaokeState;
+  const history = useHistory();
+  const location = useLocation();
+  const [, , titleId] = location.pathname.split('/'); // Outputs song title id
 
   const onPlayPauseClickHandler = () => {
-    setPlaying(!playing);
+    karaokeDispatch({
+      type: 'SET_PLAYSONG',
+      payload: { playSong: !playSong },
+    });
   };
 
   const handleLiveVoice = () => {
-    setLiveVoice(!isOn);
+    karaokeDispatch({
+      type: 'SET_ORIGINAL_VOICE_ON',
+      payload: { origVoiceOn: !origVoiceOn },
+    });
+  };
+
+  const goToSing = () => {
+    history.push(`/sing/${titleId}`);
   };
 
   return (
     <div className="control-icons-container">
       <button
         className="play-control record-btn-ctr record-border"
-        // onClick={this.recordTrack}
+        onClick={goToSing}
         type="button"
       >
         <i className="fas fa-circle red" />
@@ -34,7 +50,7 @@ const PreviewButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        {playing ? (
+        {playSong ? (
           <i className="fas fa-pause" />
         ) : (
           <i className="fas fa-play" />
@@ -51,14 +67,14 @@ const PreviewButtons = () => {
         <input
           type="checkbox"
           id="react-switch-new"
-          checked={isOn}
+          checked={origVoiceOn}
           onChange={handleLiveVoice}
         />
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label
           className="react-switch-label"
           htmlFor="react-switch-new"
-          style={{ background: isOn && '#154734' }}
+          style={{ background: origVoiceOn && '#154734' }}
         >
           <span className="react-switch-button" />
         </label>
