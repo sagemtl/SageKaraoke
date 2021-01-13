@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useGlobalContext } from 'global/context';
-import Controls from '../../../components/Controls/Controls';
+import Controls from '../../../components/Controls/containers/Controls';
 
 const Home = () => {
   const globalContext = useGlobalContext();
@@ -30,7 +30,6 @@ const Home = () => {
       >
         Increment
       </button>
-      <Controls />
     </div>
   );
 };
