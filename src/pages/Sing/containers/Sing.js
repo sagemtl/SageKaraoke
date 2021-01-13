@@ -49,6 +49,13 @@ const Sing = ({ match }) => {
     });
   };
 
+  const setVoiceToggle = (play) => {
+    karaokeDispatch({
+      type: 'SET_ORIGINAL_VOICE_ON',
+      payload: { origVoiceOn: play },
+    });
+  };
+
   // useEffect(() => {
   //   const getSongData = async () => {
   //     const songData = await getLyricsByTitleId(songTitle);
@@ -83,6 +90,9 @@ const Sing = ({ match }) => {
       <h1>{songName}</h1>
       <h1>{artist}</h1>
       <div>
+        <button type="button" onClick={() => setVoiceToggle(!origVoiceOn)}>
+          toggle voice
+        </button>
         {playSong ? null : <Countdown onComplete={setPlaySong} />}
         <Video
           playing={playSong}
