@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
 import '../styles/song.scss';
 import AudioInput from 'components/AudioAnalyser';
 import AudioRecognizer from 'components/AudioRecognizer';
-import { getLyricsByTitleId } from 'utils/ktvQueries';
 import parseLrc from 'utils/parseLrc';
+import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
@@ -19,8 +19,28 @@ const Sing = ({ match }) => {
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
 
-  const [lang, setLang] = useState('');
+  const [songName, setSongName] = useState('');
+  const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
+
+  const [lang, setLang] = useState('');
+
+  const onTimeUpdate = useCallback(
+    (event) => {
+      karaokeDispatch({
+        type: 'SET_AUDIO_TIME',
+        payload: Math.floor(event.target.currentTime * 10) * 100,
+      });
+    },
+    [karaokeDispatch],
+  );
+
+  const onEnded = useCallback(() => {
+    karaokeDispatch({
+      type: 'SET_AUDIO_ENDED',
+      payload: true,
+    });
+  }, [karaokeDispatch]);
 
   const setPlaySong = (play) => {
     karaokeDispatch({
@@ -29,25 +49,47 @@ const Sing = ({ match }) => {
     });
   };
 
+  // useEffect(() => {
+  //   const getSongData = async () => {
+  //     const songData = await getLyricsByTitleId(songTitle);
+  //     const lineList = parseLrc(songData.lyrics);
+  //     setLang(songData.language);
+  //     setLrcList(lineList);
+  //   };
+  //   getSongData();
+  // }, [songTitle]);
+
   useEffect(() => {
+    const getSongInfo = async () => {
+      const songInfo = await getSongByTitleId(songTitle);
+      console.log(songInfo);
+      setSongName(songInfo.title);
+      setArtist(songInfo.artist);
+    };
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
       const lineList = parseLrc(songData.lyrics);
+      setLrcList(lineList);
       setLang(songData.language);
       setLrcList(lineList);
     };
+
+    getSongInfo();
     getSongData();
   }, [songTitle]);
-
   return (
     <div className="home">
       <h1>Sing Page </h1>
+      <h1>{songName}</h1>
+      <h1>{artist}</h1>
       <div>
         {playSong ? null : <Countdown onComplete={setPlaySong} />}
         <Video
           playing={playSong}
           songName={songTitle}
           origVoiceOn={origVoiceOn}
+          onTimeUpdate={onTimeUpdate}
+          onEnded={onEnded}
         />
       </div>
       {lang && lrcList.length ? (
