@@ -46,9 +46,9 @@
 
   // Standard
   & .play-control {
-    font-size: 50px;
-    height: 75px;
-    width: 75px;
+    font-size: 35px;
+    height: 55px;
+    width: 55px;
     border: none;
     background: none;
     cursor: pointer;
@@ -98,8 +98,8 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    width: 90px;
-    height: 50px;
+    width: 60px;
+    height: 35px;
     background: grey;
     border-radius: 100px;
     position: relative;
@@ -111,8 +111,8 @@
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 45px;
-    height: 45px;
+    width: 30px;
+    height: 30px;
     border-radius: 45px;
     transition: 0.2s;
     background: #fff;
@@ -126,5 +126,44 @@
 
   & .react-switch-label:active .react-switch-button {
     width: 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .control-center {
+    width: 100%;
+    height: 75px;
+    bottom: 0px;
+  }
+
+  .control-center--hidden {
+    bottom: -82px;
+  }
+
+  .control-icons-container {
+    
+    // Standard
+    & .play-control {
+      font-size: 25px;
+      height: 45px;
+      width: 45px;
+    }
+  }
+
+  .voice-over-btn {
+  
+    & .react-switch-label {
+      width: 50px;
+      height: 25px;
+    }
+  
+    & .react-switch-label .react-switch-button {
+      width: 20px;
+      height: 20px;
+    }
+  
+    & .react-switch-label:active .react-switch-button {
+      width: 40px;
+    }
   }
 }

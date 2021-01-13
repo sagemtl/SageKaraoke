@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // eslint-disable-next-line
 import classNames from 'classnames';
-import '../../styles/controls.scss';
+import '../styles/controls.scss';
 
 const Controls = () => {
   const [hidden, setHidden] = useState(false);
@@ -36,19 +36,24 @@ const Controls = () => {
         <b>{hidden ? 'show' : 'hide'}</b>
       </div>
       <div className="control-icons-container">
-        <button
-          className="play-control record-btn-ctr record-border"
-          // onClick={this.recordTrack}
-          type="button"
-        >
-          <i className="fas fa-circle red" />
-        </button>
+        <div>
+          {/* <div style={{ textAlign: 'center' }}>
+            <b>start</b>
+          </div> */}
+          <button
+            className="play-control record-btn-ctr record-border"
+            // onClick={this.recordTrack}
+            type="button"
+          >
+            <i className="fas fa-circle red" />
+          </button>
+        </div>
         <button
           className="play-control prev-track-btn-ctr"
           // onClick={this.playPrevTrack}
           type="button"
         >
-          <i className="fas fa-step-backward" />
+          <i className="fas fa-step-backward" style={{ marginLeft: 20 }} />
         </button>
         <button
           className="play-control play-pause-container"
@@ -66,8 +71,12 @@ const Controls = () => {
           // onClick={this.playNextTrack}
           type="button"
         >
-          <i className="fas fa-step-forward" />
+          <i className="fas fa-step-forward" style={{ marginRight: 20 }} />
         </button>
+        {/* <div> */}
+        {/* <div style={{ textAlign: 'center' }}>
+            <b>voice</b>
+          </div> */}
         <div className="voice-over-btn switch">
           <input
             type="checkbox"
@@ -84,6 +93,7 @@ const Controls = () => {
             <span className="react-switch-button" />
           </label>
         </div>
+        {/* </div> */}
       </div>
     </div>
   );
