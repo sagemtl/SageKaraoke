@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Carousel from 'react-spring-3d-carousel';
+import { useGlobalContext } from 'global/context';
 import AlbumCover1 from 'assets/albumCover1.jpg';
 import { getAllSongs } from 'utils/ktvQueries';
 
 const AlbumCarousel = () => {
-  const [selectedAlbum, setSelectedAlbum] = useState(0);
+  const globalContext = useGlobalContext();
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
+  const { selectedAlbum } = karaokeState;
+
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
@@ -12,6 +16,15 @@ const AlbumCarousel = () => {
       setAlbums(res);
     });
   }, []);
+
+  const setSelectedAlbum = (index) => {
+    karaokeDispatch({
+      type: 'SET_SELECTED_ALBUM',
+      payload: {
+        selectedAlbum: index,
+      },
+    });
+  };
 
   const transformData = (data) => {
     const content = data.map((slide, index) => ({
