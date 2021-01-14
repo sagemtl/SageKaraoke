@@ -10,6 +10,7 @@ const initialState = {
   audioTime: 0,
   audioEnded: false,
   lyricsScore: 0,
+  selectedAlbum: 0,
 };
 
 const reducer = (state, action) => {
@@ -26,6 +27,8 @@ const reducer = (state, action) => {
       return { ...state, lyricsScore: action.payload };
     case 'SET_NAVBAR_OPEN':
       return { ...state, navOpen: action.payload };
+    case 'SET_SELECTED_ALBUM':
+      return { ...state, selectedAlbum: action.payload.selectedAlbum };
     default:
       return null;
   }
