@@ -1,0 +1,127 @@
+@media (min-width: 900px) {
+  .header-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .header-mobile {
+    display: flex;
+  }
+}
+
+.header-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 60px;
+  padding: 0 0 0 20px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+
+  &__cart {
+    width: 75px;
+    height: auto;
+    margin: 0;
+
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+
+  &__icon {
+    color: #154734;
+    position: relative;
+    left: -5px;
+
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+
+  &__logo {
+    width: 55px;
+    height: auto;
+    color: #154734;
+    margin: 0;
+  }
+
+  &__logo-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: black;
+    z-index: 100;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+
+  &__button {
+    width: calc(100% / 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: black;
+    z-index: 100;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    &:hover .header-mobile__icon {
+      color: white;
+    }
+  }
+
+  &__separator {
+    border-bottom: 2px solid #154734;
+    margin: 1.5em 0;
+  }
+
+  &__link {
+    color: #154734;
+
+    &:hover {
+      color: #154734;
+    }
+  }
+
+  &__footer-link {
+    color: #154734;
+    font-size: 0.9rem;
+
+    &:hover {
+      color: #154734;
+      text-decoration: none;
+    }
+  }
+}
+
+.header-mobile-drawer {
+  width: 300px;
+  z-index: 1000;
+  padding: 3em 2em;
+}
+
+.header-mobile-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+[role="button"]:hover,
+[role="button"]:focus,
+[role="button"]:active {   
+   outline: none;
+} 
