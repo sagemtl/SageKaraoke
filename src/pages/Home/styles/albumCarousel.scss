@@ -1,0 +1,41 @@
+@mixin album {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.album {
+  @include album();
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  &--selected {
+    @include album();
+
+    &:hover {
+      opacity: 1;
+      cursor: auto;
+    }
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__subtitle {
+    margin: 0;
+  }
+
+  &__cover {
+    width: 350px;
+    height: auto;
+    margin: 0 auto;
+  }
+}
