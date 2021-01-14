@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useGlobalContext } from 'global/context';
 import '../styles/controls.scss';
@@ -7,6 +7,7 @@ const PreviewButtons = () => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
+  const [play, setPlay] = useState(playSong);
   const history = useHistory();
   const location = useLocation();
   const [, , titleId] = location.pathname.split('/'); // Outputs song title id
@@ -29,6 +30,12 @@ const PreviewButtons = () => {
     history.push(`/sing/${titleId}`);
   };
 
+  useEffect(() => {
+    setPlay(playSong);
+  }, [playSong]);
+
+  console.log(playSong);
+
   return (
     <div className="control-icons-container">
       <button
@@ -50,11 +57,7 @@ const PreviewButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        {playSong ? (
-          <i className="fas fa-pause" />
-        ) : (
-          <i className="fas fa-play" />
-        )}
+        {play ? <i className="fas fa-pause" /> : <i className="fas fa-play" />}
       </button>
       <button
         className="play-control next-track-btn-ctr"

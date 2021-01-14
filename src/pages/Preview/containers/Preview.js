@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import { getSongByTitleId } from 'utils/ktvQueries';
@@ -15,16 +15,6 @@ const Preview = ({ match }) => {
   const [songTitle, setSongTitle] = useState('');
   const [artist, setArtist] = useState('');
 
-  const setPlaySong = useCallback(
-    (play) => {
-      karaokeDispatch({
-        type: 'SET_PLAYSONG',
-        payload: { playSong: play },
-      });
-    },
-    [karaokeDispatch],
-  );
-
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
@@ -37,6 +27,13 @@ const Preview = ({ match }) => {
   }, [songName]);
 
   useEffect(() => {
+    const setPlaySong = (play) => {
+      karaokeDispatch({
+        type: 'SET_PLAYSONG',
+        payload: { playSong: play },
+      });
+    };
+
     setPlaySong(true); // play song on page loads
 
     return () => {
@@ -47,7 +44,7 @@ const Preview = ({ match }) => {
         payload: { origVoiceOn: true },
       });
     };
-  }, [setPlaySong, playSong, karaokeDispatch]);
+  }, [karaokeDispatch]);
 
   return (
     <div className="home">
