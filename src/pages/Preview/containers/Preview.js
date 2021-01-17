@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import Lyrics from 'components/Lyrics';
@@ -36,16 +36,6 @@ const Preview = ({ match }) => {
     });
   }, [karaokeDispatch]);
 
-  const setPlaySong = useCallback(
-    (play) => {
-      karaokeDispatch({
-        type: 'SET_PLAYSONG',
-        payload: { playSong: play },
-      });
-    },
-    [karaokeDispatch],
-  );
-
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
@@ -64,6 +54,13 @@ const Preview = ({ match }) => {
   }, [songName]);
 
   useEffect(() => {
+    const setPlaySong = (play) => {
+      karaokeDispatch({
+        type: 'SET_PLAYSONG',
+        payload: { playSong: play },
+      });
+    };
+
     setPlaySong(true); // play song on page loads
     console.log(`playsong after set true ${playSong}`);
 
@@ -75,7 +72,7 @@ const Preview = ({ match }) => {
         payload: { origVoiceOn: true },
       });
     };
-  }, [setPlaySong, playSong, karaokeDispatch]);
+  }, [karaokeDispatch]);
 
   return (
     <div className="home">
