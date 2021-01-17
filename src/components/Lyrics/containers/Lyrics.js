@@ -20,16 +20,6 @@ const Lyrics = ({ lineList }) => {
 
   return (
     <div className="lyrics-div">
-      {/* pull this into audio wth background */}
-      {/* <audio
-        src={songFile}
-        autoPlay
-        muted
-        onTimeUpdate={onTimeUpdate}
-        onEnded={onEnded}
-      > 
-        Sorry, your browser doesn&apos;t support audio.
-      </audio> */}
       <div>time: {audioTime}</div>
       <div className="lyrics-current">
         {currentIndex >= 0 ? lineList[currentIndex].content : null}
