@@ -14,7 +14,7 @@ const Countdown = ({ onComplete }) => {
   }
   return (
     <div className="App">
-      <div>Countdown: {counter}</div>
+      <p>Countdown: {counter}</p>
     </div>
   );
 };

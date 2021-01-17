@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import Lyrics from 'components/Lyrics';
