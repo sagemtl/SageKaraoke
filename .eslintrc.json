@@ -19,7 +19,7 @@
     "settings": {
       "import/resolver": {
         "node": {
-          "paths": ["src"]
+          "paths": ["./src"]
         }
       }
     },
@@ -46,6 +46,7 @@
         ],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-        "no-console": "off"
+        "no-console": "off",
+        "import/no-unresolved": "off"
     }
 }
