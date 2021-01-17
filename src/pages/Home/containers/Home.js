@@ -17,6 +17,9 @@ const Home = () => {
         <Link to="/preview/yue-liang-dai-biao">月亮代表我的心 preview</Link>
       </div>
       <Link to="/sing/yue-liang-dai-biao">月亮代表我的心</Link>
+      <div>
+        <Link to="/preview/ju-hua-tai">ju hua tai preview</Link>
+      </div>
       <h1>{karaokeState.test}</h1>
       <button
         type="button"
