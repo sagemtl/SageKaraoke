@@ -1,0 +1,37 @@
+.leaderboards {
+  width: 100vw;
+  overflow: hidden;
+  border-bottom: 2px solid white;
+  border-top: 2px solid white;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+
+  &__entry {
+    color: white;
+    min-width: 200px;
+    width: 200px;
+    margin: 0 50px;
+    font-size: 1.3rem;
+    font-weight: 540;
+    text-align: center;
+  }
+}
+
+.leaderboards-track {
+  width: calc(300px * 12);
+  display: flex;
+  animation: straight 15s linear infinite;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .leaderboards {
+    top: 60px;
+  }
+}
+
+@keyframes straight {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(calc(-300px * 6))}
+}
