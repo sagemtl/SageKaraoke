@@ -9,6 +9,8 @@ const Lyrics = ({ lineList }) => {
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const [currentIndex, setCurrentIndex] = useState(-1);
 
+  const { audioTime, controlOpen } = karaokeState;
+
   const onTimeUpdate = useCallback(
     (event) => {
       karaokeDispatch({
@@ -18,12 +20,12 @@ const Lyrics = ({ lineList }) => {
 
       if (
         currentIndex < lineList.length - 1 &&
-        karaokeState.audioTime >= lineList[currentIndex + 1].millisecond
+        audioTime >= lineList[currentIndex + 1].millisecond
       ) {
         setCurrentIndex(currentIndex + 1);
       }
     },
-    [karaokeState, karaokeDispatch, currentIndex, lineList],
+    [audioTime, karaokeDispatch, currentIndex, lineList],
   );
 
   const onEnded = useCallback(() => {
@@ -33,8 +35,10 @@ const Lyrics = ({ lineList }) => {
     });
   }, [karaokeDispatch]);
 
+  console.log(controlOpen);
+
   return (
-    <div className="lyrics-div">
+    <div className={controlOpen ? 'lyrics__higher' : 'lyrics__lower'}>
       <audio
         src={songFile}
         autoPlay
@@ -44,11 +48,11 @@ const Lyrics = ({ lineList }) => {
       >
         Sorry, your browser doesn&apos;t support audio.
       </audio>
-      <div>time: {karaokeState.audioTime}</div>
-      <div className="lyrics-current">
+      <div>time: {audioTime}</div>
+      <div className="lyrics__current">
         {currentIndex >= 0 ? lineList[currentIndex].content : null}
       </div>
-      <div className="lyrics-next">
+      <div className="lyrics__next">
         {currentIndex < lineList.length - 1
           ? lineList[currentIndex + 1].content
           : null}

@@ -5,6 +5,7 @@ const KaraokeContext = createContext();
 
 const initialState = {
   navOpen: true,
+  controlOpen: true,
   playSong: false,
   origVoiceOn: true,
   audioTime: 0,
@@ -27,6 +28,8 @@ const reducer = (state, action) => {
       return { ...state, lyricsScore: action.payload };
     case 'SET_NAVBAR_OPEN':
       return { ...state, navOpen: action.payload };
+    case 'SET_CONTROL_CENTER_OPEN':
+      return { ...state, controlOpen: action.payload };
     case 'SET_SELECTED_ALBUM':
       return { ...state, selectedAlbum: action.payload.selectedAlbum };
     default:
