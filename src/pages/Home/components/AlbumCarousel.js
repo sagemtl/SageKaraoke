@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Carousel from 'react-spring-3d-carousel';
 import { useGlobalContext } from 'global/context';
-import AlbumCover1 from 'assets/albumCover1.jpg';
 import { getAllSongs } from 'utils/ktvQueries';
 
 const AlbumCarousel = () => {
@@ -10,6 +9,8 @@ const AlbumCarousel = () => {
   const { selectedAlbum } = karaokeState;
 
   const [albums, setAlbums] = useState([]);
+
+  console.log(albums);
 
   useEffect(() => {
     getAllSongs().then((res) => {
@@ -33,7 +34,7 @@ const AlbumCarousel = () => {
         <div className={selectedAlbum === index ? 'album--selected' : 'album'}>
           <h1 className="album__title">{slide.title}</h1>
           <p className="album__subtitle">{slide.artist}</p>
-          <img src={AlbumCover1} alt="test" className="album__cover" />
+          <img src={slide.cover_photo} alt="test" className="album__cover" />
         </div>
       ),
     }));
