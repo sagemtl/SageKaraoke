@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import Lyrics from 'components/Lyrics';
@@ -72,7 +72,7 @@ const Preview = ({ match }) => {
         payload: { origVoiceOn: true },
       });
     };
-  }, [karaokeDispatch]);
+  }, [karaokeDispatch, playSong]);
 
   return (
     <div className="home">
@@ -94,14 +94,12 @@ const Preview = ({ match }) => {
         playing={playSong}
         onTimeUpdate={onTimeUpdate}
         onEnded={onEnded}
-        controls
       />
       {/* vocals */}
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/${songName}/${songName}_vocals.mp3`}
         playing={playSong}
         muted={!origVoiceOn}
-        controls
       />
 
       {lrcList.length ? (
