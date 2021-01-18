@@ -9,6 +9,8 @@ import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
+import { getLyricsScore } from '../../../utils/score';
+// import NumberShuffler from './NumberShuffler';
 
 const Sing = ({ match }) => {
   const {
@@ -40,6 +42,7 @@ const Sing = ({ match }) => {
       type: 'SET_AUDIO_ENDED',
       payload: true,
     });
+    return <div> Score = {getLyricsScore}</div>;
   }, [karaokeDispatch]);
 
   const setPlaySong = (play) => {
@@ -94,6 +97,7 @@ const Sing = ({ match }) => {
           toggle voice
         </button> */}
         {playSong ? null : <Countdown onComplete={setPlaySong} />}
+        {/* <NumberShuffler score={getLyricsScore} /> */}
         <Video
           playing={playSong}
           songName={songTitle}
