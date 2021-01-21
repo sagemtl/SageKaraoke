@@ -6,6 +6,7 @@ import Lyrics from 'components/Lyrics';
 import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import parseLrc from 'utils/parseLrc';
 import { useGlobalContext } from '../../../global/context';
+import '../styles/preview.scss';
 
 const Preview = ({ match }) => {
   const {
@@ -15,9 +16,13 @@ const Preview = ({ match }) => {
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
 
-  const [songTitle, setSongTitle] = useState('');
-  const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
+  const [songData, setSongData] = useState({
+    artist: '',
+    title: '',
+    titleChinese: '',
+    cover: '',
+  });
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -40,17 +45,24 @@ const Preview = ({ match }) => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
       console.log(songInfo);
-      setSongTitle(songInfo.title);
-      setArtist(songInfo.artist);
+      // setSongTitle(songInfo.title);
+      // setArtist(songInfo.artist);
+      setSongData((prev) => ({
+        ...prev,
+        title: songInfo.title,
+        artist: songInfo.artist,
+        cover: songInfo.cover_photo,
+      }));
     };
-    const getSongData = async () => {
-      const songData = await getLyricsByTitleId(songName);
-      const lineList = parseLrc(songData.lyrics);
+
+    const getSongLyrics = async () => {
+      const songLyrics = await getLyricsByTitleId(songName);
+      const lineList = parseLrc(songLyrics.lyrics);
       setLrcList(lineList);
     };
 
     getSongInfo();
-    getSongData();
+    getSongLyrics();
   }, [songName]);
 
   useEffect(() => {
@@ -75,19 +87,22 @@ const Preview = ({ match }) => {
   }, [karaokeDispatch, playSong]);
 
   return (
-    <div className="home">
-      <h1>Preview page</h1>
-      <h3>Playing {songTitle}</h3>
-      <h3>By {artist}</h3>
-      {/* visuals */}
-      <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-        playing={playSong}
-        muted
-        controls
-        height="70%"
-        width="35%"
-      />
+    <div className="preview">
+      <h3>
+        Playing {songData.title} By {songData.artist}
+      </h3>
+      <div className="album-mv-container">
+        <img src={songData.cover} alt="album cover" className="album-cover" />
+        {/* visuals */}
+        <ReactPlayer
+          url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+          playing={playSong}
+          muted
+          controls
+          height="70%"
+          width="50%"
+        />
+      </div>
       {/* music */}
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
