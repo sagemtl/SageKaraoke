@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import { getSongByTitleId } from 'utils/ktvQueries';
+import Lyrics from 'components/Lyrics';
+
+import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
+import parseLrc from 'utils/parseLrc';
 import { useGlobalContext } from '../../../global/context';
 
 const Preview = ({ match }) => {
@@ -14,6 +17,24 @@ const Preview = ({ match }) => {
 
   const [songTitle, setSongTitle] = useState('');
   const [artist, setArtist] = useState('');
+  const [lrcList, setLrcList] = useState([]);
+
+  const onTimeUpdate = useCallback(
+    (event) => {
+      karaokeDispatch({
+        type: 'SET_AUDIO_TIME',
+        payload: Math.floor(event.target.currentTime * 10) * 100,
+      });
+    },
+    [karaokeDispatch],
+  );
+
+  const onEnded = useCallback(() => {
+    karaokeDispatch({
+      type: 'SET_AUDIO_ENDED',
+      payload: true,
+    });
+  }, [karaokeDispatch]);
 
   useEffect(() => {
     const getSongInfo = async () => {
@@ -22,8 +43,14 @@ const Preview = ({ match }) => {
       setSongTitle(songInfo.title);
       setArtist(songInfo.artist);
     };
+    const getSongData = async () => {
+      const songData = await getLyricsByTitleId(songName);
+      const lineList = parseLrc(songData.lyrics);
+      setLrcList(lineList);
+    };
 
     getSongInfo();
+    getSongData();
   }, [songName]);
 
   useEffect(() => {
@@ -57,11 +84,15 @@ const Preview = ({ match }) => {
         playing={playSong}
         muted
         controls
+        height="70%"
+        width="35%"
       />
       {/* music */}
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
         playing={playSong}
+        onTimeUpdate={onTimeUpdate}
+        onEnded={onEnded}
         controls
       />
       {/* vocals */}
@@ -71,6 +102,12 @@ const Preview = ({ match }) => {
         muted={!origVoiceOn}
         controls
       />
+
+      {lrcList.length ? (
+        <>
+          <Lyrics lineList={lrcList} />
+        </>
+      ) : null}
     </div>
   );
 };
