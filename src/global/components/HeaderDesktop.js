@@ -7,12 +7,14 @@ const routes = [
   {
     id: 1,
     label: 'Home',
-    to: 'https://www.sagemontreal.com/',
+    to: '/',
+    external: false,
   },
   {
     id: 2,
     label: 'Boutique',
     to: 'https://www.sagemontreal.com/shop',
+    external: true,
   },
 ];
 
@@ -24,9 +26,7 @@ const HeaderDesktop = () => {
   const openNavbar = (open) => {
     karaokeDispatch({
       type: 'SET_NAVBAR_OPEN',
-      payload: {
-        navOpen: open,
-      },
+      payload: open,
     });
   };
 
@@ -65,7 +65,14 @@ const HeaderDesktop = () => {
           </div>
         </header>
         {routes.map((route) => (
-          <a className="navbox__link" href={route.to} key={route.id}>
+          // eslint-disable-next-line react/jsx-no-target-blank
+          <a
+            className="navbox__link"
+            href={route.to}
+            key={route.id}
+            target={route.external ? '_blank' : ''}
+            rel={route.external ? 'noreferrer' : ''}
+          >
             <h2 className="navbox__text">{route.label}</h2>
           </a>
         ))}

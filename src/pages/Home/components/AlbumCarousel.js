@@ -1,16 +1,18 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Carousel from 'react-spring-3d-carousel';
 import { useGlobalContext } from 'global/context';
 import { getAllSongs } from 'utils/ktvQueries';
 
 const AlbumCarousel = () => {
   const globalContext = useGlobalContext();
+  const history = useHistory();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { selectedAlbum } = karaokeState;
 
   const [albums, setAlbums] = useState([]);
-
-  console.log(albums);
 
   useEffect(() => {
     getAllSongs().then((res) => {
@@ -35,6 +37,17 @@ const AlbumCarousel = () => {
           <h1 className="album__title">{slide.title}</h1>
           <p className="album__subtitle">{slide.artist}</p>
           <img src={slide.cover_photo} alt="test" className="album__cover" />
+          {selectedAlbum === index && (
+            <div className="album-hidden">
+              <PlayCircleOutlineIcon
+                className="album-hidden__button"
+                style={{ fontSize: '5rem' }}
+                onClick={() =>
+                  history.push(`/preview/${albums[selectedAlbum].title_id}`)
+                }
+              />
+            </div>
+          )}
         </div>
       ),
     }));

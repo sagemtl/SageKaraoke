@@ -7,12 +7,14 @@ const routes = [
   {
     id: 1,
     label: 'Home',
-    to: 'https://www.sagemontreal.com/',
+    to: '/',
+    external: false,
   },
   {
     id: 2,
     label: 'Boutique',
     to: 'https://www.sagemontreal.com/shop',
+    external: true,
   },
 ];
 
@@ -24,7 +26,14 @@ const HeaderMobile = () => {
       <Drawer open={open} onClose={() => setOpen(!open)}>
         <div className="header-mobile-drawer">
           {routes.map((route) => (
-            <a className="header-mobile__link" to={route.to} key={route.id}>
+            // eslint-disable-next-line react/jsx-no-target-blank
+            <a
+              className="header-mobile__link"
+              href={route.to}
+              key={route.id}
+              target={route.external ? '_blank' : ''}
+              rel={route.external ? 'noreferrer' : ''}
+            >
               <h2>{route.label}</h2>
             </a>
           ))}
