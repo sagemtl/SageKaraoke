@@ -62,7 +62,6 @@ const Preview = ({ match }) => {
     };
 
     setPlaySong(true); // play song on page loads
-    console.log(`playsong after set true ${playSong}`);
 
     return () => {
       setPlaySong(false); // stop playing when page unmount
