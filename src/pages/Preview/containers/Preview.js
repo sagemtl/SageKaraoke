@@ -23,6 +23,7 @@ const Preview = ({ match }) => {
     titleChinese: '',
     cover: '',
   });
+  // const [leaderboard, setLeaderboard] = useState([]);
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -88,9 +89,9 @@ const Preview = ({ match }) => {
 
   return (
     <div className="preview">
-      <h3>
+      <h2>
         Playing {songData.title} By {songData.artist}
-      </h3>
+      </h2>
       <div className="album-mv-container">
         <img src={songData.cover} alt="album cover" className="album-cover" />
         {/* visuals */}
@@ -102,6 +103,9 @@ const Preview = ({ match }) => {
           height="70%"
           width="50%"
         />
+        <div>
+          <h3>leaderboard</h3>
+        </div>
       </div>
       {/* music */}
       <ReactPlayer

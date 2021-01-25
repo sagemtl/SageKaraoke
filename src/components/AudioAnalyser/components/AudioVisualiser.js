@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/AudioVisualiser.scss';
 
 class AudioVisualiser extends Component {
   constructor(props) {
     super(props);
     this.canvas = React.createRef();
+    this.mobile = window.innerWidth < 600;
   }
 
   componentDidUpdate() {
@@ -21,7 +23,7 @@ class AudioVisualiser extends Component {
     const sliceWidth = (width * 1.0) / audioData.length;
 
     context.lineWidth = 2;
-    context.strokeStyle = '#000000';
+    context.strokeStyle = '#FFFFFF';
     context.clearRect(0, 0, width, height);
 
     context.beginPath();
@@ -37,8 +39,12 @@ class AudioVisualiser extends Component {
 
   render() {
     return (
-      <div>
-        <canvas width="300" height="300" ref={this.canvas} />
+      <div className="audio-visuals">
+        <canvas
+          width={window.innerWidth * 0.8}
+          height={window.innerHeight * 0.2}
+          ref={this.canvas}
+        />
       </div>
     );
   }

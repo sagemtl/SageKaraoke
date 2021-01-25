@@ -7,7 +7,6 @@ const Counter = (arr) => {
 };
 
 export const getWordList = (data) => {
-  console.log('word list test');
   const linesWordsList = data
     .map((line) => line.content.trim().toLowerCase().split(''))
     .reduce((a, b) => a.concat(b), []);
