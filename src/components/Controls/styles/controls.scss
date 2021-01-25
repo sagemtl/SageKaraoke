@@ -1,11 +1,10 @@
-.control-center {
+%control-center-def {
   position: absolute;
   width: 500px;
-  height: 150px;
+  height: 100px;
   background-color: white;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 10vh;
   border-radius: 5px;
   border: 2px solid lightgrey;
   box-shadow: 7px 7px lightgrey;
@@ -16,8 +15,16 @@
   z-index: 100;
 }
 
-.control-center--hidden {
-  bottom: -154px;
+.control-center {
+  &__open {
+    @extend %control-center-def;
+    bottom: 10vh;
+  }
+
+  &__hidden {
+    @extend %control-center-def;
+    bottom: -104px;
+  }
 }
 
 .control-dismiss-tab {
@@ -34,10 +41,6 @@
   border: 2px solid lightgrey;
   text-align: center;
   cursor: pointer;
-}
-
-.control-dismiss-tab:focus {
-  outline: none;
 }
 
 .control-icons-container {
@@ -139,10 +142,17 @@
 }
 
 @media screen and (max-width: 600px) {
-  .control-center {
-    width: 100%;
+
+  %control-center-def {
+    width: 100vw;
     height: 75px;
     bottom: 0px;
+  }
+
+  .control-center {  
+    &__hidden {
+      bottom: -82px;
+    }
   }
 
   .control-center--hidden {
