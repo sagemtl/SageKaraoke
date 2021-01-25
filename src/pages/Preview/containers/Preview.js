@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import Lyrics from 'components/Lyrics';
 
-import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
+import {
+  getSongByTitleId,
+  getLyricsByTitleId,
+  getLeaderboardByTitleId,
+} from 'utils/ktvQueries';
 import parseLrc from 'utils/parseLrc';
 import { useGlobalContext } from '../../../global/context';
 import '../styles/preview.scss';
@@ -23,7 +27,7 @@ const Preview = ({ match }) => {
     titleChinese: '',
     cover: '',
   });
-  // const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboard, setLeaderboard] = useState([]);
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -46,8 +50,6 @@ const Preview = ({ match }) => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
       console.log(songInfo);
-      // setSongTitle(songInfo.title);
-      // setArtist(songInfo.artist);
       setSongData((prev) => ({
         ...prev,
         title: songInfo.title,
@@ -62,9 +64,16 @@ const Preview = ({ match }) => {
       setLrcList(lineList);
     };
 
+    const getLeaderboard = async () => {
+      const leader = await getLeaderboardByTitleId(songName);
+      setLeaderboard(leader);
+      console.log(leaderboard);
+    };
+
     getSongInfo();
     getSongLyrics();
-  }, [songName]);
+    getLeaderboard();
+  }, [songName, leaderboard]);
 
   useEffect(() => {
     const setPlaySong = (play) => {
@@ -75,7 +84,6 @@ const Preview = ({ match }) => {
     };
 
     setPlaySong(true); // play song on page loads
-    console.log(`playsong after set true ${playSong}`);
 
     return () => {
       setPlaySong(false); // stop playing when page unmount
