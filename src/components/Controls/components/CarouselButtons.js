@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGlobalContext } from 'global/context';
+import { useHistory } from 'react-router-dom';
 import '../styles/controls.scss';
 
 const CarouselButtons = () => {
   const globalContext = useGlobalContext();
+  const history = useHistory();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { selectedAlbum } = karaokeState;
-
-  const [playing, setPlaying] = useState(false);
-
-  const onPlayPauseClickHandler = () => {
-    setPlaying(!playing);
-  };
+  const { albums, selectedAlbum } = karaokeState;
 
   const setSelectedAlbum = (index) => {
     karaokeDispatch({
@@ -24,7 +20,6 @@ const CarouselButtons = () => {
 
   return (
     <div className="control-icons-container">
-      {/* <div> */}
       <button
         className="play-control prev-track-btn-ctr"
         onClick={() => setSelectedAlbum(selectedAlbum - 1)}
@@ -33,19 +28,16 @@ const CarouselButtons = () => {
         <p className="control-icons-label">previous</p>
         <i className="fas fa-step-backward" />
       </button>
-      {/* </div> */}
 
       <button
         className="play-control play-pause-container"
-        onClick={onPlayPauseClickHandler}
+        onClick={() =>
+          history.push(`/preview/${albums[selectedAlbum].title_id}`)
+        }
         type="button"
       >
-        <p className="control-icons-label">{playing ? 'play' : 'pause'}</p>
-        {playing ? (
-          <i className="fas fa-pause" />
-        ) : (
-          <i className="fas fa-play" />
-        )}
+        <p className="control-icons-label">play</p>
+        <i className="fas fa-play" />
       </button>
       <button
         className="play-control next-track-btn-ctr"

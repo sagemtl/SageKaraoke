@@ -38,7 +38,7 @@ const SingButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        <p className="control-icons-label">{playSong ? 'play' : 'pause'}</p>
+        <p className="control-icons-label">{playSong ? 'pause' : 'play'}</p>
         {playSong ? (
           <i className="fas fa-pause" />
         ) : (

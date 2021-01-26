@@ -59,7 +59,7 @@ const PreviewButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        <p className="control-icons-label">{playSong ? 'play' : 'pause'}</p>
+        <p className="control-icons-label">{playSong ? 'pause' : 'play'}</p>
         {play ? <i className="fas fa-pause" /> : <i className="fas fa-play" />}
       </button>
       <button
