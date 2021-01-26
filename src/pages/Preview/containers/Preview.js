@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import Lyrics from 'components/Lyrics';
 
 import {
   getSongByTitleId,
@@ -49,7 +48,6 @@ const Preview = ({ match }) => {
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
-      console.log(songInfo);
       setSongData((prev) => ({
         ...prev,
         title: songInfo.title,
@@ -112,14 +110,17 @@ const Preview = ({ match }) => {
         />
         <div>
           <h3>leaderboard</h3>
-          {leaderboard.map(({ name, score }) => (
-            <p>
-              {name}: {score}
+          {leaderboard.map(({ name, score }, index) => (
+            <p key={name + score}>
+              {index + 1}. {name}: {score}
             </p>
           ))}
         </div>
         <div>
           <h3>Lyrics</h3>
+          {lrcList.map(({ id, content }) => (
+            <p key={id}>{content}</p>
+          ))}
         </div>
       </div>
       {/* music */}
@@ -135,12 +136,6 @@ const Preview = ({ match }) => {
         playing={playSong}
         muted={!origVoiceOn}
       />
-
-      {lrcList.length ? (
-        <>
-          <Lyrics lineList={lrcList} />
-        </>
-      ) : null}
     </div>
   );
 };
