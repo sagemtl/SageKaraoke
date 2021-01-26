@@ -24,18 +24,23 @@ const CarouselButtons = () => {
 
   return (
     <div className="control-icons-container">
+      {/* <div> */}
       <button
         className="play-control prev-track-btn-ctr"
         onClick={() => setSelectedAlbum(selectedAlbum - 1)}
         type="button"
       >
+        <p className="control-icons-label">previous</p>
         <i className="fas fa-step-backward" />
       </button>
+      {/* </div> */}
+
       <button
         className="play-control play-pause-container"
         onClick={onPlayPauseClickHandler}
         type="button"
       >
+        <p className="control-icons-label">{playing ? 'play' : 'pause'}</p>
         {playing ? (
           <i className="fas fa-pause" />
         ) : (
@@ -47,6 +52,7 @@ const CarouselButtons = () => {
         onClick={() => setSelectedAlbum(selectedAlbum + 1)}
         type="button"
       >
+        <p className="control-icons-label">next</p>
         <i className="fas fa-step-forward" />
       </button>
     </div>

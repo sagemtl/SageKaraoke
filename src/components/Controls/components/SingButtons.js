@@ -30,6 +30,7 @@ const SingButtons = () => {
   return (
     <div className="control-icons-container">
       <button className="play-control" onClick={returnHome} type="button">
+        <p className="control-icons-label">home</p>
         <i className="fas fa-home" />
       </button>
       <button
@@ -37,6 +38,7 @@ const SingButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
+        <p className="control-icons-label">{playSong ? 'play' : 'pause'}</p>
         {playSong ? (
           <i className="fas fa-pause" />
         ) : (

@@ -43,6 +43,7 @@ const PreviewButtons = () => {
         onClick={goToSing}
         type="button"
       >
+        <p className="control-icons-label">record</p>
         <i className="fas fa-circle red" />
       </button>
       <button
@@ -50,6 +51,7 @@ const PreviewButtons = () => {
         // onClick={this.playPrevTrack}
         type="button"
       >
+        <p className="control-icons-label">previous</p>
         <i className="fas fa-step-backward" />
       </button>
       <button
@@ -57,6 +59,7 @@ const PreviewButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
+        <p className="control-icons-label">{playSong ? 'play' : 'pause'}</p>
         {play ? <i className="fas fa-pause" /> : <i className="fas fa-play" />}
       </button>
       <button
@@ -64,6 +67,7 @@ const PreviewButtons = () => {
         // onClick={this.playNextTrack}
         type="button"
       >
+        <p className="control-icons-label">next</p>
         <i className="fas fa-step-forward" />
       </button>
       <div className="voice-over-btn switch">

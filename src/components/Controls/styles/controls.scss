@@ -1,7 +1,7 @@
 %control-center-def {
   position: absolute;
   width: 500px;
-  height: 100px;
+  height: 120px;
   background-color: white;
   left: 50%;
   transform: translateX(-50%);
@@ -47,6 +47,7 @@
   display: flex;
   justify-content: space-evenly;
   vertical-align: baseline;
+  padding-bottom: 25px;
 
   // Standard
   & .play-control {
@@ -139,6 +140,14 @@
 
 .next-track-btn-ctr {
   margin-right: 25px;
+}
+
+.control-icons-label {
+  color: black;
+  margin-top: 0px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {
