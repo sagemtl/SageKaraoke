@@ -23,6 +23,11 @@
       opacity: 1;
       cursor: auto;
     }
+
+    &:hover .album-hidden {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
   &__title {
@@ -37,5 +42,26 @@
     width: 350px;
     height: auto;
     margin: 0 auto;
+  }
+}
+
+.album-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s;
+  background-color: rgba(0, 0, 0, 0.8);
+  max-width: 350px;
+  width: 350px;
+  height: 350px;
+  padding: 1.5em 1em;
+  position: absolute;
+  top: 100px; left: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__button {
+    cursor: pointer;
+    opacity: 0.8;
   }
 }
