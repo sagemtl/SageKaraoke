@@ -67,13 +67,12 @@ const Preview = ({ match }) => {
     const getLeaderboard = async () => {
       const leader = await getLeaderboardByTitleId(songName);
       setLeaderboard(leader);
-      console.log(leaderboard);
     };
-
+    console.log('in top useeffect');
     getSongInfo();
     getSongLyrics();
     getLeaderboard();
-  }, [songName, leaderboard]);
+  }, [songName]);
 
   useEffect(() => {
     const setPlaySong = (play) => {
@@ -113,6 +112,14 @@ const Preview = ({ match }) => {
         />
         <div>
           <h3>leaderboard</h3>
+          {leaderboard.map(({ name, score }) => (
+            <p>
+              {name}: {score}
+            </p>
+          ))}
+        </div>
+        <div>
+          <h3>Lyrics</h3>
         </div>
       </div>
       {/* music */}

@@ -18,8 +18,6 @@ const Lyrics = ({ lineList }) => {
     }
   }, [currentIndex, audioTime, lineList]);
 
-  console.log(controlOpen);
-
   return (
     <div className={controlOpen ? 'lyrics__higher' : 'lyrics__lower'}>
       <div>time: {audioTime}</div>

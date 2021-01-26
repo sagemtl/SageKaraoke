@@ -34,8 +34,6 @@ const PreviewButtons = () => {
     setPlay(playSong);
   }, [playSong]);
 
-  console.log(playSong);
-
   return (
     <div className="control-icons-container">
       <button
