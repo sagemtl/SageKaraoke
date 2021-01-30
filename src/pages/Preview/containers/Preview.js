@@ -94,33 +94,48 @@ const Preview = ({ match }) => {
 
   return (
     <div className="preview">
-      <h2>
+      <h3>
         Playing {songData.title} By {songData.artist}
-      </h2>
+      </h3>
       <div className="album-mv-container">
-        <img src={songData.cover} alt="album cover" className="album-cover" />
+        <div className="left-panel">
+          <img
+            src={songData.cover}
+            alt="album cover"
+            className="left-panel__album-cover"
+          />
+          <div className="lyrics">
+            <h3>LYRICS</h3>
+            {lrcList.map(({ id, content }) => (
+              <p key={id}>{content}</p>
+            ))}
+          </div>
+        </div>
         {/* visuals */}
         <ReactPlayer
           url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
           playing={playSong}
           muted
-          controls
-          height="70%"
-          width="50%"
+          // controls
+          height="30vw"
+          width="50vw"
         />
-        <div>
-          <h3>leaderboard</h3>
-          {leaderboard.map(({ name, score }, index) => (
-            <p key={name + score}>
-              {index + 1}. {name}: {score}
+        <div className="right-panel">
+          <div className="right-panel__instructions">
+            <h3>INSTRUCTIONS</h3>
+            <p className="right-panel__instructions__content">
+              Click the record buttom to play the game. Sing along the lyrics
+              using the right pitch at the right time to earn a higher score.
             </p>
-          ))}
-        </div>
-        <div>
-          <h3>Lyrics</h3>
-          {lrcList.map(({ id, content }) => (
-            <p key={id}>{content}</p>
-          ))}
+          </div>
+          <div className="right-panel__leaderboard">
+            <h3>LEADERBOARD</h3>
+            {leaderboard.map(({ name, score }, index) => (
+              <p key={name + score}>
+                {index + 1}. {name}: {score}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
       {/* music */}
