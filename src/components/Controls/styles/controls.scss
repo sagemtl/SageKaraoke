@@ -1,7 +1,7 @@
 %control-center-def {
-  position: absolute;
+  position: fixed;
   width: 500px;
-  height: 120px;
+  height: 100px;
   background-color: white;
   left: 50%;
   transform: translateX(-50%);
@@ -160,12 +160,8 @@
 
   .control-center {  
     &__hidden {
-      bottom: -82px;
+      bottom: -80px;
     }
-  }
-
-  .control-center--hidden {
-    bottom: -82px;
   }
 
   .control-icons-container {
@@ -193,5 +189,11 @@
     & .react-switch-label:active .react-switch-button {
       width: 40px;
     }
+  }
+
+  .control-icons-label {
+    margin-top: 7px;
+    margin-bottom: 10px;
+    font-size: 12px;
   }
 }
