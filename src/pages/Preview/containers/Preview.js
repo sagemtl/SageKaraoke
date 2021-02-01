@@ -92,10 +92,18 @@ const Preview = ({ match }) => {
     };
   }, [karaokeDispatch, playSong]);
 
+  const mvStyles = {
+    // border: '4px',
+    // borderColor: 'black',
+    // borderStyle: 'solid',
+    // borderRadius: '10px',
+    margin: '0 1em',
+  };
+
   return (
     <div className="preview">
-      <h3>
-        Playing {songData.title} By {songData.artist}
+      <h3 className="song-title">
+        {songData.title.toUpperCase()} BY {songData.artist.toUpperCase()}
       </h3>
       <div className="album-mv-container">
         <div className="left-panel">
@@ -104,7 +112,7 @@ const Preview = ({ match }) => {
             alt="album cover"
             className="left-panel__album-cover"
           />
-          <div className="lyrics">
+          <div className="left-panel__lyrics">
             <h3>LYRICS</h3>
             {lrcList.map(({ id, content }) => (
               <p key={id}>{content}</p>
@@ -119,12 +127,13 @@ const Preview = ({ match }) => {
           // controls
           height="30vw"
           width="50vw"
+          style={mvStyles}
         />
         <div className="right-panel">
           <div className="right-panel__instructions">
             <h3>INSTRUCTIONS</h3>
             <p className="right-panel__instructions__content">
-              Click the record buttom to play the game. Sing along the lyrics
+              Click the record button to play the game. Sing along the lyrics
               using the right pitch at the right time to earn a higher score.
             </p>
           </div>
