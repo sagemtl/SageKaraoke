@@ -23,8 +23,6 @@ const Controls = () => {
     });
   };
 
-  console.log(controlOpen);
-
   return (
     <div
       className={
