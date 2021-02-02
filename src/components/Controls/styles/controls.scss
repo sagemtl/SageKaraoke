@@ -68,6 +68,7 @@
     & .red {
       color: red;
       transition: all 0.2s ease-in-out;
+      margin: 0;
     }
   }
 
@@ -142,12 +143,31 @@
   margin-right: 25px;
 }
 
-.control-icons-label {
+.carousel-control-icons-labels {
   color: black;
   margin-top: 0px; 
   margin-bottom: 15px;
   font-size: 14px;
   font-weight: bold;
+  text-align: center;
+}
+
+.control-icons-label {
+  color: black;
+  margin-top: 20px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.record-label {
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -192,8 +212,14 @@
   }
 
   .control-icons-label {
-    margin-top: 7px;
+    margin-top: 20px;
     margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .record-label {
+    margin-top: 20px;
+    margin-bottom: 0px;
     font-size: 12px;
   }
 }

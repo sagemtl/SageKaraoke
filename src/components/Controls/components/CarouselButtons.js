@@ -25,7 +25,7 @@ const CarouselButtons = () => {
         onClick={() => setSelectedAlbum(selectedAlbum - 1)}
         type="button"
       >
-        <p className="control-icons-label">previous</p>
+        <p className="carousel-control-icons-labels">previous</p>
         <i className="fas fa-step-backward" />
       </button>
 
@@ -36,7 +36,7 @@ const CarouselButtons = () => {
         }
         type="button"
       >
-        <p className="control-icons-label">play</p>
+        <p className="carousel-control-icons-labels">play</p>
         <i className="fas fa-play" />
       </button>
       <button
@@ -44,7 +44,7 @@ const CarouselButtons = () => {
         onClick={() => setSelectedAlbum(selectedAlbum + 1)}
         type="button"
       >
-        <p className="control-icons-label">next</p>
+        <p className="carousel-control-icons-labels">next</p>
         <i className="fas fa-step-forward" />
       </button>
     </div>
