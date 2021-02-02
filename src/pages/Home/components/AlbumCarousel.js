@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Carousel from 'react-spring-3d-carousel';
@@ -10,15 +10,18 @@ const AlbumCarousel = () => {
   const globalContext = useGlobalContext();
   const history = useHistory();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { selectedAlbum } = karaokeState;
-
-  const [albums, setAlbums] = useState([]);
+  const { selectedAlbum, albums } = karaokeState;
 
   useEffect(() => {
     getAllSongs().then((res) => {
-      setAlbums(res);
+      karaokeDispatch({
+        type: 'SET_ALBUMS',
+        payload: {
+          albums: res,
+        },
+      });
     });
-  }, []);
+  }, [karaokeDispatch]);
 
   const setSelectedAlbum = (index) => {
     karaokeDispatch({
