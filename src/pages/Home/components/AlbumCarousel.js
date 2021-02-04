@@ -1,24 +1,14 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Carousel from 'react-spring-3d-carousel';
 import { useGlobalContext } from 'global/context';
-import { getAllSongs } from 'utils/ktvQueries';
 
-const AlbumCarousel = () => {
+const AlbumCarousel = ({ albums, selectedAlbum }) => {
   const globalContext = useGlobalContext();
   const history = useHistory();
-  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { selectedAlbum } = karaokeState;
-
-  const [albums, setAlbums] = useState([]);
-
-  useEffect(() => {
-    getAllSongs().then((res) => {
-      setAlbums(res);
-    });
-  }, []);
+  const [, karaokeDispatch] = globalContext.karaoke;
 
   const setSelectedAlbum = (index) => {
     karaokeDispatch({

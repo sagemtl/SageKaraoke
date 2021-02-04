@@ -12,6 +12,7 @@ const initialState = {
   audioEnded: false,
   lyricsScore: 0,
   selectedAlbum: 0,
+  albums: [],
 };
 
 const reducer = (state, action) => {
