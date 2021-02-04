@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Countdown = ({ onComplete }) => {
+const Countdown = ({ onComplete, start }) => {
   const [counter, setCounter] = useState(3);
 
   useEffect(() => {
@@ -10,6 +10,7 @@ const Countdown = ({ onComplete }) => {
 
   if (counter === 0) {
     onComplete(true);
+    start(true);
     return null;
   }
   return (
@@ -21,5 +22,6 @@ const Countdown = ({ onComplete }) => {
 
 Countdown.propTypes = {
   onComplete: PropTypes.func.isRequired,
+  start: PropTypes.func.isRequired,
 };
 export default Countdown;

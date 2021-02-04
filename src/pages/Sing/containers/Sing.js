@@ -9,8 +9,7 @@ import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
-import { getLyricsScore } from '../../../utils/score';
-// import NumberShuffler from './NumberShuffler';
+import ScoreRenderer from '../components/ScoreRenderer';
 
 const Sing = ({ match }) => {
   const {
@@ -19,11 +18,12 @@ const Sing = ({ match }) => {
 
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn } = karaokeState;
+  const { playSong, origVoiceOn, lyricsScore } = karaokeState;
 
   const [songName, setSongName] = useState('');
   const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
+  const [playLocalSong, setPlayLocalSong] = useState(false);
 
   const [lang, setLang] = useState('');
 
@@ -37,12 +37,21 @@ const Sing = ({ match }) => {
     [karaokeDispatch],
   );
 
+  // const onScoreUpdate = useCallback(
+  //   (event) => {
+  //     karaokeDispatch({
+  //       type: 'SET_LYRICS_SCORE',
+  //       payload: (getLyricsScore += getLyricsScore),
+  //     });
+  //   },
+  //   [karaokeDispatch],
+  // );
+
   const onEnded = useCallback(() => {
     karaokeDispatch({
       type: 'SET_AUDIO_ENDED',
       payload: true,
     });
-    return <div> Score = {getLyricsScore}</div>;
   }, [karaokeDispatch]);
 
   const setPlaySong = (play) => {
@@ -87,17 +96,25 @@ const Sing = ({ match }) => {
     getSongInfo();
     getSongData();
   }, [songTitle]);
+
   return (
     <div className="home">
       <h1>Sing Page </h1>
       <h1>{songName}</h1>
       <h1>{artist}</h1>
+      {/* <h1>{lyricsScore}</h1> */}
+      {onEnded ? <ScoreRenderer number={lyricsScore} /> : <div />}
+      {/* <div className="scoreRenderer">
+        <ScoreRenderer number={lyricsScore} />
+      </div> */}
+      {/* <ScoreRenderer number={100} /> */}
       <div>
         {/* <button type="button" onClick={() => setVoiceToggle(!origVoiceOn)}>
           toggle voice
         </button> */}
-        {playSong ? null : <Countdown onComplete={setPlaySong} />}
-        {/* <NumberShuffler score={getLyricsScore} /> */}
+        {playLocalSong ? null : (
+          <Countdown onComplete={setPlaySong} start={setPlayLocalSong} />
+        )}
         <Video
           playing={playSong}
           songName={songTitle}
