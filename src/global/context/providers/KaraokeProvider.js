@@ -33,6 +33,8 @@ const reducer = (state, action) => {
       return { ...state, controlOpen: action.payload };
     case 'SET_SELECTED_ALBUM':
       return { ...state, selectedAlbum: action.payload.selectedAlbum };
+    case 'SET_ALBUMS':
+      return { ...state, albums: action.payload.albums };
     default:
       return null;
   }

@@ -30,6 +30,7 @@ const SingButtons = () => {
   return (
     <div className="control-icons-container">
       <button className="play-control" onClick={returnHome} type="button">
+        <p className="control-icons-label">home</p>
         <i className="fas fa-home" />
       </button>
       <button
@@ -37,27 +38,31 @@ const SingButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
+        <p className="control-icons-label">{playSong ? 'pause' : 'play'}</p>
         {playSong ? (
           <i className="fas fa-pause" />
         ) : (
           <i className="fas fa-play" />
         )}
       </button>
-      <div className="voice-over-btn switch">
-        <input
-          type="checkbox"
-          id="react-switch-new"
-          checked={origVoiceOn}
-          onChange={handleLiveVoice}
-        />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label
-          className="react-switch-label"
-          htmlFor="react-switch-new"
-          style={{ background: origVoiceOn && '#154734' }}
-        >
-          <span className="react-switch-button" />
-        </label>
+      <div>
+        <p className="control-icons-label">voice</p>
+        <div className="voice-over-btn switch">
+          <input
+            type="checkbox"
+            id="react-switch-new"
+            checked={origVoiceOn}
+            onChange={handleLiveVoice}
+          />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label
+            className="react-switch-label"
+            htmlFor="react-switch-new"
+            style={{ background: origVoiceOn && '#154734' }}
+          >
+            <span className="react-switch-button" />
+          </label>
+        </div>
       </div>
     </div>
   );

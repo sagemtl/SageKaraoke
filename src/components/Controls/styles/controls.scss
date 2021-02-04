@@ -1,5 +1,5 @@
 %control-center-def {
-  position: absolute;
+  position: fixed;
   width: 500px;
   height: 100px;
   background-color: white;
@@ -47,6 +47,7 @@
   display: flex;
   justify-content: space-evenly;
   vertical-align: baseline;
+  padding-bottom: 25px;
 
   // Standard
   & .play-control {
@@ -67,6 +68,7 @@
     & .red {
       color: red;
       transition: all 0.2s ease-in-out;
+      margin: 0;
     }
   }
 
@@ -141,6 +143,33 @@
   margin-right: 25px;
 }
 
+.carousel-control-icons-labels {
+  color: black;
+  margin-top: 0px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.control-icons-label {
+  color: black;
+  margin-top: 20px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.record-label {
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
 
   %control-center-def {
@@ -151,12 +180,8 @@
 
   .control-center {  
     &__hidden {
-      bottom: -82px;
+      bottom: -80px;
     }
-  }
-
-  .control-center--hidden {
-    bottom: -82px;
   }
 
   .control-icons-container {
@@ -184,5 +209,17 @@
     & .react-switch-label:active .react-switch-button {
       width: 40px;
     }
+  }
+
+  .control-icons-label {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .record-label {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-size: 12px;
   }
 }
