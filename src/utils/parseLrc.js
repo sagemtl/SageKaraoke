@@ -14,9 +14,7 @@ export default (lrc) => {
     const timeStringList = line.match(LRC_TIMESTAMP_WITH_BRACKET);
     const content = line.replace(LRC_TIMESTAMP_WITH_BRACKET, '');
     timeStringList.forEach((timeString) => {
-      const [minute, second, millisecond = '0'] = timeString.match(
-        LRC_TIMESTAMP,
-      );
+      const [minute, second, millisecond] = timeString.match(LRC_TIMESTAMP);
       lrcLineList.push({
         id: getRandomString(),
         millisecond:

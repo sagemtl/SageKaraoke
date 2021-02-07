@@ -19,6 +19,7 @@ const initialState = {
   audioEnded: false,
   lyricsScore: 0,
   selectedAlbum: 0,
+  pinyinOn: false,
 };
 
 const reducer = (state, action) => {
@@ -39,6 +40,8 @@ const reducer = (state, action) => {
       return { ...state, controlOpen: action.payload };
     case 'SET_SELECTED_ALBUM':
       return { ...state, selectedAlbum: action.payload.selectedAlbum };
+    case 'SET_PINYIN_ON':
+      return { ...state, pinyinOn: action.payload.pinyinOn };
     default:
       return null;
   }

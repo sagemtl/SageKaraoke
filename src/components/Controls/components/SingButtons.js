@@ -1,14 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { useHistory } from 'react-router-dom';
 import { useGlobalContext } from 'global/context';
 import '../styles/controls.scss';
 
 const SingButtons = () => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn } = karaokeState;
-  const history = useHistory();
+  const { playSong, origVoiceOn, pinyinOn } = karaokeState;
 
   const onPlayPauseClickHandler = () => {
     karaokeDispatch({
@@ -24,8 +22,11 @@ const SingButtons = () => {
     });
   };
 
-  const returnHome = () => {
-    history.push('/');
+  const togglePinyin = () => {
+    karaokeDispatch({
+      type: 'SET_PINYIN_ON',
+      payload: { pinyinOn: !pinyinOn },
+    });
   };
 
   return (
@@ -35,7 +36,7 @@ const SingButtons = () => {
         <Button
           variant="contained"
           className="pinyin-control"
-          onClick={returnHome}
+          onClick={togglePinyin}
           color="primary"
         >
           拼
