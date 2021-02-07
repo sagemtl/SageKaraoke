@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
-import '../styles/song.scss';
 import AudioInput from 'components/AudioAnalyser';
 import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
 import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
 import { useGlobalContext } from '../../../global/context';
-import Countdown from '../components/Countdown';
+// import Countdown from '../components/Countdown';
 import { getLyricsScore } from '../../../utils/score';
-// import NumberShuffler from './NumberShuffler';
 
 const Sing = ({ match }) => {
   const {
@@ -45,29 +43,12 @@ const Sing = ({ match }) => {
     return <div> Score = {getLyricsScore}</div>;
   }, [karaokeDispatch]);
 
-  const setPlaySong = (play) => {
-    karaokeDispatch({
-      type: 'SET_PLAYSONG',
-      payload: { playSong: play },
-    });
-  };
-
-  // const setVoiceToggle = (play) => {
+  // const setPlaySong = (play) => {
   //   karaokeDispatch({
-  //     type: 'SET_ORIGINAL_VOICE_ON',
-  //     payload: { origVoiceOn: play },
+  //     type: 'SET_PLAYSONG',
+  //     payload: { playSong: play },
   //   });
   // };
-
-  // useEffect(() => {
-  //   const getSongData = async () => {
-  //     const songData = await getLyricsByTitleId(songTitle);
-  //     const lineList = parseLrc(songData.lyrics);
-  //     setLang(songData.language);
-  //     setLrcList(lineList);
-  //   };
-  //   getSongData();
-  // }, [songTitle]);
 
   useEffect(() => {
     const getSongInfo = async () => {
@@ -88,16 +69,11 @@ const Sing = ({ match }) => {
     getSongData();
   }, [songTitle]);
   return (
-    <div className="home">
-      <h1>Sing Page </h1>
-      <h1>{songName}</h1>
-      <h1>{artist}</h1>
-      <div>
-        {/* <button type="button" onClick={() => setVoiceToggle(!origVoiceOn)}>
-          toggle voice
-        </button> */}
-        {playSong ? null : <Countdown onComplete={setPlaySong} />}
-        {/* <NumberShuffler score={getLyricsScore} /> */}
+    <div className="sing">
+      <h1 className="sing__title">{songName}</h1>
+      <h1 className="sing__title">{artist}</h1>
+      <div className="sing-video">
+        {/* {playSong ? null : <Countdown onComplete={setPlaySong} />} */}
         <Video
           playing={playSong}
           songName={songTitle}

@@ -2,11 +2,12 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 
 const video = ({ playing, songName, origVoiceOn, onTimeUpdate, onEnded }) => (
-  <div>
+  <div className="video">
     <ReactPlayer
       url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
       playing={playing}
       muted
+      className="video__video"
     />
     {/* music */}
     <ReactPlayer

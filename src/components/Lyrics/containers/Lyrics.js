@@ -20,7 +20,6 @@ const Lyrics = ({ lineList }) => {
 
   return (
     <div className={controlOpen ? 'lyrics__higher' : 'lyrics__lower'}>
-      <div>time: {audioTime}</div>
       <div className="lyrics__current">
         {currentIndex >= 0 ? lineList[currentIndex].content : null}
       </div>
