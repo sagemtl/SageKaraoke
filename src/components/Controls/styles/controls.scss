@@ -18,7 +18,7 @@
 .control-center {
   &__open {
     @extend %control-center-def;
-    bottom: 10vh;
+    bottom: 5vh;
   }
 
   &__hidden {
