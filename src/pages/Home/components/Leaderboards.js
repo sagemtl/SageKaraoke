@@ -1,35 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { getLeaderboardByTitleId } from 'utils/ktvQueries';
 
-const Leaderboards = () => {
-  // TODO: Get top scores from server
+const Leaderboards = ({ albums, selectedAlbum }) => {
+  const [scores, setScores] = useState([]);
 
-  const scores = [
-    {
-      id: 1,
-      name: 'Test A',
-      score: 100,
-    },
-    {
-      id: 2,
-      name: 'Test B',
-      score: 200,
-    },
-    {
-      id: 3,
-      name: 'Test C',
-      score: 300,
-    },
-    {
-      id: 4,
-      name: 'Test D',
-      score: 400,
-    },
-    {
-      id: 5,
-      name: 'Test E',
-      score: 500,
-    },
-  ];
+  useEffect(() => {
+    if (albums[selectedAlbum]) {
+      getLeaderboardByTitleId(albums[selectedAlbum].title_id).then((res) => {
+        setScores(res);
+      });
+    }
+  }, [albums, selectedAlbum]);
 
   return (
     <div className="leaderboards">
@@ -49,6 +31,11 @@ const Leaderboards = () => {
       </div>
     </div>
   );
+};
+
+Leaderboards.propTypes = {
+  albums: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  selectedAlbum: PropTypes.number.isRequired,
 };
 
 export default Leaderboards;
