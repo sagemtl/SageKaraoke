@@ -9,6 +9,7 @@ const AlbumCarousel = ({ albums, selectedAlbum }) => {
   const globalContext = useGlobalContext();
   const history = useHistory();
   const [, karaokeDispatch] = globalContext.karaoke;
+  const { width } = globalContext.window;
 
   const setSelectedAlbum = (index) => {
     karaokeDispatch({
@@ -53,7 +54,7 @@ const AlbumCarousel = ({ albums, selectedAlbum }) => {
       <Carousel
         slides={transformData(albums)}
         goToSlide={selectedAlbum}
-        offsetRadius={2}
+        offsetRadius={width > 700 ? 2 : 1}
       />
     </div>
   );
