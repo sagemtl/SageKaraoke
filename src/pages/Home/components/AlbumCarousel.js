@@ -11,8 +11,6 @@ const AlbumCarousel = ({ albums, selectedAlbum }) => {
   const [, karaokeDispatch] = globalContext.karaoke;
   const { width } = globalContext.window;
 
-  console.log(width);
-
   const setSelectedAlbum = (index) => {
     karaokeDispatch({
       type: 'SET_SELECTED_ALBUM',
