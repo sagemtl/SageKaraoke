@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { useGlobalContext } from 'global/context';
 import '../styles/controls.scss';
@@ -29,10 +30,17 @@ const SingButtons = () => {
 
   return (
     <div className="control-icons-container">
-      <button className="play-control" onClick={returnHome} type="button">
-        <p className="control-icons-label">home</p>
-        <i className="fas fa-home" />
-      </button>
+      <div>
+        <p className="control-icons-label">pinyin</p>
+        <Button
+          variant="contained"
+          className="pinyin-control"
+          onClick={returnHome}
+          color="primary"
+        >
+          拼
+        </Button>
+      </div>
       <button
         className="play-control play-pause-container"
         onClick={onPlayPauseClickHandler}

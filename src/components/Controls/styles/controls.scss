@@ -72,6 +72,12 @@
     }
   }
 
+  & .pinyin-control {
+    padding: 0;
+    min-width: 40px;
+    height: 35px;
+  }
+
   & .record-border {
     border: 3px solid black;
     border-radius: 50%;
@@ -145,7 +151,7 @@
 
 .carousel-control-icons-labels {
   color: black;
-  margin-top: 0px; 
+  margin-top: 5px; 
   margin-bottom: 15px;
   font-size: 14px;
   font-weight: bold;
@@ -213,6 +219,13 @@
 
   .control-icons-label {
     margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .carousel-control-icons-labels {
+    color: black;
+    margin-top: 8px; 
     margin-bottom: 10px;
     font-size: 12px;
   }
