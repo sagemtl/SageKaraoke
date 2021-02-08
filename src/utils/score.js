@@ -9,6 +9,7 @@ const Counter = (arr) => {
 export const getWordList = (data, lang) => {
   const splitToken = lang === 'en-US' ? ' ' : '';
   const linesWordsList = data
+    .slice(1)
     .map((line) => line.content.trim().toLowerCase().split(splitToken))
     .reduce((a, b) => a.concat(b), []);
 
