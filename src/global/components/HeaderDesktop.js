@@ -1,4 +1,6 @@
 import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { useGlobalContext } from 'global/context';
 import '../styles/headerDesktop.scss';
@@ -42,28 +44,35 @@ const HeaderDesktop = () => {
         <ArrowForwardIosIcon className="header-button__icon" />
       </div>
       <div className={navOpen ? 'navbox' : 'navbox--closed'}>
-        <header>
-          <div
-            role="button"
-            tabIndex={-1}
-            onClick={() => openNavbar(false)}
-            onKeyDown={() => openNavbar(false)}
-            className="navbox-logo-wrapper"
-          >
-            <video
-              src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
-              poster="https://sageimagebank.s3.ca-central-1.amazonaws.com/poster.gif"
-              className="navbox__logo"
-              muted
-              playsInline
-              loop
-              onMouseOver={(e) => e.target.play()}
-              onFocus={(e) => e.target.play()}
-              onMouseOut={(e) => e.target.pause()}
-              onBlur={(e) => e.target.pause()}
-            />
-          </div>
-        </header>
+        <IconButton
+          aria-label="close"
+          className="header-desktop__close"
+          size="small"
+          onClick={() => openNavbar(false)}
+          onKeyDown={() => openNavbar(false)}
+        >
+          <HighlightOffIcon fontSize="small" className="header-desktop__icon" />
+        </IconButton>
+        <a
+          tabIndex={-1}
+          onClick={() => openNavbar(false)}
+          onKeyDown={() => openNavbar(false)}
+          className="navbox-logo-wrapper"
+          href="/"
+        >
+          <video
+            src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
+            poster="https://sageimagebank.s3.ca-central-1.amazonaws.com/poster.gif"
+            className="navbox__logo"
+            muted
+            playsInline
+            loop
+            onMouseOver={(e) => e.target.play()}
+            onFocus={(e) => e.target.play()}
+            onMouseOut={(e) => e.target.pause()}
+            onBlur={(e) => e.target.pause()}
+          />
+        </a>
         {routes.map((route) => (
           // eslint-disable-next-line react/jsx-no-target-blank
           <a

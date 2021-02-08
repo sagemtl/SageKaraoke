@@ -37,98 +37,16 @@
   border-top: 2px solid black;
 }
 
-.cart{
-  position: fixed;
-  right: 30px;
-  top: 30px;
-  width: 175px;
-  z-index: 20;
-
-  &__item{
-    position: relative;
-    background-color: white;
-    width: 175px;
-    height: 75px;
-    border: 2px solid black;
-    border-radius: 15px;
-    margin-bottom: 5px;
-    box-shadow: 3px 3px #154734;
-    color: black;
-    outline: none;
-    &__amount{
-      position: absolute;
-      left: 10px;
-      top: 28px;
-      font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
-      font-size: 12px;
-    }
-    &__image{
-      margin-top: 10px;
-      margin-left: 30px;
-      height: 100px;
-      position: relative;
-      z-index:0;
-    }
-    &__size{
-      position: absolute;
-      left: 115px;
-      top: 28px;
-      font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
-      font-size: 12px;
-    }
-    &__price{
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
-      font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
-      font-size: 12px;
-    }
-    &__close{
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      color: black;
-      font-size: 16px;
-
-      &:hover {
-        background: black;
-        color: white;
-        opacity: 1;
-        border-radius: 50%;
-      }
-    } 
-    &:hover {
-      opacity: 0.7;
-      cursor: pointer;
-    }
-    &__noStock{
-      opacity: 0.5;
-      cursor: pointer;
-    }
-    &__noStockMsg{
-      position: absolute;
-      color:red;
-      width: 100px;
-      z-index: 100;
-    }
+.header-desktop {
+  &__close {
+    z-index: 50;
+    position: absolute;
+    left: 145px;
+    top: 2px;
   }
 
-  &__button{
-    border: none;
-    box-shadow: 3px 3px #000;
-    margin-top: 15px;
-    background-color: #154734;
-    border-radius: 8px;
-    width: 175px;
-    height: 40px;
-    color: white;
-    outline: none;
-    font-weight: 500;
-    cursor: pointer;
-
-    &:focus {
-      outline: none;
-    }
+  &__icon {
+    color: #154734;
   }
 }
 
@@ -180,7 +98,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 0 5px;
+  margin-bottom: 10px;
+  margin-top: -10px;
 }
 
 .navbox--closed {
@@ -213,6 +132,14 @@
 
   .header-desktop {
     display: none;
+
+    &__close {
+      display: none;
+    }
+
+    &__icon {
+      display: none;
+    }
   }
   
   .navbox {

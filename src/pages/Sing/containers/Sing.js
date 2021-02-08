@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
 import AudioInput from 'components/AudioAnalyser';
-import AudioRecognizer from 'components/AudioRecognizer';
+// import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
 import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
@@ -72,20 +72,18 @@ const Sing = ({ match }) => {
     <div className="sing">
       <h1 className="sing__title">{songName}</h1>
       <h1 className="sing__title">{artist}</h1>
-      <div className="sing-video">
-        {/* {playSong ? null : <Countdown onComplete={setPlaySong} />} */}
-        <Video
-          playing={playSong}
-          songName={songTitle}
-          origVoiceOn={origVoiceOn}
-          onTimeUpdate={onTimeUpdate}
-          onEnded={onEnded}
-        />
-      </div>
+      {/* {playSong ? null : <Countdown onComplete={setPlaySong} />} */}
+      <Video
+        playing={playSong}
+        songName={songTitle}
+        origVoiceOn={origVoiceOn}
+        onTimeUpdate={onTimeUpdate}
+        onEnded={onEnded}
+      />
       {lang && lrcList.length ? (
         <>
           <AudioInput songTitle={songTitle} />
-          <AudioRecognizer lang={lang} lineList={lrcList} />
+          {/* <AudioRecognizer lang={lang} lineList={lrcList} /> */}
           <Lyrics lineList={lrcList} />
         </>
       ) : null}
