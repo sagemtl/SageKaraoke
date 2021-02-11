@@ -10,16 +10,30 @@
   min-width: 800px;
   max-width: 1900px;
   text-align: center;
+
+  &__background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    animation: fadein 3s;
+  }
 }
 
 .song-title {
   line-height: 1.2;
 }
 .album-mv-container {
+  // position: fixed;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   margin: 0 auto;
+}
+
+.mv {
 }
 
 .left-panel {
@@ -36,10 +50,15 @@
     margin: 0 auto;
   }
   &__lyrics {
-    max-height: 20vw;
-    overflow: scroll;
     margin: 0 auto;
-    margin-top: 1em;
+    margin-top: 2em;
+    &__lyrics-title {
+      margin-bottom: 2px;
+    }
+    &__lyrics-body {
+      overflow: scroll;
+      max-height: 20vw;
+    }
   }
 }
 
@@ -63,7 +82,7 @@
   }
   &__leaderboard {
     min-width: 12vw;
-    margin-top: 3em;
+    margin-top: 2em;
     border: 2px;
     border-color: black;
     border-style: solid;
@@ -76,7 +95,36 @@
     font-size: 15px;
     max-width: 300px;
   }
+  .preview {
+    flex-direction: column;
+  }
   .album-mv-container {
-    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1;
+  }
+  .left-panel {
+    flex-direction: row;
+    &__lyrics {
+      margin: 0 auto;
+      // width: 200px;
+    }
+  }
+  .right-panel {
+    flex-direction: column;
+    width: 90vw;
+
+    // height: 10vw;
+    &__instructions {
+      height: 20vh;
+      overflow-y: scroll;
+    }
+    &__leaderboard {
+      height: 20vh;
+      overflow-y: scroll;
+    }
+  }
+  .mv {
+    order: -1;
+    // height: 300px;
   }
 }

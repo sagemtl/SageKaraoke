@@ -101,7 +101,19 @@ const Preview = ({ match }) => {
   };
 
   return (
-    <div className="preview">
+    <div
+      className="preview"
+      style={{
+        backgroundImage: `url(${`${process.env.PUBLIC_URL}/lavender.jpg`})`,
+        backgroundSize: '100%',
+        // filter: 'blur(8px)',
+      }}
+    >
+      {/* <img
+        src={`${process.env.PUBLIC_URL}/lavender.jpg`}
+        alt="background-img"
+        className="preview__background"
+      /> */}
       <h3 className="song-title">
         {songData.title.toUpperCase()} BY {songData.artist.toUpperCase()}
       </h3>
@@ -113,22 +125,26 @@ const Preview = ({ match }) => {
             className="left-panel__album-cover"
           />
           <div className="left-panel__lyrics">
-            <h3>LYRICS</h3>
-            {lrcList.map(({ id, content }) => (
-              <p key={id}>{content}</p>
-            ))}
+            <h3 className="left-panel__lyrics__lyrics-title">LYRICS</h3>
+            <div className="left-panel__lyrics__lyrics-body">
+              {lrcList.map(({ id, content }) => (
+                <p key={id}>{content}</p>
+              ))}
+            </div>
           </div>
         </div>
         {/* visuals */}
-        <ReactPlayer
-          url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-          playing={playSong}
-          muted
-          // controls
-          height="30vw"
-          width="50vw"
-          style={mvStyles}
-        />
+        <div className="mv">
+          <ReactPlayer
+            url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+            playing={playSong}
+            muted
+            // controls
+            height="350px"
+            width="50vw"
+            style={mvStyles}
+          />
+        </div>
         <div className="right-panel">
           <div className="right-panel__instructions">
             <h3>INSTRUCTIONS</h3>
