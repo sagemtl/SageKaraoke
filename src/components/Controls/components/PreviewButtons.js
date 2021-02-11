@@ -34,22 +34,24 @@ const PreviewButtons = () => {
     setPlay(playSong);
   }, [playSong]);
 
-  console.log(playSong);
-
   return (
     <div className="control-icons-container">
-      <button
-        className="play-control record-btn-ctr record-border"
-        onClick={goToSing}
-        type="button"
-      >
-        <i className="fas fa-circle red" />
-      </button>
+      <div>
+        <p className="record-label">record</p>
+        <button
+          className="play-control record-btn-ctr record-border"
+          onClick={goToSing}
+          type="button"
+        >
+          <i className="fas fa-circle red" />
+        </button>
+      </div>
       <button
         className="play-control prev-track-btn-ctr"
         // onClick={this.playPrevTrack}
         type="button"
       >
+        <p className="control-icons-label">previous</p>
         <i className="fas fa-step-backward" />
       </button>
       <button
@@ -57,6 +59,7 @@ const PreviewButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
+        <p className="control-icons-label">{playSong ? 'pause' : 'play'}</p>
         {play ? <i className="fas fa-pause" /> : <i className="fas fa-play" />}
       </button>
       <button
@@ -64,23 +67,27 @@ const PreviewButtons = () => {
         // onClick={this.playNextTrack}
         type="button"
       >
+        <p className="control-icons-label">next</p>
         <i className="fas fa-step-forward" />
       </button>
-      <div className="voice-over-btn switch">
-        <input
-          type="checkbox"
-          id="react-switch-new"
-          checked={origVoiceOn}
-          onChange={handleLiveVoice}
-        />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label
-          className="react-switch-label"
-          htmlFor="react-switch-new"
-          style={{ background: origVoiceOn && '#154734' }}
-        >
-          <span className="react-switch-button" />
-        </label>
+      <div>
+        <p className="control-icons-label">voice</p>
+        <div className="voice-over-btn switch">
+          <input
+            type="checkbox"
+            id="react-switch-new"
+            checked={origVoiceOn}
+            onChange={handleLiveVoice}
+          />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label
+            className="react-switch-label"
+            htmlFor="react-switch-new"
+            style={{ background: origVoiceOn && '#154734' }}
+          >
+            <span className="react-switch-button" />
+          </label>
+        </div>
       </div>
     </div>
   );

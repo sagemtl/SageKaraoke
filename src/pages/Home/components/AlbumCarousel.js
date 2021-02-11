@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Carousel from 'react-spring-3d-carousel';
 import { useGlobalContext } from 'global/context';
-import { getAllSongs } from 'utils/ktvQueries';
 
-const AlbumCarousel = () => {
+const AlbumCarousel = ({ albums, selectedAlbum }) => {
   const globalContext = useGlobalContext();
-  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { selectedAlbum } = karaokeState;
-
-  const [albums, setAlbums] = useState([]);
-
-  console.log(albums);
-
-  useEffect(() => {
-    getAllSongs().then((res) => {
-      setAlbums(res);
-    });
-  }, []);
+  const history = useHistory();
+  const [, karaokeDispatch] = globalContext.karaoke;
+  const { width } = globalContext.window;
 
   const setSelectedAlbum = (index) => {
     karaokeDispatch({
@@ -35,6 +28,17 @@ const AlbumCarousel = () => {
           <h1 className="album__title">{slide.title}</h1>
           <p className="album__subtitle">{slide.artist}</p>
           <img src={slide.cover_photo} alt="test" className="album__cover" />
+          {selectedAlbum === index && (
+            <div className="album-hidden">
+              <PlayCircleOutlineIcon
+                className="album-hidden__button"
+                style={{ fontSize: '5rem' }}
+                onClick={() =>
+                  history.push(`/preview/${albums[selectedAlbum].title_id}`)
+                }
+              />
+            </div>
+          )}
         </div>
       ),
     }));
@@ -50,7 +54,7 @@ const AlbumCarousel = () => {
       <Carousel
         slides={transformData(albums)}
         goToSlide={selectedAlbum}
-        offsetRadius={2}
+        offsetRadius={width > 700 ? 2 : 1}
       />
     </div>
   );

@@ -64,3 +64,21 @@ export const getScore = async (titleId, audioData) => {
     .then((result) => result)
     .catch((error) => console.log('error', error));
 };
+
+export const getLeaderboardByTitleId = async (titleId) => {
+  const requestOptions = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+    redirect: 'follow',
+  };
+  return fetch(
+    `http://localhost:5000/ktv-api/leaderboard/${titleId}`,
+    requestOptions,
+  )
+    .then((response) => response.json())
+    .then((result) => result)
+    .catch((error) => console.log('error', error));
+};

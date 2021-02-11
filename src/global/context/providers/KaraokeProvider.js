@@ -1,16 +1,25 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { getAllSongs } from 'utils/ktvQueries';
 import PropTypes from 'prop-types';
 
 const KaraokeContext = createContext();
 
 const initialState = {
   navOpen: true,
+  controlOpen: true,
   playSong: false,
   origVoiceOn: true,
   audioTime: 0,
   audioEnded: false,
   lyricsScore: 0,
   selectedAlbum: 0,
+  pinyinOn: false,
 };
 
 const reducer = (state, action) => {
@@ -27,8 +36,12 @@ const reducer = (state, action) => {
       return { ...state, lyricsScore: action.payload };
     case 'SET_NAVBAR_OPEN':
       return { ...state, navOpen: action.payload };
+    case 'SET_CONTROL_CENTER_OPEN':
+      return { ...state, controlOpen: action.payload };
     case 'SET_SELECTED_ALBUM':
       return { ...state, selectedAlbum: action.payload.selectedAlbum };
+    case 'SET_PINYIN_ON':
+      return { ...state, pinyinOn: action.payload.pinyinOn };
     default:
       return null;
   }
@@ -36,9 +49,14 @@ const reducer = (state, action) => {
 
 export const KaraokeContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [albums, setAlbums] = useState([]);
+
+  useEffect(() => {
+    getAllSongs().then((res) => setAlbums(res));
+  }, []);
 
   return (
-    <KaraokeContext.Provider value={[state, dispatch]}>
+    <KaraokeContext.Provider value={[{ ...state, albums }, dispatch]}>
       {children}
     </KaraokeContext.Provider>
   );

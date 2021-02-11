@@ -1,4 +1,4 @@
-@import '../pages/Home/styles/home.scss';
+@import "../pages/Home/styles/home.scss";
 
 html * {
   font-family: Arial, Helvetica, sans-serif !important;
@@ -6,8 +6,11 @@ html * {
 
 body {
   margin: 0;
-  overflow: auto;
-  background: black;
+  overflow: hidden;
+  background-image: url('https://res.cloudinary.com/sagemontreal-com/image/upload/v1612729998/stars4_y0goq8.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background: pink;
 }
 
 *:focus {

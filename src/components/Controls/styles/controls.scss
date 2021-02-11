@@ -1,11 +1,10 @@
-.control-center {
-  position: absolute;
+%control-center-def {
+  position: fixed;
   width: 500px;
-  height: 150px;
+  height: 100px;
   background-color: white;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 10vh;
   border-radius: 5px;
   border: 2px solid lightgrey;
   box-shadow: 7px 7px lightgrey;
@@ -16,8 +15,16 @@
   z-index: 100;
 }
 
-.control-center--hidden {
-  bottom: -154px;
+.control-center {
+  &__open {
+    @extend %control-center-def;
+    bottom: 5vh;
+  }
+
+  &__hidden {
+    @extend %control-center-def;
+    bottom: -104px;
+  }
 }
 
 .control-dismiss-tab {
@@ -36,14 +43,11 @@
   cursor: pointer;
 }
 
-.control-dismiss-tab:focus {
-  outline: none;
-}
-
 .control-icons-container {
   display: flex;
   justify-content: space-evenly;
   vertical-align: baseline;
+  padding-bottom: 25px;
 
   // Standard
   & .play-control {
@@ -64,7 +68,15 @@
     & .red {
       color: red;
       transition: all 0.2s ease-in-out;
+      margin: 0;
     }
+  }
+
+  & .pinyin-control {
+    padding: 0;
+    min-width: 55px;
+    min-height: 25px;
+    height: 40%;
   }
 
   & .record-border {
@@ -138,15 +150,45 @@
   margin-right: 25px;
 }
 
+.carousel-control-icons-labels {
+  color: black;
+  margin-top: 5px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.control-icons-label {
+  color: black;
+  margin-top: 20px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.record-label {
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
-  .control-center {
-    width: 100%;
+
+  %control-center-def {
+    width: 100vw;
     height: 75px;
     bottom: 0px;
   }
 
-  .control-center--hidden {
-    bottom: -82px;
+  .control-center {  
+    &__hidden {
+      bottom: -80px;
+    }
   }
 
   .control-icons-container {
@@ -174,5 +216,24 @@
     & .react-switch-label:active .react-switch-button {
       width: 40px;
     }
+  }
+
+  .control-icons-label {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .carousel-control-icons-labels {
+    color: black;
+    margin-top: 8px; 
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .record-label {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-size: 12px;
   }
 }

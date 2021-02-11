@@ -6,7 +6,7 @@ import '../styles/Lyrics.scss';
 const Lyrics = ({ lineList }) => {
   const globalContext = useGlobalContext();
   const [karaokeState] = globalContext.karaoke;
-  const { audioTime } = karaokeState;
+  const { audioTime, controlOpen } = karaokeState;
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
@@ -19,12 +19,12 @@ const Lyrics = ({ lineList }) => {
   }, [currentIndex, audioTime, lineList]);
 
   return (
-    <div className="lyrics-div">
+    <div className={controlOpen ? 'lyrics__higher' : 'lyrics__lower'}>
       <div>time: {audioTime}</div>
-      <div className="lyrics-current">
+      <div className="lyrics__current">
         {currentIndex >= 0 ? lineList[currentIndex].content : null}
       </div>
-      <div className="lyrics-next">
+      <div className="lyrics__next">
         {currentIndex < lineList.length - 1
           ? lineList[currentIndex + 1].content
           : null}

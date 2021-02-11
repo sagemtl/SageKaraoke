@@ -90,6 +90,7 @@
 
   &__link {
     color: #154734;
+    text-decoration: none;
 
     &:hover {
       color: #154734;
@@ -108,7 +109,7 @@
 }
 
 .header-mobile-drawer {
-  width: 300px;
+  width: 230px;
   z-index: 1000;
   padding: 3em 2em;
 }

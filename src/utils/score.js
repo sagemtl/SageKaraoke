@@ -6,10 +6,11 @@ const Counter = (arr) => {
   return count;
 };
 
-export const getWordList = (data) => {
-  console.log('word list test');
+export const getWordList = (data, lang) => {
+  const splitToken = lang === 'en-US' ? ' ' : '';
   const linesWordsList = data
-    .map((line) => line.content.trim().toLowerCase().split(''))
+    .slice(1)
+    .map((line) => line.content.trim().toLowerCase().split(splitToken))
     .reduce((a, b) => a.concat(b), []);
 
   const wordsCount = Counter(linesWordsList);

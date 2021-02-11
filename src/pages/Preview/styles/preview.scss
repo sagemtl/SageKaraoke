@@ -2,3 +2,86 @@
   width: 1000px;
   height: 1000px;
 }
+
+.preview {
+  display: flex;
+  // flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+
+  flex-wrap: wrap;
+  margin: 0 auto;
+  min-width: 800px;
+  max-width: 1900px;
+  text-align: center;
+}
+
+.song-title {
+  line-height: 1.2;
+}
+.album-mv-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0 auto;
+  width: 15vw;
+  &__album-cover {
+    width: 13vw;
+    height: 13vw;
+    border-radius: 15px;
+    margin: 0 auto;
+  }
+  &__lyrics {
+    max-height: 20vw;
+    overflow: scroll;
+    margin: 0 auto;
+    margin-top: 1em;
+  }
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 15vw;
+  margin: 0 auto;
+  &__instructions {
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 10px;
+    min-width: 12vw;
+    &__content {
+      margin: 0 auto;
+      max-width: 70%;
+      padding-bottom: 1em;
+    }
+  }
+  &__leaderboard {
+    min-width: 12vw;
+    margin-top: 3em;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 450px) {
+  .song-title {
+    font-size: 15px;
+    max-width: 300px;
+  }
+  .album-mv-container {
+    flex-wrap: wrap;
+  }
+}

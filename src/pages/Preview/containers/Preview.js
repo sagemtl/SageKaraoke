@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import Lyrics from 'components/Lyrics';
 
-import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
+import {
+  getSongByTitleId,
+  getLyricsByTitleId,
+  getLeaderboardByTitleId,
+} from 'utils/ktvQueries';
 import parseLrc from 'utils/parseLrc';
 import { useGlobalContext } from '../../../global/context';
+import '../styles/preview.scss';
 
 const Preview = ({ match }) => {
   const {
@@ -15,9 +19,14 @@ const Preview = ({ match }) => {
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
 
-  const [songTitle, setSongTitle] = useState('');
-  const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
+  const [songData, setSongData] = useState({
+    artist: '',
+    title: '',
+    titleChinese: '',
+    cover: '',
+  });
+  const [leaderboard, setLeaderboard] = useState([]);
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -39,18 +48,28 @@ const Preview = ({ match }) => {
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
-      console.log(songInfo);
-      setSongTitle(songInfo.title);
-      setArtist(songInfo.artist);
+      setSongData((prev) => ({
+        ...prev,
+        title: songInfo.title,
+        artist: songInfo.artist,
+        cover: songInfo.cover_photo,
+      }));
     };
-    const getSongData = async () => {
-      const songData = await getLyricsByTitleId(songName);
-      const lineList = parseLrc(songData.lyrics);
+
+    const getSongLyrics = async () => {
+      const songLyrics = await getLyricsByTitleId(songName);
+      const lineList = parseLrc(songLyrics.lyrics);
       setLrcList(lineList);
     };
 
+    const getLeaderboard = async () => {
+      const leader = await getLeaderboardByTitleId(songName);
+      setLeaderboard(leader);
+    };
+    console.log('in top useeffect');
     getSongInfo();
-    getSongData();
+    getSongLyrics();
+    getLeaderboard();
   }, [songName]);
 
   useEffect(() => {
@@ -72,43 +91,76 @@ const Preview = ({ match }) => {
         payload: { origVoiceOn: true },
       });
     };
-  }, [karaokeDispatch]);
+  }, [karaokeDispatch, playSong]);
+
+  const mvStyles = {
+    // border: '4px',
+    // borderColor: 'black',
+    // borderStyle: 'solid',
+    // borderRadius: '10px',
+    margin: '0 1em',
+  };
 
   return (
-    <div className="home">
-      <h1>Preview page</h1>
-      <h3>Playing {songTitle}</h3>
-      <h3>By {artist}</h3>
-      {/* visuals */}
-      <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-        playing={playSong}
-        muted
-        controls
-        height="70%"
-        width="35%"
-      />
+    <div className="preview">
+      <h3 className="song-title">
+        {songData.title.toUpperCase()} BY {songData.artist.toUpperCase()}
+      </h3>
+      <div className="album-mv-container">
+        <div className="left-panel">
+          <img
+            src={songData.cover}
+            alt="album cover"
+            className="left-panel__album-cover"
+          />
+          <div className="left-panel__lyrics">
+            <h3>LYRICS</h3>
+            {lrcList.map(({ id, content }) => (
+              <p key={id}>{content}</p>
+            ))}
+          </div>
+        </div>
+        {/* visuals */}
+        <ReactPlayer
+          url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+          playing={playSong}
+          muted
+          // controls
+          height="30vw"
+          width="50vw"
+          style={mvStyles}
+        />
+        <div className="right-panel">
+          <div className="right-panel__instructions">
+            <h3>INSTRUCTIONS</h3>
+            <p className="right-panel__instructions__content">
+              Click the record button to play the game. Sing along the lyrics
+              using the right pitch at the right time to earn a higher score.
+            </p>
+          </div>
+          <div className="right-panel__leaderboard">
+            <h3>LEADERBOARD</h3>
+            {leaderboard.map(({ name, score }, index) => (
+              <p key={name + score}>
+                {index + 1}. {name}: {score}
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
       {/* music */}
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
         playing={playSong}
         onTimeUpdate={onTimeUpdate}
         onEnded={onEnded}
-        controls
       />
       {/* vocals */}
       <ReactPlayer
         url={`${process.env.PUBLIC_URL}/${songName}/${songName}_vocals.mp3`}
         playing={playSong}
         muted={!origVoiceOn}
-        controls
       />
-
-      {lrcList.length ? (
-        <>
-          <Lyrics lineList={lrcList} />
-        </>
-      ) : null}
     </div>
   );
 };

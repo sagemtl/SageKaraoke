@@ -10,6 +10,8 @@ import Video from '../components/Video';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
 import ScoreRenderer from '../components/ScoreRenderer';
+import { getLyricsScore } from '../../../utils/score';
+// import NumberShuffler from './NumberShuffler';
 
 const Sing = ({ match }) => {
   const {
@@ -18,12 +20,13 @@ const Sing = ({ match }) => {
 
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn, lyricsScore } = karaokeState;
+  const { playSong, origVoiceOn, pinyinOn, lyricsScore } = karaokeState;
 
   const [songName, setSongName] = useState('');
   const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
   const [playLocalSong, setPlayLocalSong] = useState(false);
+  const [lrcRomanList, setLrcRomanList] = useState([]);
 
   const [lang, setLang] = useState('');
 
@@ -52,6 +55,7 @@ const Sing = ({ match }) => {
       type: 'SET_AUDIO_ENDED',
       payload: true,
     });
+    return <div> Score = {getLyricsScore}</div>;
   }, [karaokeDispatch]);
 
   const setPlaySong = (play) => {
@@ -85,12 +89,17 @@ const Sing = ({ match }) => {
       setSongName(songInfo.title);
       setArtist(songInfo.artist);
     };
+
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
       const lineList = parseLrc(songData.lyrics);
       setLrcList(lineList);
       setLang(songData.language);
       setLrcList(lineList);
+      if (songData.lyrics_roman) {
+        const romanLineList = parseLrc(songData.lyrics_roman);
+        setLrcRomanList(romanLineList);
+      }
     };
 
     getSongInfo();
@@ -127,7 +136,9 @@ const Sing = ({ match }) => {
         <>
           <AudioInput songTitle={songTitle} />
           <AudioRecognizer lang={lang} lineList={lrcList} />
-          <Lyrics lineList={lrcList} />
+          <Lyrics
+            lineList={pinyinOn && lrcRomanList.length ? lrcRomanList : lrcList}
+          />
         </>
       ) : null}
     </div>

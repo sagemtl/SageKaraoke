@@ -41,7 +41,7 @@ const AudioAnalyser = ({ audio, songTitle }) => {
 
   // Handle on each audio data
   useEffect(() => {
-    audioDataSave.current.push(JSON.stringify({ audioTime, audioData }));
+    audioDataSave.current.push({ audioTime, audioData: Array.from(audioData) });
   }, [audioTime, audioData]);
 
   // Handle when audio has ended

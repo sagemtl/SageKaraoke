@@ -5,9 +5,15 @@ import {
   KaraokeContextProvider,
   useKaraokeContext,
 } from './providers/KaraokeProvider';
+import {
+  WindowContextProvider,
+  useWindowContext,
+} from './providers/WindowProvider';
 
 export const GlobalContextProvider = ({ children }) => (
-  <KaraokeContextProvider>{children}</KaraokeContextProvider>
+  <WindowContextProvider>
+    <KaraokeContextProvider>{children}</KaraokeContextProvider>
+  </WindowContextProvider>
 );
 
 GlobalContextProvider.propTypes = {
@@ -16,6 +22,7 @@ GlobalContextProvider.propTypes = {
 
 export const useGlobalContext = () => ({
   karaoke: useKaraokeContext(),
+  window: useWindowContext(),
 });
 
 export const useGlobalDispatch = () => ({});
