@@ -19,11 +19,12 @@ const Sing = ({ match }) => {
 
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn } = karaokeState;
+  const { playSong, origVoiceOn, pinyinOn } = karaokeState;
 
   const [songName, setSongName] = useState('');
   const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
+  const [lrcRomanList, setLrcRomanList] = useState([]);
 
   const [lang, setLang] = useState('');
 
@@ -52,23 +53,6 @@ const Sing = ({ match }) => {
     });
   };
 
-  // const setVoiceToggle = (play) => {
-  //   karaokeDispatch({
-  //     type: 'SET_ORIGINAL_VOICE_ON',
-  //     payload: { origVoiceOn: play },
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   const getSongData = async () => {
-  //     const songData = await getLyricsByTitleId(songTitle);
-  //     const lineList = parseLrc(songData.lyrics);
-  //     setLang(songData.language);
-  //     setLrcList(lineList);
-  //   };
-  //   getSongData();
-  // }, [songTitle]);
-
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songTitle);
@@ -76,26 +60,28 @@ const Sing = ({ match }) => {
       setSongName(songInfo.title);
       setArtist(songInfo.artist);
     };
+
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
       const lineList = parseLrc(songData.lyrics);
-      setLrcList(lineList);
       setLang(songData.language);
       setLrcList(lineList);
+      if (songData.lyrics_roman) {
+        const romanLineList = parseLrc(songData.lyrics_roman);
+        setLrcRomanList(romanLineList);
+      }
     };
 
     getSongInfo();
     getSongData();
   }, [songTitle]);
+
   return (
     <div className="home">
       <h1>Sing Page </h1>
       <h1>{songName}</h1>
       <h1>{artist}</h1>
       <div>
-        {/* <button type="button" onClick={() => setVoiceToggle(!origVoiceOn)}>
-          toggle voice
-        </button> */}
         {playSong ? null : <Countdown onComplete={setPlaySong} />}
         {/* <NumberShuffler score={getLyricsScore} /> */}
         <Video
@@ -110,7 +96,9 @@ const Sing = ({ match }) => {
         <>
           <AudioInput songTitle={songTitle} />
           <AudioRecognizer lang={lang} lineList={lrcList} />
-          <Lyrics lineList={lrcList} />
+          <Lyrics
+            lineList={pinyinOn && lrcRomanList.length ? lrcRomanList : lrcList}
+          />
         </>
       ) : null}
     </div>

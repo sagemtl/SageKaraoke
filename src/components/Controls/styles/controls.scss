@@ -18,7 +18,7 @@
 .control-center {
   &__open {
     @extend %control-center-def;
-    bottom: 10vh;
+    bottom: 5vh;
   }
 
   &__hidden {
@@ -70,6 +70,13 @@
       transition: all 0.2s ease-in-out;
       margin: 0;
     }
+  }
+
+  & .pinyin-control {
+    padding: 0;
+    min-width: 55px;
+    min-height: 25px;
+    height: 40%;
   }
 
   & .record-border {
@@ -145,7 +152,7 @@
 
 .carousel-control-icons-labels {
   color: black;
-  margin-top: 0px; 
+  margin-top: 5px; 
   margin-bottom: 15px;
   font-size: 14px;
   font-weight: bold;
@@ -213,6 +220,13 @@
 
   .control-icons-label {
     margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .carousel-control-icons-labels {
+    color: black;
+    margin-top: 8px; 
     margin-bottom: 10px;
     font-size: 12px;
   }
