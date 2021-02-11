@@ -7,6 +7,7 @@ import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
 import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
+import FinalResultsModal from '../components/FinalResultsModal';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
 import { getLyricsScore } from '../../../utils/score';
@@ -89,6 +90,7 @@ const Sing = ({ match }) => {
   }, [songTitle]);
   return (
     <div className="home">
+      <FinalResultsModal />
       <h1>Sing Page </h1>
       <h1>{songName}</h1>
       <h1>{artist}</h1>
