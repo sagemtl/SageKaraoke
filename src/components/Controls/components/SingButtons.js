@@ -32,7 +32,7 @@ const SingButtons = () => {
   return (
     <div className="control-icons-container">
       <div>
-        <p className="control-icons-label">pinyin</p>
+        <p className="sing-control-icons-label">pinyin</p>
         <Button
           variant="contained"
           className="pinyin-control"
@@ -47,7 +47,9 @@ const SingButtons = () => {
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        <p className="control-icons-label">{playSong ? 'pause' : 'play'}</p>
+        <p className="sing-control-icons-label">
+          {playSong ? 'pause' : 'play'}
+        </p>
         {playSong ? (
           <i className="fas fa-pause" />
         ) : (
@@ -55,7 +57,7 @@ const SingButtons = () => {
         )}
       </button>
       <div>
-        <p className="control-icons-label">voice</p>
+        <p className="sing-control-icons-label">voice</p>
         <div className="voice-over-btn switch">
           <input
             type="checkbox"
@@ -67,7 +69,7 @@ const SingButtons = () => {
           <label
             className="react-switch-label"
             htmlFor="react-switch-new"
-            style={{ background: origVoiceOn && '#154734' }}
+            style={{ background: origVoiceOn && '#6D4D83' }}
           >
             <span className="react-switch-button" />
           </label>
