@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/resultsModal.scss';
 
 const ScoreRenderer = ({ number }) => {
   const [count, setCount] = useState(0);
@@ -25,9 +26,9 @@ const ScoreRenderer = ({ number }) => {
 
   return (
     <div className="Count">
-      <h3>
+      <h1 className="final-score">
         <i>{count}</i>
-      </h3>
+      </h1>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import { useHistory } from 'react-router-dom';
+import ScoreRenderer from './ScoreRenderer';
 import '../styles/resultsModal.scss';
 
 const Transition = React.forwardRef((props, ref) => (
@@ -34,7 +35,12 @@ const FinalResultsModal = () => {
     history.go(0);
   };
 
-  const getFinalScore = () => Math.round(0.5 * lyricsScore + 0.5 * pitchScore);
+  const getFinalScore = () => {
+    if (pitchScore) {
+      return Math.round(0.5 * lyricsScore + 0.5 * pitchScore);
+    }
+    return Math.round(lyricsScore);
+  };
 
   useEffect(() => {
     console.log(audioEnded);
@@ -73,7 +79,7 @@ const FinalResultsModal = () => {
             src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1612838969/final-score_lbohbx.png"
             alt="Your Score Is"
           />
-          <h1 className="final-score">{getFinalScore()}</h1>
+          <ScoreRenderer number={getFinalScore()} />
           <div className="buttons">
             <button
               className="return-home-btn"
