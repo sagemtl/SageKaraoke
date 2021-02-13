@@ -98,84 +98,78 @@ const Preview = ({ match }) => {
     // borderStyle: 'solid',
     // borderRadius: '10px',
     margin: '0 1em',
+    width: '100%',
   };
 
+  const mobile = window.innerWidth <= 600;
+
   return (
-    <div
-      className="preview"
-      style={{
-        backgroundImage: `url(${`${process.env.PUBLIC_URL}/lavender.jpg`})`,
-        backgroundSize: '100%',
-        // filter: 'blur(8px)',
-      }}
-    >
-      {/* <img
-        src={`${process.env.PUBLIC_URL}/lavender.jpg`}
-        alt="background-img"
-        className="preview__background"
-      /> */}
-      <h3 className="song-title">
-        {songData.title.toUpperCase()} BY {songData.artist.toUpperCase()}
-      </h3>
-      <div className="album-mv-container">
-        <div className="left-panel">
-          <img
-            src={songData.cover}
-            alt="album cover"
-            className="left-panel__album-cover"
-          />
-          <div className="left-panel__lyrics">
-            <h3 className="left-panel__lyrics__lyrics-title">LYRICS</h3>
-            <div className="left-panel__lyrics__lyrics-body">
-              {lrcList.map(({ id, content }) => (
-                <p key={id}>{content}</p>
+    <div className="preview">
+      <div className="preview__container">
+        <h3 className="song-title">
+          {songData.title.toUpperCase()} BY {songData.artist.toUpperCase()}
+        </h3>
+        <div className="album-mv-container">
+          <div className="left-panel">
+            <img
+              src={songData.cover}
+              alt="album cover"
+              className="left-panel__album-cover"
+            />
+            <div className="left-panel__lyrics">
+              <h3 className="left-panel__lyrics__lyrics-title">LYRICS</h3>
+              <div className="left-panel__lyrics__lyrics-body">
+                {lrcList.map(({ id, content }) => (
+                  <p key={id}>{content}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* visuals */}
+          <div className="mv">
+            <ReactPlayer
+              url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+              playing={playSong}
+              muted
+              // height="auto"
+              width={mobile ? '90vw' : '50vw'}
+              style={mvStyles}
+            />
+          </div>
+          <div className="right-panel">
+            <div className="right-panel__instructions">
+              <h3>INSTRUCTIONS</h3>
+              <p className="right-panel__instructions__content">
+                Click the record button to play the game. Sing along the lyrics
+                using the right pitch at the right time to earn a higher score.
+              </p>
+            </div>
+            <div className="right-panel__leaderboard">
+              <h3>LEADERBOARD</h3>
+              {leaderboard.map(({ name, score }, index) => (
+                <p key={name + score}>
+                  {index + 1}. {name}: {score}
+                </p>
               ))}
             </div>
           </div>
         </div>
-        {/* visuals */}
-        <div className="mv">
-          <ReactPlayer
-            url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-            playing={playSong}
-            muted
-            // controls
-            height="350px"
-            width="50vw"
-            style={mvStyles}
-          />
-        </div>
-        <div className="right-panel">
-          <div className="right-panel__instructions">
-            <h3>INSTRUCTIONS</h3>
-            <p className="right-panel__instructions__content">
-              Click the record button to play the game. Sing along the lyrics
-              using the right pitch at the right time to earn a higher score.
-            </p>
-          </div>
-          <div className="right-panel__leaderboard">
-            <h3>LEADERBOARD</h3>
-            {leaderboard.map(({ name, score }, index) => (
-              <p key={name + score}>
-                {index + 1}. {name}: {score}
-              </p>
-            ))}
-          </div>
-        </div>
+        {/* music */}
+        <ReactPlayer
+          style={{ display: 'none' }}
+          url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
+          playing={playSong}
+          onTimeUpdate={onTimeUpdate}
+          onEnded={onEnded}
+        />
+        {/* vocals */}
+        <ReactPlayer
+          style={{ display: 'none' }}
+          url={`${process.env.PUBLIC_URL}/${songName}/${songName}_vocals.mp3`}
+          playing={playSong}
+          muted={!origVoiceOn}
+        />
       </div>
-      {/* music */}
-      <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
-        playing={playSong}
-        onTimeUpdate={onTimeUpdate}
-        onEnded={onEnded}
-      />
-      {/* vocals */}
-      <ReactPlayer
-        url={`${process.env.PUBLIC_URL}/${songName}/${songName}_vocals.mp3`}
-        playing={playSong}
-        muted={!origVoiceOn}
-      />
     </div>
   );
 };
