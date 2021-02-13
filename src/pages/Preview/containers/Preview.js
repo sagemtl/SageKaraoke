@@ -131,7 +131,7 @@ const Preview = ({ match }) => {
               url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
               playing={playSong}
               muted
-              // height="auto"
+              height="auto"
               width={mobile ? '90vw' : '50vw'}
               style={mvStyles}
             />
