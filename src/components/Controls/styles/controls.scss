@@ -6,8 +6,8 @@
   left: 50%;
   transform: translateX(-50%);
   border-radius: 5px;
-  border: 2px solid lightgrey;
-  box-shadow: 7px 7px lightgrey;
+  border: 2px solid #6D4D83;
+  box-shadow: 7px 7px #6D4D83;
   transition: all 1.5s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -38,9 +38,10 @@
   background-color: white;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  border: 2px solid lightgrey;
+  border: 2px solid #6D4D83;
   text-align: center;
   cursor: pointer;
+  color: #6D4D83;
 }
 
 .control-icons-container {
@@ -54,6 +55,7 @@
     font-size: 35px;
     height: 55px;
     width: 55px;
+    color: #6D4D83;
     border: none;
     background: none;
     cursor: pointer;
@@ -77,6 +79,11 @@
     min-width: 55px;
     min-height: 25px;
     height: 40%;
+    background-color: #6D4D83;
+  }
+
+  & .pinyin-control:hover {
+    background-color: #6D4D83;
   }
 
   & .record-border {
@@ -151,8 +158,17 @@
 }
 
 .carousel-control-icons-labels {
-  color: black;
-  margin-top: 5px; 
+  color: #6D4D83;
+  margin-top: 0px; 
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sing-control-icons-label {
+  color: #6D4D83;
+  margin-top: 10px; 
   margin-bottom: 15px;
   font-size: 14px;
   font-weight: bold;
@@ -160,7 +176,7 @@
 }
 
 .control-icons-label {
-  color: black;
+  color: #6D4D83;
   margin-top: 20px; 
   margin-bottom: 15px;
   font-size: 14px;
@@ -169,7 +185,7 @@
 }
 
 .record-label {
-  color: black;
+  color: #6D4D83;
   margin-top: 20px;
   margin-bottom: 5px;
   font-size: 14px;
@@ -222,6 +238,7 @@
     margin-top: 20px;
     margin-bottom: 10px;
     font-size: 12px;
+    color: #6D4D83;
   }
 
   .carousel-control-icons-labels {
@@ -229,9 +246,11 @@
     margin-top: 8px; 
     margin-bottom: 10px;
     font-size: 12px;
+    color: #6D4D83;
   }
 
   .record-label {
+    color: #6D4D83;
     margin-top: 20px;
     margin-bottom: 0px;
     font-size: 12px;

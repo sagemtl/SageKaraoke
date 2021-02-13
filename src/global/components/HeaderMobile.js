@@ -56,7 +56,7 @@ const HeaderMobile = () => {
       >
         <img
           className="header-mobile__logo"
-          src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1613237763/sage-animated-purple_vj7uod.gif"
           alt="Sage Mobile Logo"
         />
       </div>

@@ -10,11 +10,15 @@
   &__higher {
     @extend %lyrics-position;
     bottom: 250px;
+    max-width: 90vw;
+    width: max-content;
   }
 
   &__lower {
     @extend %lyrics-position;
     bottom: 100px;
+    max-width: 90vw;
+    width: max-content;
   }
 
   &__current {
@@ -39,12 +43,10 @@
   .lyrics {
 
     &__higher {
-      max-width: 90vw;
       bottom: 150px;
     }
   
     &__lower {
-      max-width: 90vw;
       bottom: 100px;
     }
   
