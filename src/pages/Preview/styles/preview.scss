@@ -12,19 +12,13 @@
   // max-width: 1900px;
   text-align: center;
 
-  &__background {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    animation: fadein 3s;
+  &__video {
+    margin: 0 2em;
   }
 
   &__container {
-    overflow: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
+    position: absolute;
+    top: 5vh;
   }
 
   &__container::-webkit-scrollbar {
@@ -42,9 +36,6 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 0 auto;
-}
-
-.mv {
 }
 
 .left-panel {
@@ -68,7 +59,7 @@
     }
     &__lyrics-body {
       overflow: scroll;
-      max-height: 20vw;
+      max-height: 200px;
     }
   }
 }
@@ -85,6 +76,9 @@
     border-style: solid;
     border-radius: 10px;
     min-width: 12vw;
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     &__content {
       margin: 0 auto;
       max-width: 70%;
@@ -93,21 +87,42 @@
   }
   &__leaderboard {
     min-width: 12vw;
+    max-height: 200px;
     margin-top: 2em;
     border: 2px;
     border-color: black;
     border-style: solid;
     border-radius: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
   .song-title {
+    margin: 8vh;
     font-size: 15px;
-    max-width: 300px;
+    max-width: 90vw;
   }
   .preview {
     flex-direction: column;
+
+    &__video {
+      overflow-x: hidden;
+      position: fixed;
+      z-index: -100;
+      top: 0px;
+      left: 0px;
+      margin: 0;
+      animation: fadein 3s;
+    }
+
+    &__container {
+      overflow: scroll;
+      position: relative;
+      -ms-overflow-style: none;
+      scrollbar-width: none; 
+    }
   }
   .album-mv-container {
     flex-direction: column;
@@ -123,7 +138,7 @@
       height: 45vw;
     }
     &__lyrics {
-      margin: 0 auto;
+      margin: 8vh auto;
       width: 90vw;
       // height: 60vw;
       &__lyrics-body {
@@ -144,6 +159,7 @@
     &__leaderboard {
       height: 20vh;
       overflow-y: scroll;
+      margin-bottom: 20vh;
     }
   }
   .mv {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
@@ -27,23 +27,6 @@ const Preview = ({ match }) => {
     cover: '',
   });
   const [leaderboard, setLeaderboard] = useState([]);
-
-  const onTimeUpdate = useCallback(
-    (event) => {
-      karaokeDispatch({
-        type: 'SET_AUDIO_TIME',
-        payload: Math.floor(event.target.currentTime * 10) * 100,
-      });
-    },
-    [karaokeDispatch],
-  );
-
-  const onEnded = useCallback(() => {
-    karaokeDispatch({
-      type: 'SET_AUDIO_ENDED',
-      payload: true,
-    });
-  }, [karaokeDispatch]);
 
   useEffect(() => {
     const getSongInfo = async () => {
@@ -92,15 +75,6 @@ const Preview = ({ match }) => {
     };
   }, [karaokeDispatch, playSong]);
 
-  const mvStyles = {
-    // border: '4px',
-    // borderColor: 'black',
-    // borderStyle: 'solid',
-    // borderRadius: '10px',
-    margin: '0 1em',
-    width: '100%',
-  };
-
   const mobile = window.innerWidth <= 600;
 
   return (
@@ -128,12 +102,12 @@ const Preview = ({ match }) => {
           {/* visuals */}
           <div className="mv">
             <ReactPlayer
+              className="preview__video"
               url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
               playing={playSong}
               muted
-              height="auto"
-              width={mobile ? '90vw' : '50vw'}
-              style={mvStyles}
+              height={mobile ? '100vh' : 'auto'}
+              width={mobile ? 'auto' : '50vw'}
             />
           </div>
           <div className="right-panel">
@@ -159,8 +133,6 @@ const Preview = ({ match }) => {
           style={{ display: 'none' }}
           url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}
           playing={playSong}
-          onTimeUpdate={onTimeUpdate}
-          onEnded={onEnded}
         />
         {/* vocals */}
         <ReactPlayer
