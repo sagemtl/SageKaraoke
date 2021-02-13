@@ -1,4 +1,11 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { getAllSongs } from 'utils/ktvQueries';
 import PropTypes from 'prop-types';
 
 const KaraokeContext = createContext();
@@ -13,7 +20,7 @@ const initialState = {
   lyricsScore: 0,
   pitchScore: 0,
   selectedAlbum: 0,
-  albums: [],
+  pinyinOn: false,
 };
 
 const reducer = (state, action) => {
@@ -36,8 +43,8 @@ const reducer = (state, action) => {
       return { ...state, controlOpen: action.payload };
     case 'SET_SELECTED_ALBUM':
       return { ...state, selectedAlbum: action.payload.selectedAlbum };
-    case 'SET_ALBUMS':
-      return { ...state, albums: action.payload.albums };
+    case 'SET_PINYIN_ON':
+      return { ...state, pinyinOn: action.payload.pinyinOn };
     default:
       return null;
   }
@@ -45,9 +52,14 @@ const reducer = (state, action) => {
 
 export const KaraokeContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [albums, setAlbums] = useState([]);
+
+  useEffect(() => {
+    getAllSongs().then((res) => setAlbums(res));
+  }, []);
 
   return (
-    <KaraokeContext.Provider value={[state, dispatch]}>
+    <KaraokeContext.Provider value={[{ ...state, albums }, dispatch]}>
       {children}
     </KaraokeContext.Provider>
   );

@@ -1,27 +1,15 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Carousel from 'react-spring-3d-carousel';
 import { useGlobalContext } from 'global/context';
-import { getAllSongs } from 'utils/ktvQueries';
 
-const AlbumCarousel = () => {
+const AlbumCarousel = ({ albums, selectedAlbum }) => {
   const globalContext = useGlobalContext();
   const history = useHistory();
-  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { selectedAlbum, albums } = karaokeState;
-
-  useEffect(() => {
-    getAllSongs().then((res) => {
-      karaokeDispatch({
-        type: 'SET_ALBUMS',
-        payload: {
-          albums: res,
-        },
-      });
-    });
-  }, [karaokeDispatch]);
+  const [, karaokeDispatch] = globalContext.karaoke;
+  const { width } = globalContext.window;
 
   const setSelectedAlbum = (index) => {
     karaokeDispatch({
@@ -66,7 +54,7 @@ const AlbumCarousel = () => {
       <Carousel
         slides={transformData(albums)}
         goToSlide={selectedAlbum}
-        offsetRadius={2}
+        offsetRadius={width > 700 ? 2 : 1}
       />
     </div>
   );
