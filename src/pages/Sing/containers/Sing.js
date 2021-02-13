@@ -7,9 +7,9 @@ import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
 import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
+import FinalResultsModal from '../components/FinalResultsModal';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
-import ScoreRenderer from '../components/ScoreRenderer';
 import { getLyricsScore } from '../../../utils/score';
 // import NumberShuffler from './NumberShuffler';
 
@@ -20,7 +20,7 @@ const Sing = ({ match }) => {
 
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn, pinyinOn, lyricsScore } = karaokeState;
+  const { playSong, origVoiceOn, pinyinOn } = karaokeState;
 
   const [songName, setSongName] = useState('');
   const [artist, setArtist] = useState('');
@@ -108,11 +108,11 @@ const Sing = ({ match }) => {
 
   return (
     <div className="home">
+      <FinalResultsModal />
       <h1>Sing Page </h1>
       <h1>{songName}</h1>
       <h1>{artist}</h1>
       {/* <h1>{lyricsScore}</h1> */}
-      {onEnded ? <ScoreRenderer number={lyricsScore} /> : <div />}
       {/* <div className="scoreRenderer">
         <ScoreRenderer number={lyricsScore} />
       </div> */}

@@ -18,6 +18,7 @@ const initialState = {
   audioTime: 0,
   audioEnded: false,
   lyricsScore: 0,
+  pitchScore: 0,
   selectedAlbum: 0,
   pinyinOn: false,
 };
@@ -34,6 +35,8 @@ const reducer = (state, action) => {
       return { ...state, audioEnded: action.payload };
     case 'SET_LYRICS_SCORE':
       return { ...state, lyricsScore: action.payload };
+    case 'SET_PITCH_SCORE':
+      return { ...state, pitchScore: action.payload };
     case 'SET_NAVBAR_OPEN':
       return { ...state, navOpen: action.payload };
     case 'SET_CONTROL_CENTER_OPEN':

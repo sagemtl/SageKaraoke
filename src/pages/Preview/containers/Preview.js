@@ -91,7 +91,8 @@ const Preview = ({ match }) => {
         payload: { origVoiceOn: true },
       });
     };
-  }, [karaokeDispatch, playSong]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const mvStyles = {
     // border: '4px',
