@@ -32,13 +32,13 @@ const AudioRecognizer = ({ lang, lineList }) => {
   useEffect(() => {
     console.log('recognizer start');
     recognition.start();
-    wordListRef.current = getWordList(lineList);
+    wordListRef.current = getWordList(lineList, lang);
     const cleanup = () => {
       recognition.abort();
       console.log('audio recognizer cleanup');
     };
     return cleanup;
-  }, [recognition, lineList]);
+  }, [recognition, lineList, lang]);
 
   useEffect(() => {
     if (audioEnded) {
