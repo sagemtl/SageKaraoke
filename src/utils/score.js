@@ -1,9 +1,11 @@
 const Counter = (arr) => {
   const count = {};
+  let total = 0;
   arr.forEach((val) => {
     count[val] = (count[val] || 0) + 1;
+    total += 1;
   });
-  return count;
+  return { wordsCount: count, total };
 };
 
 export const getWordList = (data, lang) => {
@@ -13,8 +15,8 @@ export const getWordList = (data, lang) => {
     .map((line) => line.content.trim().toLowerCase().split(splitToken))
     .reduce((a, b) => a.concat(b), []);
 
-  const wordsCount = Counter(linesWordsList);
-  return wordsCount;
+  const counterOut = Counter(linesWordsList);
+  return counterOut;
 };
 
 export const getLyricsScore = (wordsCount, speech) => {
