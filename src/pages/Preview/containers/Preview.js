@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
@@ -16,6 +17,7 @@ const Preview = ({ match }) => {
     params: { songName },
   } = match;
   const globalContext = useGlobalContext();
+  const history = useHistory();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
 
@@ -48,6 +50,9 @@ const Preview = ({ match }) => {
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songName);
+      if (!songInfo) {
+        history.push('/404');
+      }
       setSongData((prev) => ({
         ...prev,
         title: songInfo.title,
@@ -67,10 +72,13 @@ const Preview = ({ match }) => {
       setLeaderboard(leader);
     };
     console.log('in top useeffect');
+
     getSongInfo();
-    getSongLyrics();
+    getSongLyrics().catch(() => {
+      history.push('/404');
+    });
     getLeaderboard();
-  }, [songName]);
+  }, [history, songName]);
 
   useEffect(() => {
     const setPlaySong = (play) => {

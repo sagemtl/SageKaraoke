@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
 import '../styles/song.scss';
@@ -29,6 +30,7 @@ const Sing = ({ match }) => {
   const [lrcRomanList, setLrcRomanList] = useState([]);
 
   const [lang, setLang] = useState('');
+  const history = useHistory();
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -101,10 +103,13 @@ const Sing = ({ match }) => {
         setLrcRomanList(romanLineList);
       }
     };
-
-    getSongInfo();
-    getSongData();
-  }, [songTitle]);
+    getSongInfo().catch(() => {
+      history.push('/404');
+    });
+    getSongData().catch(() => {
+      history.push('/404');
+    });
+  }, [history, songTitle]);
 
   return (
     <div className="home">
