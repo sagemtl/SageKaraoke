@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-const video = ({ playing, songName, origVoiceOn, onTimeUpdate, onEnded }) => (
-  <div>
+const video = ({
+  playing,
+  songName,
+  origVoiceOn,
+  onTimeUpdate,
+  onEnded,
+  mobile,
+}) => (
+  <>
     <ReactPlayer
       url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
       playing={playing}
       muted
+      height={mobile ? '100vh' : 'auto'}
+      width={mobile ? 'auto' : '100vw'}
     />
     {/* music */}
     <ReactPlayer
@@ -21,6 +30,6 @@ const video = ({ playing, songName, origVoiceOn, onTimeUpdate, onEnded }) => (
       playing={playing}
       muted={!origVoiceOn}
     />
-  </div>
+  </>
 );
 export default video;

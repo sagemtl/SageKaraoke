@@ -1,6 +1,12 @@
 .audio-visuals {
   position: absolute;
   left: 50%;
-  top: 10vh;
+  top: 15vh;
   transform: translateX(-50%);
+}
+
+@media only screen and (max-width: 740px) {
+  .audio-visuals {
+    top: 110px;
+  }
 }
