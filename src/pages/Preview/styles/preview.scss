@@ -5,36 +5,23 @@
 
 .preview {
   display: flex;
+  // flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  overflow: hidden;
 
   flex-wrap: wrap;
   margin: 0 auto;
-  width: 100vw;
-  height: 100vh;
+  min-width: 800px;
+  max-width: 1900px;
   text-align: center;
-
-  &__video {
-    margin: 0 2em;
-  }
-
-  &__container {
-    position: absolute;
-    top: 5vh;
-  }
-
-  &__container::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .song-title {
   line-height: 1.2;
 }
 .album-mv-container {
-  // position: fixed;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   margin: 0 auto;
@@ -54,15 +41,10 @@
     margin: 0 auto;
   }
   &__lyrics {
+    max-height: 20vw;
+    overflow: scroll;
     margin: 0 auto;
-    margin-top: 2em;
-    &__lyrics-title {
-      margin-bottom: 2px;
-    }
-    &__lyrics-body {
-      overflow: scroll;
-      max-height: 200px;
-    }
+    margin-top: 1em;
   }
 }
 
@@ -78,9 +60,6 @@
     border-style: solid;
     border-radius: 10px;
     min-width: 12vw;
-    max-height: 200px;
-    overflow-y: scroll;
-    overflow-x: hidden;
     &__content {
       margin: 0 auto;
       max-width: 70%;
@@ -89,78 +68,20 @@
   }
   &__leaderboard {
     min-width: 12vw;
-    max-height: 200px;
-    margin-top: 2em;
+    margin-top: 3em;
     border: 2px;
     border-color: black;
     border-style: solid;
     border-radius: 10px;
-    overflow-y: scroll;
-    overflow-x: hidden;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 450px) {
   .song-title {
-    margin: 8vh;
     font-size: 15px;
-    max-width: 90vw;
-  }
-  .preview {
-    flex-direction: column;
-
-    &__video {
-      overflow-x: hidden;
-      position: fixed;
-      z-index: -100;
-      top: 0px;
-      left: 0px;
-      margin: 0;
-      animation: fadein 3s;
-    }
-
-    &__container {
-      overflow: scroll;
-      position: relative;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    max-width: 300px;
   }
   .album-mv-container {
-    flex-direction: column;
-    flex: 1;
-  }
-  .left-panel {
-    flex-direction: column;
-    width: 90vw;
-    &__album-cover {
-      width: 45vw;
-      height: 45vw;
-    }
-    &__lyrics {
-      margin: 8vh auto;
-      width: 90vw;
-      &__lyrics-body {
-        overflow: scroll;
-        max-height: 50vw;
-      }
-    }
-  }
-  .right-panel {
-    flex-direction: column;
-    width: 90vw;
-    &__instructions {
-      height: 20vh;
-      overflow-y: scroll;
-    }
-    &__leaderboard {
-      height: 20vh;
-      overflow-y: scroll;
-      margin-bottom: 20vh;
-    }
-  }
-  .mv {
-    order: -1;
-    // height: 300px;
+    flex-wrap: wrap;
   }
 }
