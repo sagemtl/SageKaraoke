@@ -6,7 +6,7 @@ import AudioVisualiser from './AudioVisualiser';
 
 const AudioAnalyser = ({ audio, songTitle }) => {
   const globalContext = useGlobalContext();
-  const [karaokeState] = globalContext.karaoke;
+  const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { audioEnded, audioTime } = karaokeState;
 
   const [audioEnv, setAudioEnv] = useState({ analyser: null, source: null });
@@ -52,11 +52,15 @@ const AudioAnalyser = ({ audio, songTitle }) => {
           songTitle,
           JSON.stringify(audioDataSave.current),
         );
-        console.log(score);
+        karaokeDispatch({
+          type: 'SET_PITCH_SCORE',
+          payload: score,
+        });
+        console.log(`Pitch score: ${score}`);
       };
       getPitchScore();
     }
-  }, [audioEnded, songTitle]);
+  }, [audioEnded, karaokeDispatch, songTitle]);
 
   // Handle analyser and source cleanup
   useEffect(() => {

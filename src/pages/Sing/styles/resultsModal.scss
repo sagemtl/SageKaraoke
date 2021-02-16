@@ -1,0 +1,66 @@
+.close-button {
+  float: right;
+  border: none;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  opacity: 0.4;
+}
+.MuiDialog-paper {
+  height: 70vh;
+  background-image: url("https://res.cloudinary.com/sagemontreal-com/image/upload/v1612729998/stars4_y0goq8.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  padding: 20px;
+  vertical-align: center;
+}
+
+.score-results-title {
+  object-fit: contain;
+  width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+
+  .return-home-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .home-btn, .buttons-label {
+    font-size: 30px;
+  }
+
+  .final-score {
+    text-align: center;
+    font-size: 100px;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-btn, .buttons-label {
+    font-size: 5vw;
+  }
+
+  .final-score {
+    text-align: center;
+    font-size: 15vw;
+    color: white;
+  }
+}

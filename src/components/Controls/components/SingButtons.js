@@ -1,13 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { useGlobalContext } from 'global/context';
 import '../styles/controls.scss';
 
 const SingButtons = () => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn } = karaokeState;
-  const history = useHistory();
+  const { playSong, origVoiceOn, pinyinOn } = karaokeState;
 
   const onPlayPauseClickHandler = () => {
     karaokeDispatch({
@@ -23,22 +22,34 @@ const SingButtons = () => {
     });
   };
 
-  const returnHome = () => {
-    history.push('/');
+  const togglePinyin = () => {
+    karaokeDispatch({
+      type: 'SET_PINYIN_ON',
+      payload: { pinyinOn: !pinyinOn },
+    });
   };
 
   return (
     <div className="control-icons-container">
-      <button className="play-control" onClick={returnHome} type="button">
-        <p className="control-icons-label">home</p>
-        <i className="fas fa-home" />
-      </button>
+      <div>
+        <p className="sing-control-icons-label">pinyin</p>
+        <Button
+          variant="contained"
+          className="pinyin-control"
+          onClick={togglePinyin}
+          color="primary"
+        >
+          拼
+        </Button>
+      </div>
       <button
         className="play-control play-pause-container"
         onClick={onPlayPauseClickHandler}
         type="button"
       >
-        <p className="control-icons-label">{playSong ? 'pause' : 'play'}</p>
+        <p className="sing-control-icons-label">
+          {playSong ? 'pause' : 'play'}
+        </p>
         {playSong ? (
           <i className="fas fa-pause" />
         ) : (
@@ -46,7 +57,7 @@ const SingButtons = () => {
         )}
       </button>
       <div>
-        <p className="control-icons-label">voice</p>
+        <p className="sing-control-icons-label">voice</p>
         <div className="voice-over-btn switch">
           <input
             type="checkbox"
@@ -58,7 +69,7 @@ const SingButtons = () => {
           <label
             className="react-switch-label"
             htmlFor="react-switch-new"
-            style={{ background: origVoiceOn && '#154734' }}
+            style={{ background: origVoiceOn && '#6D4D83' }}
           >
             <span className="react-switch-button" />
           </label>

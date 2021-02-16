@@ -83,7 +83,7 @@ const PreviewButtons = () => {
           <label
             className="react-switch-label"
             htmlFor="react-switch-new"
-            style={{ background: origVoiceOn && '#154734' }}
+            style={{ background: origVoiceOn && '#6D4D83' }}
           >
             <span className="react-switch-button" />
           </label>
