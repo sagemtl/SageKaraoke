@@ -48,13 +48,8 @@ const AudioRecognizer = ({ lang, lineList }) => {
     if (audioEnded) {
       console.log('recognizer end');
       recognition.stop();
-
-      karaokeDispatch({
-        type: 'SET_LYRICS_SCORE',
-        payload: (lyricsScore / wordListRef.current.total) * 100,
-      });
     }
-  }, [recognition, audioEnded, karaokeDispatch, lyricsScore]);
+  }, [recognition, audioEnded]);
 
   useEffect(() => {
     recognition.onresult = (event) => {
@@ -65,10 +60,10 @@ const AudioRecognizer = ({ lang, lineList }) => {
           wordListRef.current.wordsCount,
           result[0].transcript,
         );
-        console.log(score / wordListRef.current.total + lyricsScore);
+        console.log((score / wordListRef.current.total) * 100 + lyricsScore);
         karaokeDispatch({
           type: 'SET_LYRICS_SCORE',
-          payload: score + lyricsScore,
+          payload: (score / wordListRef.current.total) * 100 + lyricsScore,
         });
       }
     };
