@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
-import '../styles/song.scss';
 import AudioInput from 'components/AudioAnalyser';
 import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
@@ -12,7 +11,6 @@ import FinalResultsModal from '../components/FinalResultsModal';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
 import { getLyricsScore } from '../../../utils/score';
-// import NumberShuffler from './NumberShuffler';
 
 const Sing = ({ match }) => {
   const {
@@ -66,23 +64,6 @@ const Sing = ({ match }) => {
       payload: { playSong: play },
     });
   };
-
-  // const setVoiceToggle = (play) => {
-  //   karaokeDispatch({
-  //     type: 'SET_ORIGINAL_VOICE_ON',
-  //     payload: { origVoiceOn: play },
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   const getSongData = async () => {
-  //     const songData = await getLyricsByTitleId(songTitle);
-  //     const lineList = parseLrc(songData.lyrics);
-  //     setLang(songData.language);
-  //     setLrcList(lineList);
-  //   };
-  //   getSongData();
-  // }, [songTitle]);
 
   useEffect(() => {
     const getSongInfo = async () => {
