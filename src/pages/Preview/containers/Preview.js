@@ -20,6 +20,7 @@ const Preview = ({ match }) => {
   const history = useHistory();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
+  const { width } = globalContext.window;
 
   const [lrcList, setLrcList] = useState([]);
   const [songData, setSongData] = useState({
@@ -85,7 +86,7 @@ const Preview = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const mobile = window.innerWidth <= 600;
+  const mobile = width <= 600;
 
   return (
     <div className="preview">
