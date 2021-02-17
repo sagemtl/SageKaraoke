@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
 import AudioInput from 'components/AudioAnalyser';
-// import AudioRecognizer from 'components/AudioRecognizer';
+import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
-import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
+import { getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
 import FinalResultsModal from '../components/FinalResultsModal';
 import { useGlobalContext } from '../../../global/context';
@@ -22,8 +22,6 @@ const Sing = ({ match }) => {
   const { playSong, origVoiceOn, pinyinOn } = karaokeState;
   const { width } = globalContext.window;
 
-  const [songName, setSongName] = useState('');
-  const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
   const [playLocalSong, setPlayLocalSong] = useState(false);
   const [lrcRomanList, setLrcRomanList] = useState([]);
@@ -41,16 +39,6 @@ const Sing = ({ match }) => {
     [karaokeDispatch],
   );
 
-  // const onScoreUpdate = useCallback(
-  //   (event) => {
-  //     karaokeDispatch({
-  //       type: 'SET_LYRICS_SCORE',
-  //       payload: (getLyricsScore += getLyricsScore),
-  //     });
-  //   },
-  //   [karaokeDispatch],
-  // );
-
   const onEnded = useCallback(() => {
     karaokeDispatch({
       type: 'SET_AUDIO_ENDED',
@@ -67,13 +55,6 @@ const Sing = ({ match }) => {
   };
 
   useEffect(() => {
-    const getSongInfo = async () => {
-      const songInfo = await getSongByTitleId(songTitle);
-      console.log(songInfo);
-      setSongName(songInfo.title);
-      setArtist(songInfo.artist);
-    };
-
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
       const lineList = parseLrc(songData.lyrics);
@@ -85,9 +66,7 @@ const Sing = ({ match }) => {
         setLrcRomanList(romanLineList);
       }
     };
-    getSongInfo().catch(() => {
-      history.push('/404');
-    });
+
     getSongData().catch(() => {
       history.push('/404');
     });
@@ -98,16 +77,11 @@ const Sing = ({ match }) => {
   return (
     <div className="sing">
       <FinalResultsModal />
-      <h1 className="sing__title">{songName}</h1>
-      <h1 className="sing__title">{artist}</h1>
       {/* <h1>{lyricsScore}</h1> */}
       {/* <div className="scoreRenderer">
         <ScoreRenderer number={lyricsScore} />
       </div> */}
       {/* <ScoreRenderer number={100} /> */}
-      {/* <button type="button" onClick={() => setVoiceToggle(!origVoiceOn)}>
-          toggle voice
-        </button> */}
       {playLocalSong ? null : (
         <Countdown onComplete={setPlaySong} start={setPlayLocalSong} />
       )}
@@ -124,7 +98,7 @@ const Sing = ({ match }) => {
       {lang && lrcList.length ? (
         <>
           <AudioInput songTitle={songTitle} />
-          {/* <AudioRecognizer lang={lang} lineList={lrcList} /> */}
+          <AudioRecognizer lang={lang} lineList={lrcList} />
           <Lyrics
             lineList={pinyinOn && lrcRomanList.length ? lrcRomanList : lrcList}
           />

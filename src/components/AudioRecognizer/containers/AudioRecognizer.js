@@ -30,6 +30,10 @@ const AudioRecognizer = ({ lang, lineList }) => {
   }, [lang]);
 
   useEffect(() => {
+    karaokeDispatch({
+      type: 'SET_LYRICS_SCORE',
+      payload: 0,
+    });
     console.log('recognizer start');
     recognition.start();
     wordListRef.current = getWordList(lineList, lang);
@@ -38,7 +42,7 @@ const AudioRecognizer = ({ lang, lineList }) => {
       console.log('audio recognizer cleanup');
     };
     return cleanup;
-  }, [recognition, lineList, lang]);
+  }, [recognition, lineList, lang, karaokeDispatch]);
 
   useEffect(() => {
     if (audioEnded) {
@@ -52,11 +56,14 @@ const AudioRecognizer = ({ lang, lineList }) => {
       const result = event.results[event.results.length - 1];
       if (result.isFinal) {
         console.log(result[0].transcript);
-        const score = getLyricsScore(wordListRef.current, result[0].transcript);
-        console.log(score + lyricsScore);
+        const score = getLyricsScore(
+          wordListRef.current.wordsCount,
+          result[0].transcript,
+        );
+        console.log((score / wordListRef.current.total) * 100 + lyricsScore);
         karaokeDispatch({
           type: 'SET_LYRICS_SCORE',
-          payload: score + lyricsScore,
+          payload: (score / wordListRef.current.total) * 100 + lyricsScore,
         });
       }
     };
