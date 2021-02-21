@@ -51,11 +51,13 @@ const AlbumCarousel = ({ albums, selectedAlbum }) => {
 
   return (
     <div style={{ width: '80%', height: '500px', margin: '0 auto' }}>
-      <Carousel
-        slides={transformData(albums)}
-        goToSlide={selectedAlbum}
-        offsetRadius={width > 700 ? 2 : 1}
-      />
+      {albums && (
+        <Carousel
+          slides={transformData(albums)}
+          goToSlide={selectedAlbum}
+          offsetRadius={width > 700 ? 2 : 1}
+        />
+      )}
     </div>
   );
 };

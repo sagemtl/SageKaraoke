@@ -8,14 +8,14 @@ import '../styles/headerDesktop.scss';
 const routes = [
   {
     id: 1,
-    label: 'Home',
-    to: '/',
-    external: false,
+    label: 'Boutique',
+    to: 'https://www.sagemontreal.com/shop',
+    external: true,
   },
   {
     id: 2,
-    label: 'Boutique',
-    to: 'https://www.sagemontreal.com/shop',
+    label: 'Lookbook',
+    to: 'https://www.sagemontreal.com/lookbook',
     external: true,
   },
 ];

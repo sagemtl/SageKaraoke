@@ -55,7 +55,10 @@ export const KaraokeContextProvider = ({ children }) => {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    getAllSongs().then((res) => setAlbums(res));
+    getAllSongs().then((res) => {
+      console.log(res);
+      setAlbums(res);
+    });
   }, []);
 
   return (
