@@ -55,10 +55,12 @@ const Sing = ({ match }) => {
         type: 'SET_PLAYSONG',
         payload: { playSong: play },
       });
-      if (play) {
-        videoEl.current.play();
-      } else {
-        videoEl.current.pause();
+      if (videoEl.current) {
+        if (play) {
+          videoEl.current.play();
+        } else {
+          videoEl.current.pause();
+        }
       }
     },
     [karaokeDispatch],
@@ -89,9 +91,9 @@ const Sing = ({ match }) => {
       }
     };
 
-    document.addEventListener('keypress', handleEventSpace);
+    document.addEventListener('keydown', handleEventSpace);
     return () => {
-      document.removeEventListener('keypress', handleEventSpace);
+      document.removeEventListener('keydown', handleEventSpace);
     };
   }, [playSong, setPlaySong]);
 

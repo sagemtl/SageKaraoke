@@ -9,15 +9,9 @@ const video = ({
   onTimeUpdate,
   onEnded,
   videoRef,
-  // mobile,
 }) => (
   <>
-    <video
-      url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-      muted
-      className="video-mv"
-      ref={videoRef}
-    >
+    <video muted className="video-mv" ref={videoRef}>
       <source
         type="video/mp4"
         src={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}

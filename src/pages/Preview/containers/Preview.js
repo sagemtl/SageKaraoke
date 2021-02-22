@@ -72,10 +72,12 @@ const Preview = ({ match }) => {
         payload: { playSong: play },
       });
 
-      if (play) {
-        videoEl.current.play();
-      } else {
-        videoEl.current.pause();
+      if (videoEl.current) {
+        if (play) {
+          videoEl.current.play();
+        } else {
+          videoEl.current.pause();
+        }
       }
     },
     [karaokeDispatch],
@@ -101,9 +103,9 @@ const Preview = ({ match }) => {
       }
     };
 
-    document.addEventListener('keypress', handleEventSpace);
+    document.addEventListener('keydown', handleEventSpace);
     return () => {
-      document.removeEventListener('keypress', handleEventSpace);
+      document.removeEventListener('keydown', handleEventSpace);
     };
   }, [playSong, setPlaySong]);
 
@@ -131,23 +133,12 @@ const Preview = ({ match }) => {
           </div>
           {/* visuals */}
           <div className="mv">
-            <video
-              url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-              muted
-              className="preview__video"
-              ref={videoEl}
-            >
+            <video muted className="preview__video" ref={videoEl}>
               <source
                 type="video/mp4"
                 src={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
               />
             </video>
-            {/* <ReactPlayer
-              className="preview__video"
-              url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-              playing={playSong}
-              muted
-            /> */}
           </div>
           <div className="right-panel">
             <div className="right-panel__instructions">
