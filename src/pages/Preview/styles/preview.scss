@@ -11,6 +11,9 @@
 
   &__video {
     margin: 0 2em;
+    height: auto;
+    width: 50vw;
+
   }
 
   &__container {
@@ -112,6 +115,8 @@
       left: 0px;
       margin: 0;
       animation: fadein 3s;
+      height: 100vh;
+      width: auto;
     }
 
     &__container {

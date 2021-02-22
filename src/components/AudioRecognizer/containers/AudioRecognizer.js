@@ -12,10 +12,12 @@ const AudioRecognizer = ({ lang, lineList }) => {
 
   const recognition = useMemo(() => {
     if (
-      !window.SpeechRecognition ||
-      window.webkitSpeechRecognition ||
-      window.mozSpeechRecognition ||
-      window.msSpeechRecognition
+      !(
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition ||
+        window.mozSpeechRecognition ||
+        window.msSpeechRecognition
+      )
     ) {
       return null;
     }

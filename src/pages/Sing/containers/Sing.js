@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
@@ -29,6 +29,8 @@ const Sing = ({ match }) => {
   const [lang, setLang] = useState('');
   const history = useHistory();
 
+  const videoEl = useRef(null);
+
   const onTimeUpdate = useCallback(
     (event) => {
       karaokeDispatch({
@@ -47,12 +49,20 @@ const Sing = ({ match }) => {
     return <div> Score = {getLyricsScore}</div>;
   }, [karaokeDispatch]);
 
-  const setPlaySong = (play) => {
-    karaokeDispatch({
-      type: 'SET_PLAYSONG',
-      payload: { playSong: play },
-    });
-  };
+  const setPlaySong = useCallback(
+    (play) => {
+      karaokeDispatch({
+        type: 'SET_PLAYSONG',
+        payload: { playSong: play },
+      });
+      if (play) {
+        videoEl.current.play();
+      } else {
+        videoEl.current.pause();
+      }
+    },
+    [karaokeDispatch],
+  );
 
   useEffect(() => {
     const getSongData = async () => {
@@ -71,6 +81,19 @@ const Sing = ({ match }) => {
       history.push('/404');
     });
   }, [history, songTitle]);
+
+  useEffect(() => {
+    const handleEventSpace = (e) => {
+      if (e.key === ' ') {
+        setPlaySong(!playSong);
+      }
+    };
+
+    document.addEventListener('keypress', handleEventSpace);
+    return () => {
+      document.removeEventListener('keypress', handleEventSpace);
+    };
+  }, [playSong, setPlaySong]);
 
   const mobile = width <= 600;
 
@@ -93,6 +116,7 @@ const Sing = ({ match }) => {
           onTimeUpdate={onTimeUpdate}
           onEnded={onEnded}
           mobile={mobile}
+          videoRef={videoEl}
         />
       </div>
       {lang && lrcList.length ? (

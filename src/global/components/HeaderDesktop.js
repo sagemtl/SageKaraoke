@@ -64,7 +64,6 @@ const HeaderDesktop = () => {
             src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1613237892/sage-animated-purple_lymnsy.mp4"
             className="navbox__logo"
             muted
-            playsInline
             loop
             onMouseOver={(e) => e.target.play()}
             onFocus={(e) => e.target.play()}
