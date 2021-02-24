@@ -46,6 +46,7 @@ const FinalResultsModal = () => {
 
   const submitLeaderboard = (event) => {
     console.log(`entered name ${nameLeaderboard}`);
+
     event.preventDefault();
   };
 
