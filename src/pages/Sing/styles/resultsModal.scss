@@ -20,6 +20,11 @@
 .modal-content {
   padding: 20px;
   vertical-align: center;
+  border: 2px;
+  border-color: white;
+  border-style: solid;
+  border-radius: 10px;
+  overflow-y: scroll;
 }
 
 .score-results-title {
@@ -27,6 +32,17 @@
   width: 90%;
   margin: auto;
   display: block;
+}
+
+.leaderboard-info {
+  color: white;
+}
+.name-field {
+  background-color: grey;
+  border: 2px;
+  border-color: white;
+  border-style: solid;
+  border-radius: 3px;
 }
 
 .buttons {
@@ -42,7 +58,8 @@
 }
 
 @media screen and (min-width: 600px) {
-  .home-btn, .buttons-label {
+  .home-btn,
+  .buttons-label {
     font-size: 30px;
   }
 
@@ -54,7 +71,8 @@
 }
 
 @media screen and (max-width: 600px) {
-  .home-btn, .buttons-label {
+  .home-btn,
+  .buttons-label {
     font-size: 5vw;
   }
 
