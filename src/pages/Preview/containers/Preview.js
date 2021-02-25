@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
@@ -20,7 +20,6 @@ const Preview = ({ match }) => {
   const history = useHistory();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn } = karaokeState;
-  const { width } = globalContext.window;
 
   const [lrcList, setLrcList] = useState([]);
   const [songData, setSongData] = useState({
@@ -30,6 +29,8 @@ const Preview = ({ match }) => {
     cover: '',
   });
   const [leaderboard, setLeaderboard] = useState([]);
+
+  const videoEl = useRef(null);
 
   useEffect(() => {
     const getSongInfo = async () => {
@@ -64,16 +65,26 @@ const Preview = ({ match }) => {
     getLeaderboard();
   }, [history, songName]);
 
-  useEffect(() => {
-    const setPlaySong = (play) => {
+  const setPlaySong = useCallback(
+    (play) => {
       karaokeDispatch({
         type: 'SET_PLAYSONG',
         payload: { playSong: play },
       });
-    };
 
+      if (videoEl.current) {
+        if (play) {
+          videoEl.current.play();
+        } else {
+          videoEl.current.pause();
+        }
+      }
+    },
+    [karaokeDispatch],
+  );
+
+  useEffect(() => {
     setPlaySong(true); // play song on page loads
-    console.log(`playsong after set true ${playSong}`);
 
     return () => {
       setPlaySong(false); // stop playing when page unmount
@@ -83,10 +94,20 @@ const Preview = ({ match }) => {
         payload: { origVoiceOn: true },
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setPlaySong, karaokeDispatch]);
 
-  const mobile = width <= 600;
+  useEffect(() => {
+    const handleEventSpace = (e) => {
+      if (e.key === ' ') {
+        setPlaySong(!playSong);
+      }
+    };
+
+    document.addEventListener('keydown', handleEventSpace);
+    return () => {
+      document.removeEventListener('keydown', handleEventSpace);
+    };
+  }, [playSong, setPlaySong]);
 
   return (
     <div className="preview">
@@ -112,14 +133,12 @@ const Preview = ({ match }) => {
           </div>
           {/* visuals */}
           <div className="mv">
-            <ReactPlayer
-              className="preview__video"
-              url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-              playing={playSong}
-              muted
-              height={mobile ? '100vh' : 'auto'}
-              width={mobile ? 'auto' : '50vw'}
-            />
+            <video muted className="preview__video" ref={videoEl}>
+              <source
+                type="video/mp4"
+                src={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+              />
+            </video>
           </div>
           <div className="right-panel">
             <div className="right-panel__instructions">

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
+import '../styles/video.scss';
 
 const video = ({
   playing,
@@ -7,16 +8,15 @@ const video = ({
   origVoiceOn,
   onTimeUpdate,
   onEnded,
-  mobile,
+  videoRef,
 }) => (
   <>
-    <ReactPlayer
-      url={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
-      playing={playing}
-      muted
-      height={mobile ? '100vh' : 'auto'}
-      width={mobile ? 'auto' : '100vw'}
-    />
+    <video muted className="video-mv" ref={videoRef}>
+      <source
+        type="video/mp4"
+        src={`${process.env.PUBLIC_URL}/${songName}/${songName}_mv.mp4`}
+      />
+    </video>
     {/* music */}
     <ReactPlayer
       url={`${process.env.PUBLIC_URL}/${songName}/${songName}_music.mp3`}

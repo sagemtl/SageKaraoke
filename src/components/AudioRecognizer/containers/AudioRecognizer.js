@@ -11,6 +11,17 @@ const AudioRecognizer = ({ lang, lineList }) => {
   const wordListRef = useRef();
 
   const recognition = useMemo(() => {
+    if (
+      !(
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition ||
+        window.mozSpeechRecognition ||
+        window.msSpeechRecognition
+      )
+    ) {
+      return null;
+    }
+
     const recognitionObj = new (window.SpeechRecognition ||
       window.webkitSpeechRecognition ||
       window.mozSpeechRecognition ||
@@ -35,6 +46,13 @@ const AudioRecognizer = ({ lang, lineList }) => {
       payload: 0,
     });
     console.log('recognizer start');
+
+    if (!recognition) {
+      return () => {
+        console.log('browser does not support recognizer');
+      };
+    }
+
     recognition.start();
     wordListRef.current = getWordList(lineList, lang);
     const cleanup = () => {
@@ -46,12 +64,16 @@ const AudioRecognizer = ({ lang, lineList }) => {
 
   useEffect(() => {
     if (audioEnded) {
-      console.log('recognizer end');
+      recognition.onend = () => {
+        console.log('recognizer end');
+      };
       recognition.stop();
     }
   }, [recognition, audioEnded]);
 
   useEffect(() => {
+    if (!recognition) return;
+
     recognition.onresult = (event) => {
       const result = event.results[event.results.length - 1];
       if (result.isFinal) {
