@@ -1,17 +1,16 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Lyrics from 'components/Lyrics';
-import '../styles/song.scss';
 import AudioInput from 'components/AudioAnalyser';
 import AudioRecognizer from 'components/AudioRecognizer';
 import parseLrc from 'utils/parseLrc';
-import { getSongByTitleId, getLyricsByTitleId } from 'utils/ktvQueries';
+import { getLyricsByTitleId } from 'utils/ktvQueries';
 import Video from '../components/Video';
 import FinalResultsModal from '../components/FinalResultsModal';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
 import { getLyricsScore } from '../../../utils/score';
-// import NumberShuffler from './NumberShuffler';
 
 const Sing = ({ match }) => {
   const {
@@ -21,14 +20,16 @@ const Sing = ({ match }) => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { playSong, origVoiceOn, pinyinOn } = karaokeState;
+  const { width } = globalContext.window;
 
-  const [songName, setSongName] = useState('');
-  const [artist, setArtist] = useState('');
   const [lrcList, setLrcList] = useState([]);
   const [playLocalSong, setPlayLocalSong] = useState(false);
   const [lrcRomanList, setLrcRomanList] = useState([]);
 
   const [lang, setLang] = useState('');
+  const history = useHistory();
+
+  const videoEl = useRef(null);
 
   const onTimeUpdate = useCallback(
     (event) => {
@@ -40,16 +41,6 @@ const Sing = ({ match }) => {
     [karaokeDispatch],
   );
 
-  // const onScoreUpdate = useCallback(
-  //   (event) => {
-  //     karaokeDispatch({
-  //       type: 'SET_LYRICS_SCORE',
-  //       payload: (getLyricsScore += getLyricsScore),
-  //     });
-  //   },
-  //   [karaokeDispatch],
-  // );
-
   const onEnded = useCallback(() => {
     karaokeDispatch({
       type: 'SET_AUDIO_ENDED',
@@ -58,37 +49,24 @@ const Sing = ({ match }) => {
     return <div> Score = {getLyricsScore}</div>;
   }, [karaokeDispatch]);
 
-  const setPlaySong = (play) => {
-    karaokeDispatch({
-      type: 'SET_PLAYSONG',
-      payload: { playSong: play },
-    });
-  };
-
-  // const setVoiceToggle = (play) => {
-  //   karaokeDispatch({
-  //     type: 'SET_ORIGINAL_VOICE_ON',
-  //     payload: { origVoiceOn: play },
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   const getSongData = async () => {
-  //     const songData = await getLyricsByTitleId(songTitle);
-  //     const lineList = parseLrc(songData.lyrics);
-  //     setLang(songData.language);
-  //     setLrcList(lineList);
-  //   };
-  //   getSongData();
-  // }, [songTitle]);
+  const setPlaySong = useCallback(
+    (play) => {
+      karaokeDispatch({
+        type: 'SET_PLAYSONG',
+        payload: { playSong: play },
+      });
+      if (videoEl.current) {
+        if (play) {
+          videoEl.current.play();
+        } else {
+          videoEl.current.pause();
+        }
+      }
+    },
+    [karaokeDispatch],
+  );
 
   useEffect(() => {
-    const getSongInfo = async () => {
-      const songInfo = await getSongByTitleId(songTitle);
-      setSongName(songInfo.title);
-      setArtist(songInfo.artist);
-    };
-
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
       const lineList = parseLrc(songData.lyrics);
@@ -101,34 +79,46 @@ const Sing = ({ match }) => {
       }
     };
 
-    getSongInfo();
-    getSongData();
-  }, [songTitle]);
+    getSongData().catch(() => {
+      history.push('/404');
+    });
+  }, [history, songTitle]);
+
+  useEffect(() => {
+    const handleEventSpace = (e) => {
+      if (e.key === ' ') {
+        setPlaySong(!playSong);
+      }
+    };
+
+    document.addEventListener('keydown', handleEventSpace);
+    return () => {
+      document.removeEventListener('keydown', handleEventSpace);
+    };
+  }, [playSong, setPlaySong]);
+
+  const mobile = width <= 600;
 
   return (
-    <div className="home">
+    <div className="sing">
       <FinalResultsModal titleid={songTitle} />
-      <h1>Sing Page </h1>
-      <h1>{songName}</h1>
-      <h1>{artist}</h1>
       {/* <h1>{lyricsScore}</h1> */}
       {/* <div className="scoreRenderer">
         <ScoreRenderer number={lyricsScore} />
       </div> */}
       {/* <ScoreRenderer number={100} /> */}
-      <div>
-        {/* <button type="button" onClick={() => setVoiceToggle(!origVoiceOn)}>
-          toggle voice
-        </button> */}
-        {playLocalSong ? null : (
-          <Countdown onComplete={setPlaySong} start={setPlayLocalSong} />
-        )}
+      {playLocalSong ? null : (
+        <Countdown onComplete={setPlaySong} start={setPlayLocalSong} />
+      )}
+      <div className="sing-video">
         <Video
           playing={playSong}
           songName={songTitle}
           origVoiceOn={origVoiceOn}
           onTimeUpdate={onTimeUpdate}
           onEnded={onEnded}
+          mobile={mobile}
+          videoRef={videoEl}
         />
       </div>
       {lang && lrcList.length ? (

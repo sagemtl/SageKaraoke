@@ -1,4 +1,5 @@
 @import "../pages/Home/styles/home.scss";
+@import "../pages/Sing/styles/sing.scss";
 
 html * {
   font-family: Arial, Helvetica, sans-serif !important;
@@ -8,11 +9,18 @@ body {
   margin: 0;
   overflow: hidden;
   background-image: url('https://res.cloudinary.com/sagemontreal-com/image/upload/v1612729998/stars4_y0goq8.jpg');
-  background-repeat: no-repeat;
   background-size: cover;
   color: #6D4D83;
 }
 
+p {
+  color: white;
+}
+
 *:focus {
   outline: none;
+}
+
+p, h1 {
+  color: white;
 }

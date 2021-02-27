@@ -22,7 +22,9 @@ const CarouselButtons = () => {
     <div className="control-icons-container">
       <button
         className="play-control prev-track-btn-ctr"
-        onClick={() => setSelectedAlbum(selectedAlbum - 1)}
+        onClick={() =>
+          setSelectedAlbum(selectedAlbum === 0 ? 8 : selectedAlbum - 1)
+        }
         type="button"
       >
         <p className="carousel-control-icons-labels">previous</p>
@@ -41,7 +43,7 @@ const CarouselButtons = () => {
       </button>
       <button
         className="play-control next-track-btn-ctr"
-        onClick={() => setSelectedAlbum(selectedAlbum + 1)}
+        onClick={() => setSelectedAlbum((selectedAlbum + 1) % 9)}
         type="button"
       >
         <p className="carousel-control-icons-labels">next</p>

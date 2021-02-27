@@ -7,7 +7,10 @@ export const getAllSongs = async () => {
     method: 'GET',
     redirect: 'follow',
   };
-  return fetch(`http://localhost:5000/ktv-api/songs`, requestOptions)
+  return fetch(
+    `${process.env.REACT_APP_BACKEND_API_URL}/ktv-api/songs`,
+    requestOptions,
+  )
     .then((response) => response.json())
     .then((result) => result)
     .catch((error) => console.log('error', error));
@@ -23,7 +26,7 @@ export const getSongByTitleId = async (titleId) => {
     redirect: 'follow',
   };
   return fetch(
-    `http://localhost:5000/ktv-api/song-info/${titleId}`,
+    `${process.env.REACT_APP_BACKEND_API_URL}/ktv-api/song-info/${titleId}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -41,7 +44,7 @@ export const getLyricsByTitleId = async (titleId) => {
     redirect: 'follow',
   };
   return fetch(
-    `http://localhost:5000/ktv-api/lyrics/${titleId}`,
+    `${process.env.REACT_APP_BACKEND_API_URL}/ktv-api/lyrics/${titleId}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -59,7 +62,10 @@ export const getScore = async (titleId, audioData) => {
     redirect: 'follow',
     body: JSON.stringify({ audioData }),
   };
-  return fetch(`http://localhost:5000/ktv-api/score/${titleId}`, requestOptions)
+  return fetch(
+    `${process.env.REACT_APP_BACKEND_API_URL}/ktv-api/score/${titleId}`,
+    requestOptions,
+  )
     .then((response) => response.json())
     .then((result) => result)
     .catch((error) => console.log('error', error));
@@ -75,7 +81,7 @@ export const getLeaderboardByTitleId = async (titleId) => {
     redirect: 'follow',
   };
   return fetch(
-    `http://localhost:5000/ktv-api/leaderboard/${titleId}`,
+    `${process.env.REACT_APP_BACKEND_API_URL}/ktv-api/leaderboard/${titleId}`,
     requestOptions,
   )
     .then((response) => response.json())

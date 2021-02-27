@@ -54,23 +54,34 @@
   & .play-control {
     font-size: 35px;
     height: 55px;
-    width: 55px;
+    width:60px;
     color: #6D4D83;
     border: none;
     background: none;
     cursor: pointer;
     padding: 0;
+    overflow: visible;
+    z-index: 9999;
 
     & i {
       display: flex;
       justify-content: space-evenly;
       vertical-align: baseline;
+      overflow: visible;
     }
 
     & .red {
       color: red;
       transition: all 0.2s ease-in-out;
       margin: 0;
+    }
+
+    path {
+      overflow: visible;
+    }
+    svg {
+      overflow: visible;
+      z-index: 9999;
     }
   }
 
@@ -213,7 +224,7 @@
     & .play-control {
       font-size: 25px;
       height: 45px;
-      width: 45px;
+      width: 55px;
     }
   }
 
@@ -253,6 +264,11 @@
     color: #6D4D83;
     margin-top: 20px;
     margin-bottom: 0px;
+    font-size: 12px;
+  }
+
+  .sing-control-icons-label {
+    margin-bottom: 10px; 
     font-size: 12px;
   }
 }

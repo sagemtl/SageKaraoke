@@ -24,26 +24,26 @@ const Controls = () => {
   };
 
   return (
-    <div
-      className={
-        controlOpen ? 'control-center__open' : 'control-center__hidden'
-      }
-    >
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={toggleOpen}
-        onKeyDown={toggleOpen}
-        className="control-dismiss-tab"
-      >
-        <b>{controlOpen ? 'hide' : 'show'}</b>
-      </div>
-      {!location ? (
-        <CarouselButtons />
-      ) : location === 'preview' ? (
+    <div>
+      {location === 'preview' ? (
         <PreviewButtons />
       ) : (
-        <SingButtons />
+        <div
+          className={
+            controlOpen ? 'control-center__open' : 'control-center__hidden'
+          }
+        >
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={toggleOpen}
+            onKeyDown={toggleOpen}
+            className="control-dismiss-tab"
+          >
+            <b>{controlOpen ? 'hide' : 'show'}</b>
+          </div>
+          {!location ? <CarouselButtons /> : <SingButtons />}
+        </div>
       )}
     </div>
   );
