@@ -85,7 +85,6 @@ const Sing = ({ match }) => {
   useEffect(() => {
     const getSongInfo = async () => {
       const songInfo = await getSongByTitleId(songTitle);
-      console.log(songInfo);
       setSongName(songInfo.title);
       setArtist(songInfo.artist);
     };
@@ -108,7 +107,7 @@ const Sing = ({ match }) => {
 
   return (
     <div className="home">
-      <FinalResultsModal />
+      <FinalResultsModal titleid={songTitle} />
       <h1>Sing Page </h1>
       <h1>{songName}</h1>
       <h1>{artist}</h1>

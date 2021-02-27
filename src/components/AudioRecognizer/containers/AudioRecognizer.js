@@ -20,8 +20,6 @@ const AudioRecognizer = ({ lang, lineList }) => {
     recognitionObj.interimResults = true;
     recognitionObj.lang = lang;
 
-    console.log(recognitionObj);
-
     recognitionObj.onend = () => {
       recognitionObj.start();
     };
@@ -30,19 +28,16 @@ const AudioRecognizer = ({ lang, lineList }) => {
   }, [lang]);
 
   useEffect(() => {
-    console.log('recognizer start');
     recognition.start();
     wordListRef.current = getWordList(lineList, lang);
     const cleanup = () => {
       recognition.abort();
-      console.log('audio recognizer cleanup');
     };
     return cleanup;
   }, [recognition, lineList, lang]);
 
   useEffect(() => {
     if (audioEnded) {
-      console.log('recognizer end');
       recognition.stop();
     }
   }, [recognition, audioEnded]);
@@ -51,9 +46,7 @@ const AudioRecognizer = ({ lang, lineList }) => {
     recognition.onresult = (event) => {
       const result = event.results[event.results.length - 1];
       if (result.isFinal) {
-        console.log(result[0].transcript);
         const score = getLyricsScore(wordListRef.current, result[0].transcript);
-        console.log(score + lyricsScore);
         karaokeDispatch({
           type: 'SET_LYRICS_SCORE',
           payload: score + lyricsScore,

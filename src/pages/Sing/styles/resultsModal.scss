@@ -36,13 +36,67 @@
 
 .leaderboard-info {
   color: white;
+  text-align: center;
+  &__ranking {
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+  }
 }
+
 .name-field {
   background-color: grey;
   border: 2px;
   border-color: white;
   border-style: solid;
   border-radius: 3px;
+}
+
+.contact-form {
+  width: 90%;
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // max-width: 900px;
+
+  &__label {
+    width: 100px;
+    margin: 0;
+    color: white;
+    width: 70px;
+  }
+
+  &__input {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    // padding: 5px 8px;
+  }
+
+  &__button {
+    height: 35px;
+    width: 100px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    background: #6d4d83;
+    // font-weight: 500;
+    color: white;
+    margin-left: 10px;
+
+    &:disabled {
+      background-position: right bottom;
+      color: black;
+      cursor: inherit;
+      opacity: 0.7;
+    }
+
+    &:active {
+      box-shadow: 0 2px #565656;
+      transform: translateY(4px);
+    }
+  }
 }
 
 .buttons {
