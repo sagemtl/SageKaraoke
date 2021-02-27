@@ -31,8 +31,6 @@ const AudioRecognizer = ({ lang, lineList }) => {
     recognitionObj.interimResults = true;
     recognitionObj.lang = lang;
 
-    console.log(recognitionObj);
-
     recognitionObj.onend = () => {
       recognitionObj.start();
     };
@@ -57,7 +55,6 @@ const AudioRecognizer = ({ lang, lineList }) => {
     wordListRef.current = getWordList(lineList, lang);
     const cleanup = () => {
       recognition.abort();
-      console.log('audio recognizer cleanup');
     };
     return cleanup;
   }, [recognition, lineList, lang, karaokeDispatch]);

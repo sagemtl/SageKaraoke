@@ -35,7 +35,6 @@ const AudioAnalyser = ({ audio, songTitle }) => {
     const sourceObj = audioContext.createMediaStreamSource(audio);
     sourceObj.connect(analyserObj);
 
-    console.log(analyserObj, sourceObj);
     setAudioEnv({ analyser: analyserObj, source: sourceObj });
   }, [audio]);
 
@@ -56,7 +55,6 @@ const AudioAnalyser = ({ audio, songTitle }) => {
           type: 'SET_PITCH_SCORE',
           payload: score,
         });
-        console.log(`Pitch score: ${score}`);
       };
       getPitchScore();
     }
@@ -71,11 +69,9 @@ const AudioAnalyser = ({ audio, songTitle }) => {
       setRafId(null);
       if (audioEnv.analyser) {
         audioEnv.analyser.disconnect();
-        console.log('audio analyser cleanup');
       }
       if (audioEnv.source) {
         audioEnv.source.disconnect();
-        console.log('audio source cleanup');
       }
     };
 

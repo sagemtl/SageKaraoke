@@ -101,7 +101,7 @@ const Sing = ({ match }) => {
 
   return (
     <div className="sing">
-      <FinalResultsModal />
+      <FinalResultsModal titleid={songTitle} />
       {/* <h1>{lyricsScore}</h1> */}
       {/* <div className="scoreRenderer">
         <ScoreRenderer number={lyricsScore} />
