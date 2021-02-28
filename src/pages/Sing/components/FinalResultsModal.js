@@ -22,6 +22,7 @@ const FinalResultsModal = ({ titleid }) => {
   const [modal, setModal] = useState(false);
   const [nameLeaderboard, setNameLeaderboard] = useState('');
   const [rankMessage, setRankMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const history = useHistory();
 
   const closeModal = () => {
@@ -55,6 +56,7 @@ const FinalResultsModal = ({ titleid }) => {
     );
 
     setRankMessage(`You placed ${ranking.rank} out of ${ranking.total}!`);
+    setSubmitted(true);
   };
 
   const submitWithKey = (e) => {
@@ -100,28 +102,32 @@ const FinalResultsModal = ({ titleid }) => {
             alt="Your Score Is"
           />
           <ScoreRenderer number={getFinalScore()} />
-          <h3 className="leaderboard-info">
-            To display on the leaderboard, please enter your name
-          </h3>
-          <div className="contact-form">
-            <p className="contact-form__label">Name:</p>
-            <input
-              name="message"
-              type="text"
-              onChange={(e) => setNameLeaderboard(e.target.value)}
-              value={nameLeaderboard}
-              className="contact-form__input"
-            />
-            <button
-              type="button"
-              onClick={submitLeaderboard}
-              onKeyDown={submitWithKey}
-              disabled={nameLeaderboard.length === 0}
-              className="contact-form__button"
-            >
-              Send
-            </button>
-          </div>
+          {!submitted && (
+            <div>
+              <h3 className="leaderboard-info">
+                To display on the leaderboard, please enter your name
+              </h3>
+              <div className="contact-form">
+                <p className="contact-form__label">Name:</p>
+                <input
+                  name="message"
+                  type="text"
+                  onChange={(e) => setNameLeaderboard(e.target.value)}
+                  value={nameLeaderboard}
+                  className="contact-form__input"
+                />
+                <button
+                  type="button"
+                  onClick={submitLeaderboard}
+                  onKeyDown={submitWithKey}
+                  disabled={nameLeaderboard.length === 0}
+                  className="contact-form__button"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          )}
 
           <h2 className="leaderboard-info__ranking">{rankMessage}</h2>
           <div className="buttons">
