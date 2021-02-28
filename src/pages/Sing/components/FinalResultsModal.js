@@ -99,7 +99,7 @@ const FinalResultsModal = ({ titleid }) => {
             src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1612838969/final-score_lbohbx.png"
             alt="Your Score Is"
           />
-          <ScoreRenderer number={getFinalScore()} />
+          <ScoreRenderer number={Math.round(getFinalScore())} />
           <h3 className="leaderboard-info">
             To display on the leaderboard, please enter your name
           </h3>
