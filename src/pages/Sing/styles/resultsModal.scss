@@ -25,13 +25,17 @@
 
 .score-results-title {
   object-fit: contain;
-  width: 90%;
+  width: 80%;
   margin: auto;
   display: block;
 }
 
 .leaderboard-info {
   color: white;
+  font-size: 20px;
+  margin-right: 10%;
+  margin-left: 10%;
+
   text-align: center;
   &__ranking {
     color: white;
