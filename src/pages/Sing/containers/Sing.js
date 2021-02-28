@@ -82,9 +82,7 @@ const Sing = ({ match }) => {
     <div className="sing">
       <FinalResultsModal />
       {/* <h1>{lyricsScore}</h1> */}
-      <div className="scoreRenderer">
-        <ScoreRenderer number={Math.round(lyricsScore)} />
-      </div>
+      <ScoreRenderer number={Math.round(lyricsScore)} />
       {/* <ScoreRenderer number={100} /> */}
       {playLocalSong ? null : (
         <Countdown onComplete={setPlaySong} start={setPlayLocalSong} />

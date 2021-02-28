@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/resultsModal.scss';
+import { useGlobalContext } from '../../../global/context';
 
 const scoreMultiplier = 5;
 const incrementInterval = 70; // ms
 const ScoreRenderer = ({ number }) => {
+  const globalContext = useGlobalContext();
+  const [karaokeState] = globalContext.karaoke;
+  const { audioEnded } = karaokeState;
   const [count, setCount] = useState(0);
   // const [increment, setIncrement] = useState(0);
 
@@ -25,9 +29,17 @@ const ScoreRenderer = ({ number }) => {
 
   return (
     <div className="Count">
-      <h1 className="final-score">
-        <i>{count * scoreMultiplier}</i>
-      </h1>
+      {audioEnded ? (
+        <h1 className="final-score">
+          <i>{count * scoreMultiplier}</i>
+          {/* <i>{audioEnded}</i> */}
+        </h1>
+      ) : (
+        <h1 className="lyric-score">
+          <i>{count * scoreMultiplier}</i>
+          {/* <i>{audioEnded}</i> */}
+        </h1>
+      )}
     </div>
   );
 };

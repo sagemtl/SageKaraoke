@@ -79,7 +79,7 @@ const FinalResultsModal = () => {
             src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1612838969/final-score_lbohbx.png"
             alt="Your Score Is"
           />
-          <ScoreRenderer number={getFinalScore()} />
+          <ScoreRenderer number={Math.round(getFinalScore())} />
           <div className="buttons">
             <button
               className="return-home-btn"
