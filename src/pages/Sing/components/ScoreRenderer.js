@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import '../styles/resultsModal.scss';
 import { useGlobalContext } from '../../../global/context';
 
-const scoreMultiplier = 5;
 const incrementInterval = 70; // ms
 const ScoreRenderer = ({ number }) => {
   const globalContext = useGlobalContext();
@@ -31,12 +30,12 @@ const ScoreRenderer = ({ number }) => {
     <div className="Count">
       {audioEnded ? (
         <h1 className="final-score">
-          <i>{count * scoreMultiplier}</i>
+          <i>{Math.round(number)}/100</i>
           {/* <i>{audioEnded}</i> */}
         </h1>
       ) : (
         <h1 className="lyric-score">
-          <i>{count * scoreMultiplier}</i>
+          <i>{count}/100</i>
           {/* <i>{audioEnded}</i> */}
         </h1>
       )}
