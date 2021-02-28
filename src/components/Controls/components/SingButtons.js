@@ -45,6 +45,7 @@ const SingButtons = () => {
       <button
         className="play-control play-pause-container"
         onClick={onPlayPauseClickHandler}
+        tabIndex="0"
         type="button"
       >
         <p className="sing-control-icons-label">

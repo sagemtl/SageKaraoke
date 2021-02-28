@@ -2,8 +2,11 @@
 import { useGlobalContext } from 'global/context';
 import React, { useState, useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
+// import TextField from '@matesrial-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { updateLeaderboard } from 'utils/ktvQueries';
 import ScoreRenderer from './ScoreRenderer';
 import '../styles/resultsModal.scss';
 
@@ -12,11 +15,13 @@ const Transition = React.forwardRef((props, ref) => (
   <Slide direction="up" ref={ref} {...props} />
 ));
 
-const FinalResultsModal = () => {
+const FinalResultsModal = ({ titleid }) => {
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
   const { pitchScore, audioEnded, lyricsScore } = karaokeState;
   const [modal, setModal] = useState(false);
+  const [nameLeaderboard, setNameLeaderboard] = useState('');
+  const [rankMessage, setRankMessage] = useState('');
   const history = useHistory();
 
   const closeModal = () => {
@@ -42,8 +47,23 @@ const FinalResultsModal = () => {
     return Math.round(lyricsScore);
   };
 
+  const submitLeaderboard = async () => {
+    const ranking = await updateLeaderboard(
+      titleid,
+      nameLeaderboard,
+      getFinalScore(),
+    );
+
+    setRankMessage(`You placed ${ranking.rank} out of ${ranking.total}!`);
+  };
+
+  const submitWithKey = (e) => {
+    if (e.charCode === 13) {
+      submitLeaderboard();
+    }
+  };
+
   useEffect(() => {
-    console.log(audioEnded);
     if (audioEnded) {
       setModal(true);
     }
@@ -80,6 +100,30 @@ const FinalResultsModal = () => {
             alt="Your Score Is"
           />
           <ScoreRenderer number={Math.round(getFinalScore())} />
+          <h3 className="leaderboard-info">
+            To display on the leaderboard, please enter your name
+          </h3>
+          <div className="contact-form">
+            <p className="contact-form__label">Name:</p>
+            <input
+              name="message"
+              type="text"
+              onChange={(e) => setNameLeaderboard(e.target.value)}
+              value={nameLeaderboard}
+              className="contact-form__input"
+            />
+            <button
+              type="button"
+              onClick={submitLeaderboard}
+              onKeyDown={submitWithKey}
+              disabled={nameLeaderboard.length === 0}
+              className="contact-form__button"
+            >
+              Send
+            </button>
+          </div>
+
+          <h2 className="leaderboard-info__ranking">{rankMessage}</h2>
           <div className="buttons">
             <button
               className="return-home-btn"
@@ -102,6 +146,10 @@ const FinalResultsModal = () => {
       </Dialog>
     </>
   );
+};
+
+FinalResultsModal.propTypes = {
+  titleid: PropTypes.string.isRequired,
 };
 
 export default FinalResultsModal;

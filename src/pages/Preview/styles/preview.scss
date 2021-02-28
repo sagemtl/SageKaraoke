@@ -10,7 +10,10 @@
   text-align: center;
 
   &__video {
+    border-radius: 15px;
     margin: 0 2em;
+    height: auto;
+    width: 50vw;
   }
 
   &__container {
@@ -27,7 +30,6 @@
   line-height: 1.2;
 }
 .album-mv-container {
-  // position: fixed;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -51,6 +53,9 @@
   &__lyrics {
     margin: 0 auto;
     margin-top: 2em;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
     &__lyrics-title {
       margin-bottom: 2px;
     }
@@ -58,6 +63,10 @@
       overflow: scroll;
       max-height: 200px;
     }
+  }
+
+  &__lyrics::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -76,12 +85,19 @@
     max-height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     &__content {
       margin: 0 auto;
       max-width: 70%;
       padding-bottom: 1em;
     }
   }
+
+  &__instructions::-webkit-scrollbar {
+    display: none;
+  }
+
   &__leaderboard {
     min-width: 12vw;
     max-height: 200px;
@@ -92,6 +108,12 @@
     border-radius: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  &__leaderboard::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -112,6 +134,8 @@
       left: 0px;
       margin: 0;
       animation: fadein 3s;
+      height: 100vh;
+      width: auto;
     }
 
     &__container {
