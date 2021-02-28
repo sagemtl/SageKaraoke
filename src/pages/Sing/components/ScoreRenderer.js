@@ -4,7 +4,6 @@ import '../styles/resultsModal.scss';
 
 const ScoreRenderer = ({ number }) => {
   const [count, setCount] = useState(0);
-  // const [start, set]
   // const [increment, setIncrement] = useState(0);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const ScoreRenderer = ({ number }) => {
 
       setCount(number); // set count to number value
     }
-  }, [number, count]);
+  }, [number]);
 
   return (
     <div className="Count">

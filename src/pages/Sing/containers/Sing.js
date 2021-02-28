@@ -58,17 +58,6 @@ const Sing = ({ match }) => {
     });
   };
 
-  // const getPrevLyricsScore = useCallback(() => {
-  //   if (lyricsScore === 0) {
-  //     setPrevLyricsScore(0);
-  //     return 0;
-  //   }
-  //   const prev = prevLyricsScore;
-  //   console.log(`prev lyric score in sing ${prev}`);
-  //   setPrevLyricsScore(lyricsScore);
-  //   return Math.round(prev);
-  // }, []);
-
   useEffect(() => {
     const getSongData = async () => {
       const songData = await getLyricsByTitleId(songTitle);
