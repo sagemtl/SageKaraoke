@@ -24,6 +24,7 @@ const ScoreRenderer = ({ number }) => {
 
       setCount(number); // set count to number value
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [number]);
 
   return (
