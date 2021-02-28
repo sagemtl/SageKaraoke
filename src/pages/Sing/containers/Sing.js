@@ -24,7 +24,7 @@ const Sing = ({ match }) => {
   const { width } = globalContext.window;
 
   const [lrcList, setLrcList] = useState([]);
-  const [prevLyricsScore, setPrevLyricsScore] = useState(0);
+  // const [prevLyricsScore, setPrevLyricsScore] = useState(0);
   // const [index, setIndex] = useState(-1);
 
   const [playLocalSong, setPlayLocalSong] = useState(false);
@@ -58,16 +58,16 @@ const Sing = ({ match }) => {
     });
   };
 
-  const getPrevLyricsScore = useCallback(() => {
-    if (lyricsScore === 0) {
-      setPrevLyricsScore(0);
-      return 0;
-    }
-    const prev = prevLyricsScore;
-    console.log(`prev lyric score in sing ${prev}`);
-    setPrevLyricsScore(lyricsScore);
-    return Math.round(prev);
-  }, [lyricsScore]);
+  // const getPrevLyricsScore = useCallback(() => {
+  //   if (lyricsScore === 0) {
+  //     setPrevLyricsScore(0);
+  //     return 0;
+  //   }
+  //   const prev = prevLyricsScore;
+  //   console.log(`prev lyric score in sing ${prev}`);
+  //   setPrevLyricsScore(lyricsScore);
+  //   return Math.round(prev);
+  // }, []);
 
   useEffect(() => {
     const getSongData = async () => {
@@ -94,13 +94,7 @@ const Sing = ({ match }) => {
       <FinalResultsModal />
       {/* <h1>{lyricsScore}</h1> */}
       <div className="scoreRenderer">
-        {lyricsScore === 0 ? (
-          <ScoreRenderer number={Math.round(lyricsScore)} />
-        ) : (
-          <ScoreRenderer
-            number={Math.round(lyricsScore - getPrevLyricsScore)}
-          />
-        )}
+        <ScoreRenderer number={Math.round(lyricsScore)} />
       </div>
       {/* <ScoreRenderer number={100} /> */}
       {playLocalSong ? null : (
