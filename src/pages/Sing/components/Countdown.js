@@ -14,8 +14,8 @@ const Countdown = ({ onComplete, start }) => {
     return null;
   }
   return (
-    <div className="App">
-      <p>Countdown: {counter}</p>
+    <div className="countdown">
+      <p>{counter}</p>
     </div>
   );
 };

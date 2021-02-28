@@ -11,6 +11,7 @@ import FinalResultsModal from '../components/FinalResultsModal';
 import { useGlobalContext } from '../../../global/context';
 import Countdown from '../components/Countdown';
 import { getLyricsScore } from '../../../utils/score';
+import ScoreRenderer from '../components/ScoreRenderer';
 
 const Sing = ({ match }) => {
   const {
@@ -19,10 +20,13 @@ const Sing = ({ match }) => {
 
   const globalContext = useGlobalContext();
   const [karaokeState, karaokeDispatch] = globalContext.karaoke;
-  const { playSong, origVoiceOn, pinyinOn } = karaokeState;
+  const { playSong, origVoiceOn, pinyinOn, lyricsScore } = karaokeState;
   const { width } = globalContext.window;
 
   const [lrcList, setLrcList] = useState([]);
+  // const [prevLyricsScore, setPrevLyricsScore] = useState(0);
+  // const [index, setIndex] = useState(-1);
+
   const [playLocalSong, setPlayLocalSong] = useState(false);
   const [lrcRomanList, setLrcRomanList] = useState([]);
 
@@ -103,9 +107,7 @@ const Sing = ({ match }) => {
     <div className="sing">
       <FinalResultsModal titleid={songTitle} />
       {/* <h1>{lyricsScore}</h1> */}
-      {/* <div className="scoreRenderer">
-        <ScoreRenderer number={lyricsScore} />
-      </div> */}
+      <ScoreRenderer number={Math.round(lyricsScore)} />
       {/* <ScoreRenderer number={100} /> */}
       {playLocalSong ? null : (
         <Countdown onComplete={setPlaySong} start={setPlayLocalSong} />
