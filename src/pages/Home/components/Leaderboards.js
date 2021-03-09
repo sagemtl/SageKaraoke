@@ -16,12 +16,17 @@ const Leaderboards = ({ albums, selectedAlbum }) => {
   return (
     <div className="leaderboards">
       <div className="leaderboards-track">
-        {scores.map(({ name, score, id }) => (
-          <p className="leaderboards__entry" key={id}>
-            {name}: {score}
-          </p>
-        ))}
-        <p className="leaderboards__entry">☆ Leaderboards ☆</p>
+        {scores.map(({ name, score, id }, i) => {
+          if (i < 5) {
+            return (
+              <p className="leaderboards__entry" key={id}>
+                {name}: {score}
+              </p>
+            );
+          }
+          return <></>;
+        })}
+        <p className="leaderboards__entry">☆ Top 5 Scores ☆</p>
         {scores.map(({ name, score, id }) => (
           <p className="leaderboards__entry" key={`${id}-2`}>
             {name}: {score}
