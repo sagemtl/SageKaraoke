@@ -61,7 +61,7 @@ const HeaderDesktop = () => {
           href="/"
         >
           <video
-            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+            src="/logo.mp4"
             className="navbox__logo"
             muted
             loop
