@@ -4,7 +4,7 @@ import '../styles/notFound.scss';
 const NotFound = () => (
   <div className="not-found">
     <img
-      src="https://res.cloudinary.com/die52atcc/image/upload/v1613361014/output-onlinepngtools_lshu3u.png"
+      src="/404-octopus.png"
       alt="404 Not Found"
       className="octopus-image"
     />

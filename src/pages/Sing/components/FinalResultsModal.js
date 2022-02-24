@@ -96,11 +96,6 @@ const FinalResultsModal = ({ titleid }) => {
         fullWidth
       >
         <div className="modal-content">
-          <img
-            className="score-results-title"
-            src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1612838969/final-score_lbohbx.png"
-            alt="Your Score Is"
-          />
           <ScoreRenderer number={Math.round(getFinalScore())} />
           {!submitted && (
             <div>
